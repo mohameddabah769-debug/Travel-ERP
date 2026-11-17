@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanad Travel ERP | نظام إدارة شركات السياحة - نسخة تجريبية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Top Navbar -->
+    <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-orange-500 text-white font-bold px-3 py-1 rounded-lg text-lg tracking-wide">Sanad Digital</div>
+                <span class="text-gray-400">|</span>
+                <h1 class="font-bold text-base md:text-lg">سيستم إدارة شركات السياحة والحسابات (Demo)</h1>
+            </div>
+            <div class="flex items-center gap-4 text-xs md:text-sm">
+                <span class="bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-1.5 font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    متصل بمنظومة الفاتورة الإلكترونية
+                </span>
+                <span class="hidden md:inline text-gray-300">دعم فني: <a href="tel:0150108474" class="text-orange-400 font-semibold hover:underline" dir="ltr">0150108474</a></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        
+        <!-- Quick Alert / Welcome Banner -->
+        <div class="mb-6 p-4 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-transparent border-r-4 border-orange-500 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+                <h2 class="text-slate-800 font-bold text-base">مرحباً بك في النسخة التجريبية لنظام Sanad Travel ERP ✈️</h2>
+                <p class="text-gray-600 text-xs md:text-sm mt-0.5">حل متكامل لإدارة حجوزات السياحة الدينية (العمرة والحج)، الطيران، الفنادق، وحسابات الأرباح والربط الضريبي ETA لحظياً.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="px-3 py-1 bg-white shadow-sm border border-gray-200 text-slate-700 rounded-lg text-xs font-bold">إصدار التجربة v1.2</span>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border-r-4 border-blue-600 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-sm text-gray-500 font-medium">إجمالي مبيعات الحجوزات</p>
+                    <span class="p-2 bg-blue-50 text-blue-600 rounded-lg text-sm">📊</span>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mt-1" id="totalSales">245,000 ج.م</h2>
+                <span class="text-xs text-green-600 font-semibold flex items-center gap-1 mt-2">
+                    <span>↑</span> +18% عن الشهر الماضي
+                </span>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow-sm border-r-4 border-emerald-600 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-sm text-gray-500 font-medium">صافي الأرباح المحققة</p>
+                    <span class="p-2 bg-emerald-50 text-emerald-600 rounded-lg text-sm">💰</span>
+                </div>
+                <h2 class="text-2xl font-extrabold text-emerald-600 mt-1" id="totalProfit">42,500 ج.م</h2>
+                <span class="text-xs text-gray-500 mt-2 block">بعد خصم تكلفة الوكلاء والموردين</span>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow-sm border-r-4 border-orange-500 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-sm text-gray-500 font-medium">مستحقات لدى العملاء (آجل)</p>
+                    <span class="p-2 bg-orange-50 text-orange-600 rounded-lg text-sm">⏳</span>
+                </div>
+                <h2 class="text-2xl font-extrabold text-orange-600 mt-1">31,200 ج.م</h2>
+                <span class="text-xs text-gray-500 mt-2 block">5 ملفات قيد التحصيل</span>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow-sm border-r-4 border-purple-600 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-sm text-gray-500 font-medium">أرصدة العملات الأجنبية</p>
+                    <span class="p-2 bg-purple-50 text-purple-600 rounded-lg text-sm">🌍</span>
+                </div>
+                <div class="mt-1 font-bold text-slate-800 text-sm space-y-1">
+                    <p class="flex items-center justify-between"><span>🇸🇦 ريال سعودي:</span> <span class="text-slate-900 font-extrabold">14,500</span></p>
+                    <p class="flex items-center justify-between"><span>🇺🇸 دولار أمريكي:</span> <span class="text-slate-900 font-extrabold">3,200</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Add New Booking Form -->
+            <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-1 h-fit border border-gray-100">
+                <div class="flex items-center justify-between border-b pb-3 mb-4">
+                    <h3 class="font-bold text-lg text-slate-800">➕ تسجيل حجز / ملف جديد</h3>
+                    <span class="text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded font-semibold">إدخال مباشر</span>
+                </div>
+                <form id="bookingForm" class="space-y-3">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">اسم العميل / الشركة</label>
+                        <input type="text" id="clientName" required placeholder="مثال: أ. محمود عبد الرحمن" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">نوع الخدمة السياحية</label>
+                        <select id="serviceType" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition bg-white">
+                            <option value="تذكرة طيران (القاهرة - جدة)">تذكرة طيران (القاهرة - جدة)</option>
+                            <option value="برنامج عمرة VIP - 14 يوم">برنامج عمرة VIP - 14 يوم</option>
+                            <option value="حجز فندق شرم الشيخ (4 ليالي)">حجز فندق شرم الشيخ (4 ليالي)</option>
+                            <option value="تأشيرة سياحية + انتقالات">تأشيرة سياحية + انتقالات</option>
+                            <option value="تنظيم رحلة سياحة داخلية (الغردقة)">تنظيم رحلة سياحة داخلية (الغردقة)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 text-slate-700">سعر البيع للعميل</label>
+                            <input type="number" id="sellPrice" required placeholder="15000" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 text-slate-700">التكلفة (المورد)</label>
+                            <input type="number" id="costPrice" required placeholder="12500" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">العملة</label>
+                        <select id="currency" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition bg-white">
+                            <option value="ج.م">جنيه مصري (EGP)</option>
+                            <option value="ريال">ريال سعودي (SAR)</option>
+                            <option value="دولار">دولار أمريكي (USD)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition shadow-md hover:shadow-lg mt-3 flex items-center justify-center gap-2 cursor-pointer">
+                        <span>حفظ الحجز وحساب الربح</span>
+                        <span>←</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2 border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center border-b pb-3 mb-4">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-lg text-slate-800">📋 أحدث الحجوزات والملفات المالية</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
+                                تحديث لحظي
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-slate-100 text-slate-700 text-xs font-bold uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-r-lg">العميل</th>
+                                    <th class="p-3">الخدمة / البرنامج</th>
+                                    <th class="p-3">سعر البيع</th>
+                                    <th class="p-3">صافي الربح</th>
+                                    <th class="p-3 rounded-l-lg text-center">الفاتورة الإلكترونية (ETA)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsTable" class="divide-y divide-gray-100">
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 font-bold text-slate-900">شركة النور للتجارة</td>
+                                    <td class="p-3 text-slate-700">تذكرة طيران (القاهرة - دبي)</td>
+                                    <td class="p-3 font-semibold text-slate-800">18,500 ج.م</td>
+                                    <td class="p-3 text-emerald-600 font-bold">+2,500 ج.م</td>
+                                    <td class="p-3 text-center">
+                                        <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold">
+                                            ✓ معتمدة (ETA)
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 font-bold text-slate-900">الحاج عبد الله السعيد</td>
+                                    <td class="p-3 text-slate-700">برنامج عمرة المولد النبوي</td>
+                                    <td class="p-3 font-semibold text-slate-800">4,200 ريال</td>
+                                    <td class="p-3 text-emerald-600 font-bold">+650 ريال</td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="sendInvoice(this)" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg transition shadow-sm cursor-pointer font-medium">
+                                            إصدار فاتورة ETA
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 font-bold text-slate-900">د. سارة المنشاوي</td>
+                                    <td class="p-3 text-slate-700">حجز فندق ريكسوس شرم الشيخ</td>
+                                    <td class="p-3 font-semibold text-slate-800">24,000 ج.م</td>
+                                    <td class="p-3 text-emerald-600 font-bold">+3,200 ج.م</td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="sendInvoice(this)" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg transition shadow-sm cursor-pointer font-medium">
+                                            إصدار فاتورة ETA
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+                    <p>⚡ يتم ربط الفواتير المعتمدة مباشرة بالرقم الضريبي الموحد لمصلحة الضرائب المصرية.</p>
+                    <span class="text-slate-400">نظام Sanad ERP السحابي</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 border-t border-gray-200 bg-white text-center text-xs text-gray-500">
+        <p>© 2026 Sanad Digital - جميع الحقوق محفوظة | نموذج تجريبي مخصص لشركات السياحة والسفر</p>
+    </footer>
+
+    <script>
+        let currentSales = 245000;
+        let currentProfit = 42500;
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const client = document.getElementById('clientName').value.trim();
+            const service = document.getElementById('serviceType').value;
+            const sell = parseFloat(document.getElementById('sellPrice').value);
+            const cost = parseFloat(document.getElementById('costPrice').value);
+            const currency = document.getElementById('currency').value;
+            const profit = sell - cost;
+
+            if (!client || isNaN(sell) || isNaN(cost)) return;
+
+            const table = document.getElementById('bookingsTable');
+            const row = document.createElement('tr');
+            row.className = "bg-orange-50/70 hover:bg-orange-50 transition border-r-4 border-orange-500";
+            row.innerHTML = `
+                <td class="p-3 font-bold text-slate-900">${client}</td>
+                <td class="p-3 text-slate-700">${service}</td>
+                <td class="p-3 font-semibold text-slate-800">${sell.toLocaleString()} ${currency}</td>
+                <td class="p-3 ${profit >= 0 ? 'text-emerald-600' : 'text-red-500'} font-bold">
+                    ${profit >= 0 ? '+' : ''}${profit.toLocaleString()} ${currency}
+                </td>
+                <td class="p-3 text-center">
+                    <button onclick="sendInvoice(this)" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg transition shadow-sm cursor-pointer font-medium">
+                        إصدار فاتورة ETA
+                    </button>
+                </td>
+            `;
+            table.prepend(row);
+
+            if(currency === 'ج.م') {
+                currentSales += sell;
+                currentProfit += profit;
+                document.getElementById('totalSales').innerText = currentSales.toLocaleString() + ' ج.م';
+                document.getElementById('totalProfit').innerText = currentProfit.toLocaleString() + ' ج.م';
+            }
+
+            this.reset();
+        });
+
+        function sendInvoice(btn) {
+            const randomUuid = Math.floor(1000 + Math.random() * 9000);
+            btn.innerText = "جاري الربط بالضرائب...";
+            btn.disabled = true;
+            btn.className = "bg-slate-400 text-white text-xs px-3 py-1.5 rounded-lg font-medium cursor-not-allowed";
+            setTimeout(() => {
+                btn.outerHTML = `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold">✓ معتمدة (UUID: #${randomUuid})</span>`;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
