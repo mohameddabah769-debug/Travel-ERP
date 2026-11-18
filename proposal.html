@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرض الفني والمالي | Sanad Travel ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; }
+            .print-shadow-none { box-shadow: none !important; border: 1px solid #e2e8f0 !important; }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- Action Bar (Floating for Web, Hidden on Print) -->
+    <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center bg-slate-900 text-white p-4 rounded-2xl shadow-lg no-print">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                ← العودة إلى الديمو التفاعلي
+            </a>
+            <span class="text-xs text-slate-400">| عرض فني ومالي رسمي للمشروع</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()" class="bg-orange-600 hover:bg-orange-700 text-white text-xs px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md">
+                <span>🖨️</span> طباعة / حفظ كملف PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Proposal Document Container -->
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-12 print-shadow-none">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-8 gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">✈️</span>
+                    <span class="bg-orange-600 text-white font-black px-3 py-1 rounded-xl text-lg">Sanad Digital</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">عرض فني ومالي لتوريد وتشغيل</h1>
+                <p class="text-sm text-slate-500 font-semibold mt-1">نظام إدارة شركات السياحة والحسابات السحابي المتكامل (Sanad Travel ERP)</p>
+            </div>
+            <div class="text-left sm:text-left text-xs text-slate-500 space-y-1 bg-slate-50 p-4 rounded-2xl border border-slate-100 w-full sm:w-auto">
+                <p><span class="font-bold text-slate-800">رقم العرض:</span> <span class="font-mono text-orange-600 font-bold">PROP-2026-TRV</span></p>
+                <p><span class="font-bold text-slate-800">التاريخ:</span> 18 نوفمبر 2026</p>
+                <p><span class="font-bold text-slate-800">صلاحية العرض:</span> 30 يوماً من تاريخه</p>
+                <p><span class="font-bold text-slate-800">المبيعات والدعم:</span> <span dir="ltr" class="font-bold text-slate-900">0150108474</span></p>
+            </div>
+        </div>
+
+        <!-- Client & Project Scope Summary -->
+        <div class="mt-8 bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-50 border-r-4 border-orange-500 rounded-2xl p-5">
+            <h2 class="text-base font-extrabold text-slate-900 mb-2">مقدم إلى: السادة مسؤولي وإدارة شركة السياحة المحترمين</h2>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                يسر شركة <strong>Sanad Digital</strong> تقديم هذا العرض الفني والمالي المتكامل لتطبيق وتشغيل نظام <strong>Sanad Travel ERP</strong>، والمصمم خصيصاً لتلبية كافة متطلبات إدارة شركات السياحة والسفر العاملة في مصر والشرق الأوسط، بما يضمن دقة الحسابات، سرعة إصدار الحجوزات، متابعة أرباح الرحلات، والامتثال لمنظومة الفاتورة الإلكترونية (ETA).
+            </p>
+        </div>
+
+        <!-- Section 1: Scope of Work (العرض الفني) -->
+        <div class="mt-10">
+            <div class="flex items-center gap-2 border-b border-slate-200 pb-3 mb-6">
+                <span class="w-8 h-8 rounded-xl bg-orange-600 text-white flex items-center justify-center font-black text-sm">1</span>
+                <h3 class="text-lg font-black text-slate-900">نطاق العمل والموديولات الفنية المشمولة (Technical Scope)</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                
+                <!-- Module 1 -->
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50">
+                    <h4 class="font-black text-sm text-slate-900 mb-2 flex items-center gap-1.5 text-orange-600">
+                        <span>✈️</span> إدارة الحجوزات والبرامج السياحية
+                    </h4>
+                    <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
+                        <li>تسجيل حجوزات الطيران وربط رقم الـ PNR وبيانات المسافرين.</li>
+                        <li>إدارة برامج رحلات العمرة والحج (تسكين الفنادق، التأشيرات، الانتقالات).</li>
+                        <li>إدارة حجوزات الفنادق بالسياحة الداخلية والخارجية وفوتشرات التأكيد.</li>
+                        <li>طباعة إيصالات الحجز وتذاكر الرحلات بتصميم يحمل هوية شركتكم.</li>
+                    </ul>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50">
+                    <h4 class="font-black text-sm text-slate-900 mb-2 flex items-center gap-1.5 text-emerald-600">
+                        <span>👥</span> حسابات العملاء والموردين والوكلاء
+                    </h4>
+                    <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
+                        <li>كشف حساب تفصيلي لكل عميل بمتابعة المدفوع والمتبقي الآجل.</li>
+                        <li>جدولة الأقساط وتنبيهات مواعيد الاستحقاق والتحصيل.</li>
+                        <li>حسابات شركات الطيران (مصر للطيران، إير كايرو...) وموردي الفنادق.</li>
+                        <li>إصدار وطباعة سندات القبض وسندات الصرف والتسويات البنكية.</li>
+                    </ul>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50">
+                    <h4 class="font-black text-sm text-slate-900 mb-2 flex items-center gap-1.5 text-blue-600">
+                        <span>💱</span> إدارة الخزائن وتعدد العملات وفروق الصرف
+                    </h4>
+                    <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
+                        <li>خزائن مستقلة بالجنيه المصري (EGP)، الريال السعودي (SAR)، والدولار (USD).</li>
+                        <li>تسجيل الحجز بالعملة الأجنبية مع التقييم اللحظي بسعر الصرف.</li>
+                        <li>احتساب أرباح وخسائر فروق أسعار الصرف آلياً وترحيلها محاسبياً.</li>
+                    </ul>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50">
+                    <h4 class="font-black text-sm text-slate-900 mb-2 flex items-center gap-1.5 text-purple-600">
+                        <span>📊</span> تقارير الأرباح والربط الضريبي ETA
+                    </h4>
+                    <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
+                        <li>حساب صافي ربح كل رحلة أو تذكرة بشكل منفصل (Job Order Costing).</li>
+                        <li>الربط المباشر بمنظومة الفاتورة الإلكترونية المصرية وتوليد الـ UUID.</li>
+                        <li>تقارير حركة الخزينة اليومية والبنوك وإجمالي المصروفات وصافي الأرباح.</li>
+                    </ul>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 md:col-span-2">
+                    <h4 class="font-black text-sm text-slate-900 mb-2 flex items-center gap-1.5 text-slate-800">
+                        <span>🔐</span> الأمان وصلاحيات الموظفين والعمل السحابي
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+                        <p>• تحديد صلاحيات دقيقة لكل موظف (حجز تذاكر، عمرة، حسابات).</p>
+                        <p>• حجب الاطلاع على أرباح الشركة العامة وسندات الصرف عن موظفي الحجز.</p>
+                        <p>• سجل نشاطات كامل (Audit Trail) لمعرفة من قام بأي عملية بالتاريخ والدقيقة.</p>
+                        <p>• إمكانية الدخول ومتابعة العمل بأمان من أي مكان (كمبيوتر، تابلت، أو هاتف).</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 2: Implementation Timeline (الجدول الزمني) -->
+        <div class="mt-10">
+            <div class="flex items-center gap-2 border-b border-slate-200 pb-3 mb-6">
+                <span class="w-8 h-8 rounded-xl bg-orange-600 text-white flex items-center justify-center font-black text-sm">2</span>
+                <h3 class="text-lg font-black text-slate-900">مراحل التنفيذ والتشغيل (Timeline)</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+                <div class="border border-slate-200 rounded-2xl p-4 bg-white text-center">
+                    <span class="w-7 h-7 rounded-full bg-orange-100 text-orange-600 font-bold inline-flex items-center justify-center mb-2">1</span>
+                    <h5 class="font-bold text-slate-900">المرحلة الأولى</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">تجهيز السيرفر وقاعدة البيانات وتخصيص هوية الشركة ولوجو الشركه.</p>
+                    <span class="inline-block mt-3 text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">3 إلى 5 أيام</span>
+                </div>
+                <div class="border border-slate-200 rounded-2xl p-4 bg-white text-center">
+                    <span class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 font-bold inline-flex items-center justify-center mb-2">2</span>
+                    <h5 class="font-bold text-slate-900">المرحلة الثانية</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">إعداد دليل الحسابات، الخزائن، والربط بالعملات المتعددة وتدقيق الحجوزات.</p>
+                    <span class="inline-block mt-3 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">4 إلى 6 أيام</span>
+                </div>
+                <div class="border border-slate-200 rounded-2xl p-4 bg-white text-center">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 font-bold inline-flex items-center justify-center mb-2">3</span>
+                    <h5 class="font-bold text-slate-900">المرحلة الثالثة</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">تفعيل ربط الفاتورة الإلكترونية ETA وتدريب موظفي الحجز والمحاسبين.</p>
+                    <span class="inline-block mt-3 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">3 إلى 4 أيام</span>
+                </div>
+                <div class="border border-slate-200 rounded-2xl p-4 bg-white text-center">
+                    <span class="w-7 h-7 rounded-full bg-purple-100 text-purple-600 font-bold inline-flex items-center justify-center mb-2">4</span>
+                    <h5 class="font-bold text-slate-900">المرحلة الرابعة</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">الإطلاق الرسمي المباشر وبدء فترة الدعم الفني والمتابعة اليومية.</p>
+                    <span class="inline-block mt-3 text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded">تشغيل مستمر</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Financial Proposal & Pricing (العرض المالي) -->
+        <div class="mt-10">
+            <div class="flex items-center gap-2 border-b border-slate-200 pb-3 mb-6">
+                <span class="w-8 h-8 rounded-xl bg-orange-600 text-white flex items-center justify-center font-black text-sm">3</span>
+                <h3 class="text-lg font-black text-slate-900">العرض المالي وطريقة السداد (Financial Quotation)</h3>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-900 text-white font-bold">
+                        <tr>
+                            <th class="p-3.5 rounded-r-xl">البند / البيان</th>
+                            <th class="p-3.5">الوصف والتفاصيل المشمولة</th>
+                            <th class="p-3.5 rounded-l-xl text-left">القيمة التقديرية</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 border-b border-slate-200">
+                        <tr>
+                            <td class="p-3.5 font-bold text-slate-900">ترخيص وتخصيص نظام Sanad Travel ERP</td>
+                            <td class="p-3.5 text-slate-600">شامل كافة الموديولات (حجوزات، كشوف حسابات، أقساط، خزائن عملات، صلاحيات، وتقارير).</td>
+                            <td class="p-3.5 text-left font-black text-slate-900">شامل</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold text-slate-900">ربط وتفعيل الفاتورة الإلكترونية المصرية (ETA)</td>
+                            <td class="p-3.5 text-slate-600">ربط مع بوابة الضرائب الرسمية عبر الـ API وتوليد الـ UUID وتدريب الحسابات.</td>
+                            <td class="p-3.5 text-left font-black text-slate-900">شامل</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold text-slate-900">الاستضافة السحابية والنسخ الاحتياطي (سنة كاملة)</td>
+                            <td class="p-3.5 text-slate-600">خوادم سحابية فائقة السرعة، شهادة أمان SSL، ونسخ احتياطي يومي آلي (Daily Backups).</td>
+                            <td class="p-3.5 text-left font-black text-slate-900">مجاناً للسنة الأولى</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold text-slate-900">التدريب والدعم الفني المباشر</td>
+                            <td class="p-3.5 text-slate-600">جلسات تدريبية لفريق العمل، ودعم فني وصيانة مجانية لمدة 6 أشهر كاملة.</td>
+                            <td class="p-3.5 text-left font-black text-slate-900">مجاناً</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Payment Milestones -->
+            <div class="mt-6 p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                <h4 class="font-extrabold text-sm text-slate-900 mb-3">💵 خطة الدفعات الميسرة (Payment Terms):</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                        <span class="text-orange-600 font-extrabold text-sm">40%</span>
+                        <p class="font-bold text-slate-900 mt-1">دفعة مقدمة عند التعاقد</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5">لبدء تهيئة السيرفرات وقواعد البيانات وتخصيص النظام.</p>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                        <span class="text-blue-600 font-extrabold text-sm">40%</span>
+                        <p class="font-bold text-slate-900 mt-1">دفعة تسليم واختبار النسخة التجريبية</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5">بعد مراجعة وتجربة كافة الموديولات والربط بالعملات.</p>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                        <span class="text-emerald-600 font-extrabold text-sm">20%</span>
+                        <p class="font-bold text-slate-900 mt-1">دفعة التسليم النهائي والتشغيل</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5">بعد إتمام تدريب موظفي الشركة وبدء العمل الفعلي.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Guarantees & Support (الضمان والدعم) -->
+        <div class="mt-10 p-5 rounded-2xl border border-emerald-200 bg-emerald-50/50 text-xs">
+            <h4 class="font-black text-sm text-emerald-900 mb-2 flex items-center gap-1.5">
+                <span>🛡️</span> الضمان والالتزام الفني من Sanad Digital:
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-700">
+                <p>✓ ضمان استقرار النظام بنسبة توافر 99.9% (High Availability).</p>
+                <p>✓ حماية وتشفير كامل لبيانات العملاء وأسعار التكلفة والمبيعات.</p>
+                <p>✓ سرعة الاستجابة للدعم الفني خلال ساعات العمل عبر الهاتف والواتساب.</p>
+                <p>✓ تحديثات دورية مجانية وتوافق مستمر مع تعليمات مصلحة الضرائب المصرية.</p>
+            </div>
+        </div>
+
+        <!-- Signature Blocks -->
+        <div class="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-8 text-xs">
+            <div class="text-center sm:text-right">
+                <p class="font-bold text-slate-400">الطرف الأول (الجهة المنفذة)</p>
+                <p class="font-black text-base text-slate-900 mt-1">Sanad Digital Solutions</p>
+                <p class="text-slate-500 mt-0.5">قسم المشروعات والحلول السحابية</p>
+                <div class="mt-4 font-mono text-slate-400">التوقيع والختم: [معتمد]</div>
+            </div>
+            <div class="text-center sm:text-left">
+                <p class="font-bold text-slate-400">الطرف الثاني (العميل)</p>
+                <p class="font-black text-base text-slate-900 mt-1">إدارة شركة السياحة</p>
+                <p class="text-slate-500 mt-0.5">المفوض بالتوقيع والاعتماد</p>
+                <div class="mt-4 font-mono text-slate-400">التوقيع والختم: ........................</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Print Footer -->
+    <div class="max-w-4xl mx-auto mt-6 text-center text-xs text-slate-400 no-print">
+        Sanad Digital - نظام Sanad Travel ERP المتكامل لإدارة شركات السياحة والسفر | هاتف: 0150108474
+    </div>
+
+</body>
+</html>
