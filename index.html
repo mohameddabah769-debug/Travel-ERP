@@ -275,9 +275,12 @@
             <div class="flex items-center gap-4 text-xs font-semibold">
                 <div class="hidden lg:flex items-center gap-3 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-[11px]">
                     <span class="text-slate-500 font-bold">أسعار الصرف:</span>
-                    <span class="text-slate-700">🇺🇸 1 USD = <strong>49.50</strong> ج.م</span>
+                    <span class="text-slate-700">🇺🇸 1 USD = <strong id="topbarUsd">49.50</strong> ج.م</span>
                     <span class="text-slate-300">|</span>
-                    <span class="text-slate-700">🇸🇦 1 SAR = <strong>13.20</strong> ج.م</span>
+                    <span class="text-slate-700">🇸🇦 1 SAR = <strong id="topbarSar">13.20</strong> ج.م</span>
+                    <button onclick="openFxModal()" class="text-gold-600 hover:text-gold-700 font-bold text-[10px] bg-gold-50 px-2 py-0.5 rounded cursor-pointer border border-gold-200 ml-1" title="تعديل أسعار الصرف">
+                        <i class="fa-solid fa-pen"></i> تعديل
+                    </button>
                 </div>
                 <div class="flex items-center gap-1.5 text-slate-500 text-xs">
                     <i class="fa-regular fa-clock"></i>
@@ -421,13 +424,17 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
+                            <button onclick="openManageBankModal()" class="bg-navy-800 hover:bg-slate-800 text-gold-400 border border-gold-500/40 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>إضافة بنك جديد</span>
+                            </button>
                             <button onclick="openBankTxModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-navy-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-plus-circle"></i>
-                                <span>حركة بنكية جديدة</span>
+                                <span>حركة بنكية</span>
                             </button>
                             <button onclick="openReconcileModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-file-excel text-emerald-400"></i>
-                                <span>مطابقة كشف البنك Excel</span>
+                                <span>مطابقة كشف البنك</span>
                             </button>
                         </div>
                     </div>
@@ -530,10 +537,16 @@
                             </h3>
                             <p class="text-xs text-slate-500 mt-0.5">متابعة مديونيات الشركات والعملاء الأفراد وجدولة الأقساط الشهرية</p>
                         </div>
-                        <button onclick="openVoucherModal('receipt')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-receipt"></i>
-                            <span>تسجيل سند تحصيل / قبض</span>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openManageClientModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>إضافة عميل جديد</span>
+                            </button>
+                            <button onclick="openVoucherModal('receipt')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-receipt"></i>
+                                <span>سند تحصيل</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -569,10 +582,16 @@
                             </h3>
                             <p class="text-xs text-slate-500 mt-0.5">إدارة تسويات خطوط الطيران وفنادق مكة والمدينة وموردي التأشيرات</p>
                         </div>
-                        <button onclick="openVoucherModal('payment')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-money-bill-transfer"></i>
-                            <span>سند صرف / سداد مورد</span>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openManageSupplierModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-plus-circle"></i>
+                                <span>إضافة مورد / طيران</span>
+                            </button>
+                            <button onclick="openVoucherModal('payment')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-money-bill-transfer"></i>
+                                <span>سند صرف</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -1064,6 +1083,238 @@
         </div>
     </div>
 
+    <!-- 🏦 Manage Bank Account Modal (Add / Edit Bank) -->
+    <div id="manageBankModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageBankTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-building-columns text-gold-600"></i>
+                    <span>إضافة / تعديل حساب بنكي</span>
+                </h3>
+                <button onclick="closeManageBankModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageBankForm" onsubmit="handleSaveBank(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="mbId">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم البنك</label>
+                    <input type="text" id="mbName" required placeholder="مثال: البنك الأهلي المصري، بنك CIB، مصرف الإنماء" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع الحساب والغرض</label>
+                    <input type="text" id="mbType" required placeholder="مثال: حساب جاري رئيسي، حساب سداد طيران، حساب حج وعمرة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الرصيد الفعلي</label>
+                        <input type="number" id="mbBal" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
+                        <select id="mbCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="ج.م">جنيه مصري (EGP)</option>
+                            <option value="ريال">ريال سعودي (SAR)</option>
+                            <option value="دولار">دولار أمريكي (USD)</option>
+                            <option value="درهم">درهم إماراتي (AED)</option>
+                            <option value="يورو">يورو (EUR)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رقم الحساب أو الـ IBAN</label>
+                    <input type="text" id="mbNum" placeholder="EG21000300000000012345678" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">ملاحظات / آخر نشاط</label>
+                    <input type="text" id="mbAct" placeholder="مثال: تحصيلات حجوزات الطيران" class="w-full bg-slate-50 border rounded-xl p-2.5">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ بيانات البنك وتحديث الرصيد</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 👥 Manage Client Modal (Add / Edit Client) -->
+    <div id="manageClientModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageClientTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-gold-600"></i>
+                    <span>إضافة / تعديل عميل</span>
+                </h3>
+                <button onclick="closeManageClientModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageClientForm" onsubmit="handleSaveClient(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="mcIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم العميل أو الشركة</label>
+                    <input type="text" id="mcName" required placeholder="مثال: شركة النصر، أ. محمد الشريف" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رقم الهاتف / الواتساب</label>
+                    <input type="text" id="mcPhone" required placeholder="010XXXXXXXX" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">إجمالي المبيعات</label>
+                        <input type="number" id="mcSales" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المسدد</label>
+                        <input type="number" id="mcPaid" required placeholder="15000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المتبقي (الآجل)</label>
+                        <input type="number" id="mcDue" required placeholder="10000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-amber-600">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ بيانات العميل</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🏢 Manage Supplier Modal (Add / Edit Supplier) -->
+    <div id="manageSupplierModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageSupplierTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-plane-departure text-gold-600"></i>
+                    <span>إضافة / تعديل مورد أو شركة طيران</span>
+                </h3>
+                <button onclick="closeManageSupplierModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageSupplierForm" onsubmit="handleSaveSupplier(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="msIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم المورد / شركة الطيران</label>
+                    <input type="text" id="msName" required placeholder="مثال: الخطوط السعودية، طيران أديل، فندق دار التوحيد" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع الخدمة السياحية</label>
+                    <input type="text" id="msType" required placeholder="مثال: خطوط طيران GDS، فنادق مكة والمدينة، تأشيرات ونقل" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
+                        <select id="msCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="ج.م">ج.م</option>
+                            <option value="ريال">ريال</option>
+                            <option value="دولار">دولار</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">إجمالي المعاملات</label>
+                        <input type="number" id="msTotal" required placeholder="80000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المستحق له</label>
+                        <input type="number" id="msDue" required placeholder="12000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-red-600">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ بيانات المورد</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ✏️ Edit Booking Modal -->
+    <div id="editBookingModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-gold-600"></i>
+                    <span>تعديل بيانات الحجز / الملف</span>
+                </h3>
+                <button onclick="closeEditBookingModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="editBookingForm" onsubmit="handleSaveEditBooking(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="ebId">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم العميل / الشركة</label>
+                    <input type="text" id="ebClient" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">رقم PNR / الملف</label>
+                        <input type="text" id="ebPnr" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المورد / شركة الطيران</label>
+                        <input type="text" id="ebSupplier" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">الخدمة السياحية</label>
+                    <input type="text" id="ebService" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر البيع</label>
+                        <input type="number" id="ebSell" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">التكلفة</label>
+                        <input type="number" id="ebCost" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
+                        <select id="ebCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="ج.م">ج.م</option>
+                            <option value="ريال">ريال</option>
+                            <option value="دولار">دولار</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ التعديلات وتحديث الأرباح</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ⚙️ FX Rates Modal -->
+    <div id="fxModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-coins text-gold-600"></i>
+                    <span>تعديل أسعار الصرف المعتمدة</span>
+                </h3>
+                <button onclick="closeFxModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form onsubmit="handleSaveFxRates(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">سعر الدولار الأمريكي (USD) مقابل الجنيه</label>
+                    <input type="number" id="inpFxUsd" step="0.01" value="49.50" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">سعر الريال السعودي (SAR) مقابل الجنيه</label>
+                    <input type="number" id="inpFxSar" step="0.01" value="13.20" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-900">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-2.5 rounded-xl transition cursor-pointer">
+                        تحديث الأسعار في كل شاشات السيستم
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -1159,6 +1410,8 @@
 
         // Render Tables
         function renderTables() {
+            recalculateTotals();
+
             // Dashboard Table
             const dBody = document.getElementById('dashBookingsTbody');
             dBody.innerHTML = state.bookings.map(b => `
@@ -1170,11 +1423,17 @@
                     <td class="p-3.5 ${state.user && state.user.role === 'ticketing' ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
                         ${state.user && state.user.role === 'ticketing' ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
                     </td>
-                    <td class="p-3.5 text-center">
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         ${b.eta.includes('معتمدة') 
                             ? `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
                             : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${b.eta}</button>`
                         }
+                        <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                     </td>
                 </tr>
             `).join('');
@@ -1192,27 +1451,39 @@
                     <td class="p-3.5 ${state.user && state.user.role === 'ticketing' ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
                         ${state.user && state.user.role === 'ticketing' ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
                     </td>
-                    <td class="p-3.5 text-center">
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         ${b.eta.includes('معتمدة') 
                             ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
                             : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${b.eta}</button>`
                         }
+                        <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                     </td>
                 </tr>
             `).join('');
 
             // Clients Table
             const cBody = document.getElementById('clientsTbody');
-            cBody.innerHTML = state.clients.map(c => `
+            cBody.innerHTML = state.clients.map((c, idx) => `
                 <tr class="hover:bg-slate-50 transition">
                     <td class="p-3.5 font-bold text-slate-900">${c.name}</td>
                     <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
                     <td class="p-3.5 font-semibold text-slate-800">${c.sales}</td>
                     <td class="p-3.5 text-emerald-600 font-semibold">${c.paid}</td>
                     <td class="p-3.5 text-amber-600 font-black">${c.due}</td>
-                    <td class="p-3.5 text-center">
-                        <button onclick="openVoucherModal('receipt', '${c.name}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-3 py-1.5 rounded-lg transition font-bold cursor-pointer">
-                            تحصيل سند قبض
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                        <button onclick="openVoucherModal('receipt', '${c.name}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                            تحصيل
+                        </button>
+                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات العميل">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف العميل">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
                 </tr>
@@ -1220,16 +1491,22 @@
 
             // Suppliers Table
             const sBody = document.getElementById('suppliersTbody');
-            sBody.innerHTML = state.suppliers.map(s => `
+            sBody.innerHTML = state.suppliers.map((s, idx) => `
                 <tr class="hover:bg-slate-50 transition">
                     <td class="p-3.5 font-bold text-slate-900">${s.name}</td>
                     <td class="p-3.5 text-slate-600">${s.type}</td>
                     <td class="p-3.5 font-bold text-slate-800">${s.cur}</td>
                     <td class="p-3.5 font-semibold text-slate-800">${s.total}</td>
                     <td class="p-3.5 text-red-600 font-black">${s.due}</td>
-                    <td class="p-3.5 text-center">
-                        <button onclick="openVoucherModal('payment', '${s.name}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-bold cursor-pointer">
-                            سداد دفعة
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                        <button onclick="openVoucherModal('payment', '${s.name}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                            سداد
+                        </button>
+                        <button onclick="openManageSupplierModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات المورد">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteSupplier(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف المورد">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
                 </tr>
@@ -1238,7 +1515,7 @@
             renderBankAccounts();
         }
 
-        // Render Live Bank Accounts
+        // Render Live Bank Accounts with Edit & Delete Controls
         function renderBankAccounts() {
             const container = document.getElementById('bankAccountsContainer');
             if (!container) return;
@@ -1252,9 +1529,19 @@
                             <span class="inline-block ${b.badge} text-[10px] font-black px-2 py-0.5 rounded-md mb-1">${b.type}</span>
                             <h4 class="font-extrabold text-sm text-white">${b.name}</h4>
                         </div>
-                        <span class="w-8 h-8 rounded-xl bg-white/10 text-gold-400 flex items-center justify-center text-sm shadow-inner">
-                            <i class="fa-solid ${b.icon}"></i>
-                        </span>
+                        <div class="flex items-center gap-1.5">
+                            ${!isTicketing ? `
+                                <button onclick="openManageBankModal('${b.id}')" class="text-slate-400 hover:text-gold-400 p-1 text-xs cursor-pointer" title="تعديل بيانات البنك">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="deleteBank('${b.id}')" class="text-slate-400 hover:text-red-400 p-1 text-xs cursor-pointer" title="حذف البنك">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            ` : ''}
+                            <span class="w-7 h-7 rounded-lg bg-white/10 text-gold-400 flex items-center justify-center text-xs shadow-inner">
+                                <i class="fa-solid ${b.icon}"></i>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="my-3">
@@ -1503,6 +1790,293 @@
             closeVoucherModal();
             document.getElementById('voucherForm').reset();
             alert(`✓ تم اعتماد سند ال${type === 'receipt' ? 'قبض' : 'صرف'} بمبلغ ${amt.toLocaleString()} ج.م للطرف: ${party} على حساب (${acc}) وتوليد الإيصال المالي بنجاح.`);
+        }
+
+        // ==========================================
+        // FULL CRUD & FLEXIBILITY LOGIC
+        // ==========================================
+
+        // Recalculate Totals from Live State
+        function recalculateTotals() {
+            let s = 0, p = 0;
+            state.bookings.forEach(b => {
+                if (b.currency === 'ج.م') {
+                    s += b.sell;
+                    p += b.profit;
+                }
+            });
+            state.totalSales = s;
+            state.totalProfit = p;
+
+            const salesEl = document.getElementById('dashTotalSales');
+            const profitEl = document.getElementById('dashTotalProfit');
+            if (salesEl) salesEl.innerText = s.toLocaleString() + ' ج.م';
+            if (profitEl && (!state.user || state.user.role !== 'ticketing')) {
+                profitEl.innerText = p.toLocaleString() + ' ج.م';
+            }
+
+            // Recalculate debts
+            let debts = 0;
+            state.clients.forEach(c => {
+                const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
+                debts += dueVal;
+            });
+            const debtsEl = document.getElementById('dashTotalDebts');
+            if (debtsEl) debtsEl.innerText = debts.toLocaleString() + ' ج.م';
+        }
+
+        // 🏦 BANK CRUD HANDLERS
+        function openManageBankModal(bankId = null) {
+            const form = document.getElementById('manageBankForm');
+            form.reset();
+            if (bankId) {
+                const b = state.bankAccounts.find(x => x.id === bankId);
+                if (b) {
+                    document.getElementById('manageBankTitle').innerText = 'تعديل بيانات الحساب البنكي';
+                    document.getElementById('mbId').value = b.id;
+                    document.getElementById('mbName').value = b.name;
+                    document.getElementById('mbType').value = b.type;
+                    document.getElementById('mbBal').value = b.bal;
+                    document.getElementById('mbCur').value = b.cur;
+                    document.getElementById('mbNum').value = b.num;
+                    document.getElementById('mbAct').value = b.activity;
+                }
+            } else {
+                document.getElementById('manageBankTitle').innerText = 'إضافة حساب بنكي جديد';
+                document.getElementById('mbId').value = '';
+            }
+            document.getElementById('manageBankModal').classList.remove('hidden');
+        }
+        function closeManageBankModal() {
+            document.getElementById('manageBankModal').classList.add('hidden');
+        }
+        function handleSaveBank(e) {
+            e.preventDefault();
+            const id = document.getElementById('mbId').value;
+            const name = document.getElementById('mbName').value.trim();
+            const type = document.getElementById('mbType').value.trim();
+            const bal = parseFloat(document.getElementById('mbBal').value) || 0;
+            const cur = document.getElementById('mbCur').value;
+            const num = document.getElementById('mbNum').value.trim() || 'EG' + Math.floor(10000000 + Math.random() * 90000000);
+            const act = document.getElementById('mbAct').value.trim() || 'حساب نشط ومعتمد';
+
+            if (id) {
+                const b = state.bankAccounts.find(x => x.id === id);
+                if (b) {
+                    b.name = name;
+                    b.type = type;
+                    b.bal = bal;
+                    b.cur = cur;
+                    b.num = num;
+                    b.activity = act;
+                }
+            } else {
+                const newId = 'bank_' + Date.now();
+                state.bankAccounts.push({
+                    id: newId,
+                    name: name,
+                    type: type,
+                    cur: cur,
+                    num: num,
+                    bal: bal,
+                    activity: act,
+                    icon: cur === 'ريال' ? 'fa-kaaba' : 'fa-building-columns',
+                    bg: 'from-slate-900 to-navy-950',
+                    border: 'border-gold-500/40',
+                    badge: 'bg-gold-500/20 text-gold-400'
+                });
+            }
+
+            renderBankAccounts();
+            closeManageBankModal();
+            alert(`✓ تم حفظ بيانات البنك (${name}) بنجاح ورصيده المعتمد: ${bal.toLocaleString()} ${cur}`);
+        }
+        function deleteBank(bankId) {
+            const b = state.bankAccounts.find(x => x.id === bankId);
+            if (!b) return;
+            if (confirm(`هل أنت متأكد من حذف حساب (${b.name})؟`)) {
+                state.bankAccounts = state.bankAccounts.filter(x => x.id !== bankId);
+                renderBankAccounts();
+            }
+        }
+
+        // 👥 CLIENT CRUD HANDLERS
+        function openManageClientModal(idx = null) {
+            const form = document.getElementById('manageClientForm');
+            form.reset();
+            if (idx !== null && state.clients[idx]) {
+                const c = state.clients[idx];
+                document.getElementById('manageClientTitle').innerText = 'تعديل بيانات العميل';
+                document.getElementById('mcIndex').value = idx;
+                document.getElementById('mcName').value = c.name;
+                document.getElementById('mcPhone').value = c.phone;
+                document.getElementById('mcSales').value = parseFloat(c.sales.replace(/[^0-9.-]/g, '')) || 0;
+                document.getElementById('mcPaid').value = parseFloat(c.paid.replace(/[^0-9.-]/g, '')) || 0;
+                document.getElementById('mcDue').value = parseFloat(c.due.replace(/[^0-9.-]/g, '')) || 0;
+            } else {
+                document.getElementById('manageClientTitle').innerText = 'إضافة عميل جديد';
+                document.getElementById('mcIndex').value = '';
+            }
+            document.getElementById('manageClientModal').classList.remove('hidden');
+        }
+        function closeManageClientModal() {
+            document.getElementById('manageClientModal').classList.add('hidden');
+        }
+        function handleSaveClient(e) {
+            e.preventDefault();
+            const idx = document.getElementById('mcIndex').value;
+            const name = document.getElementById('mcName').value.trim();
+            const phone = document.getElementById('mcPhone').value.trim();
+            const sales = parseFloat(document.getElementById('mcSales').value) || 0;
+            const paid = parseFloat(document.getElementById('mcPaid').value) || 0;
+            const due = parseFloat(document.getElementById('mcDue').value) || 0;
+
+            const clientObj = {
+                name: name,
+                phone: phone,
+                sales: sales.toLocaleString() + ' ج.م',
+                paid: paid.toLocaleString() + ' ج.م',
+                due: due.toLocaleString() + ' ج.م'
+            };
+
+            if (idx !== '') {
+                state.clients[parseInt(idx)] = clientObj;
+            } else {
+                state.clients.unshift(clientObj);
+            }
+
+            renderTables();
+            closeManageClientModal();
+            alert(`✓ تم حفظ بيانات العميل (${name}) بنجاح.`);
+        }
+        function deleteClient(idx) {
+            const c = state.clients[idx];
+            if (!c) return;
+            if (confirm(`هل أنت متأكد من حذف العميل (${c.name})؟`)) {
+                state.clients.splice(idx, 1);
+                renderTables();
+            }
+        }
+
+        // 🏢 SUPPLIER CRUD HANDLERS
+        function openManageSupplierModal(idx = null) {
+            const form = document.getElementById('manageSupplierForm');
+            form.reset();
+            if (idx !== null && state.suppliers[idx]) {
+                const s = state.suppliers[idx];
+                document.getElementById('manageSupplierTitle').innerText = 'تعديل بيانات المورد / شركة الطيران';
+                document.getElementById('msIndex').value = idx;
+                document.getElementById('msName').value = s.name;
+                document.getElementById('msType').value = s.type;
+                document.getElementById('msCur').value = s.cur;
+                document.getElementById('msTotal').value = parseFloat(s.total.replace(/[^0-9.-]/g, '')) || 0;
+                document.getElementById('msDue').value = parseFloat(s.due.replace(/[^0-9.-]/g, '')) || 0;
+            } else {
+                document.getElementById('manageSupplierTitle').innerText = 'إضافة مورد / شركة طيران جديدة';
+                document.getElementById('msIndex').value = '';
+            }
+            document.getElementById('manageSupplierModal').classList.remove('hidden');
+        }
+        function closeManageSupplierModal() {
+            document.getElementById('manageSupplierModal').classList.add('hidden');
+        }
+        function handleSaveSupplier(e) {
+            e.preventDefault();
+            const idx = document.getElementById('msIndex').value;
+            const name = document.getElementById('msName').value.trim();
+            const type = document.getElementById('msType').value.trim();
+            const cur = document.getElementById('msCur').value;
+            const total = parseFloat(document.getElementById('msTotal').value) || 0;
+            const due = parseFloat(document.getElementById('msDue').value) || 0;
+
+            const suppObj = {
+                name: name,
+                type: type,
+                cur: cur,
+                total: total.toLocaleString() + ' ' + cur,
+                due: due.toLocaleString() + ' ' + cur
+            };
+
+            if (idx !== '') {
+                state.suppliers[parseInt(idx)] = suppObj;
+            } else {
+                state.suppliers.unshift(suppObj);
+            }
+
+            renderTables();
+            closeManageSupplierModal();
+            alert(`✓ تم حفظ بيانات المورد (${name}) بنجاح.`);
+        }
+        function deleteSupplier(idx) {
+            const s = state.suppliers[idx];
+            if (!s) return;
+            if (confirm(`هل أنت متأكد من حذف المورد (${s.name})؟`)) {
+                state.suppliers.splice(idx, 1);
+                renderTables();
+            }
+        }
+
+        // ✏️ BOOKINGS CRUD (EDIT & DELETE)
+        function openEditBooking(bId) {
+            const b = state.bookings.find(x => x.id === bId);
+            if (!b) return;
+            document.getElementById('ebId').value = b.id;
+            document.getElementById('ebClient').value = b.client;
+            document.getElementById('ebPnr').value = b.pnr;
+            document.getElementById('ebSupplier').value = b.supplier;
+            document.getElementById('ebService').value = b.service;
+            document.getElementById('ebSell').value = b.sell;
+            document.getElementById('ebCost').value = b.cost;
+            document.getElementById('ebCur').value = b.currency;
+            document.getElementById('editBookingModal').classList.remove('hidden');
+        }
+        function closeEditBookingModal() {
+            document.getElementById('editBookingModal').classList.add('hidden');
+        }
+        function handleSaveEditBooking(e) {
+            e.preventDefault();
+            const bId = parseInt(document.getElementById('ebId').value);
+            const b = state.bookings.find(x => x.id === bId);
+            if (!b) return;
+
+            b.client = document.getElementById('ebClient').value.trim();
+            b.pnr = document.getElementById('ebPnr').value.trim();
+            b.supplier = document.getElementById('ebSupplier').value.trim();
+            b.service = document.getElementById('ebService').value.trim();
+            b.sell = parseFloat(document.getElementById('ebSell').value) || 0;
+            b.cost = parseFloat(document.getElementById('ebCost').value) || 0;
+            b.currency = document.getElementById('ebCur').value;
+            b.profit = b.sell - b.cost;
+
+            renderTables();
+            closeEditBookingModal();
+            alert(`✓ تم حفظ تعديلات الحجز ${b.pnr} واحتساب صافي الربح الجديد (+${b.profit.toLocaleString()} ${b.currency})`);
+        }
+        function deleteBooking(bId) {
+            const b = state.bookings.find(x => x.id === bId);
+            if (!b) return;
+            if (confirm(`هل أنت متأكد من حذف الحجز (${b.pnr} - ${b.client})؟`)) {
+                state.bookings = state.bookings.filter(x => x.id !== bId);
+                renderTables();
+            }
+        }
+
+        // ⚙️ FX RATES MODAL HANDLER
+        function openFxModal() {
+            document.getElementById('fxModal').classList.remove('hidden');
+        }
+        function closeFxModal() {
+            document.getElementById('fxModal').classList.add('hidden');
+        }
+        function handleSaveFxRates(e) {
+            e.preventDefault();
+            const usd = parseFloat(document.getElementById('inpFxUsd').value) || 49.50;
+            const sar = parseFloat(document.getElementById('inpFxSar').value) || 13.20;
+
+            document.getElementById('topbarUsd').innerText = usd.toFixed(2);
+            document.getElementById('topbarSar').innerText = sar.toFixed(2);
+            closeFxModal();
+            alert(`✓ تم تحديث أسعار الصرف بنجاح:\n- 1 USD = ${usd.toFixed(2)} ج.م\n- 1 SAR = ${sar.toFixed(2)} ج.م`);
         }
 
         // Initialize on DOM Ready
