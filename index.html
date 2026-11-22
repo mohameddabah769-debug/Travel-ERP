@@ -811,9 +811,16 @@
                     </div>
                     <span class="badge-amber text-[10px] font-bold px-2 py-0.5 rounded-full">32</span>
                 </button>
+                <button onclick="navTo('desksales')" id="nav-desksales" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-cash-register w-5 text-center text-sm"></i>
+                        <span data-i18n="desksales">مبيعات المكتب وجرد التذاكر</span>
+                    </div>
+                    <span class="badge-emerald text-[10px] font-bold px-2 py-0.5 rounded-full" id="sidebarStockBadge">5 بالعهدة</span>
+                </button>
                 <button onclick="navTo('clients')" id="nav-clients" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-users w-5 text-center text-sm"></i>
-                    <span data-i18n="clients">حسابات العملاء والأقساط</span>
+                    <span data-i18n="clients">حسابات الشركات والعملاء</span>
                 </button>
                 <button onclick="navTo('suppliers')" id="nav-suppliers" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-plane-departure w-5 text-center text-sm"></i>
@@ -1161,22 +1168,113 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 3. CLIENTS & DEBTS LEDGER                      -->
+            <!-- 2.5. DESK SALES & TICKET INVENTORY (POS)       -->
             <!-- ============================================== -->
-            <div id="view-clients" class="section-view space-y-6">
+            <div id="view-desksales" class="section-view space-y-6">
+                <!-- Desk Sales Metrics Strip -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="stat-box p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 mb-1" data-i18n="stat_stock_tickets">التذاكر بالعهدة (In Stock)</div>
+                        <div class="text-2xl font-black text-sky-600 flex items-center justify-between">
+                            <span id="statStockCount">3 تذاكر</span>
+                            <i class="fa-solid fa-ticket-simple text-sky-500/20 text-3xl"></i>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-1" id="statStockValue">القيمة الصافية: 25,900 ج.م</div>
+                    </div>
+                    <div class="stat-box p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 mb-1" data-i18n="stat_sold_tickets">التذاكر المصدرة والمباعة</div>
+                        <div class="text-2xl font-black text-emerald-600 flex items-center justify-between">
+                            <span id="statSoldCount">2 تذكرة</span>
+                            <i class="fa-solid fa-circle-check text-emerald-500/20 text-3xl"></i>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-1" id="statSoldSales">إجمالي المبيعات: 22,700 ج.م</div>
+                    </div>
+                    <div class="stat-box p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 mb-1" data-i18n="stat_desk_cash_credit">المبيعات نقدية / آجلة</div>
+                        <div class="text-lg font-black text-slate-800 dark:text-slate-100 flex items-center justify-between">
+                            <span id="statCashCreditRatio">نقدية: 65% | آجل: 35%</span>
+                            <i class="fa-solid fa-scale-balanced text-amber-500/20 text-3xl"></i>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-1">مطابقة مع الحساب الجاري والخزينة</div>
+                    </div>
+                    <div class="stat-box p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 mb-1" data-i18n="stat_desk_profit">أرباح مبيعات المكتب اللحظية</div>
+                        <div class="text-2xl font-black text-gold-600 flex items-center justify-between">
+                            <span id="statDeskProfit">+3,150 ج.م</span>
+                            <i class="fa-solid fa-sack-dollar text-gold-500/20 text-3xl"></i>
+                        </div>
+                        <div class="text-[10px] text-emerald-600 font-bold mt-1">متوسط هامش الربح 14.8%</div>
+                    </div>
+                </div>
+
+                <!-- Main Desk Sales Card -->
                 <div class="bg-white rounded-2xl shadow-xs border border-slate-200 p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 mb-5 gap-3">
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-users text-gold-600"></i>
-                                <span data-i18n="clients_view_title">حسابات العملاء، الأقساط، والمديونيات الآجلة</span>
+                                <i class="fa-solid fa-cash-register text-gold-600"></i>
+                                <span data-i18n="desksales_title">دورة مبيعات المكتب وجرد عهدة التذاكر (Desk POS & Inventory)</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="clients_view_desc">متابعة مديونيات الشركات والعملاء الأفراد وجدولة الأقساط الشهرية</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="desksales_desc">بيع التذاكر المباشر النقدي والآجل وخصمها اللحظي من العهدة مع التسوية الخزنية والقيد بالحساب الجاري</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="openManageClientModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                            <button onclick="openAddTicketInventoryModal()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-plus-circle"></i>
+                                <span data-i18n="btn_add_to_stock">استلام عهدة تذاكر +</span>
+                            </button>
+                            <button onclick="openDeskSaleModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition shadow-md flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span data-i18n="btn_new_desk_sale">بيع تذكرة (كاش / آجل)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[850px]">
+                            <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
+                                <tr>
+                                    <th class="p-3.5" data-i18n="th_ticket_number">رقم التذكرة</th>
+                                    <th class="p-3.5" data-i18n="th_pnr">PNR</th>
+                                    <th class="p-3.5" data-i18n="th_routing">خط السير والرحلة</th>
+                                    <th class="p-3.5" data-i18n="th_carrier">الناقل / المورد</th>
+                                    <th class="p-3.5" data-i18n="th_net_cost">التكلفة الصافية</th>
+                                    <th class="p-3.5" data-i18n="th_sell_price">سعر البيع</th>
+                                    <th class="p-3.5" data-i18n="th_profit">الربح</th>
+                                    <th class="p-3.5" data-i18n="th_passenger">المسافر / العميل</th>
+                                    <th class="p-3.5 text-center" data-i18n="th_stock_status">حالة العهدة</th>
+                                    <th class="p-3.5 text-center" data-i18n="th_actions">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketInventoryTbody" class="divide-y divide-slate-100 bg-white">
+                                <!-- Populated dynamically by renderTicketInventoryTable() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 3. COMPANIES & CLIENTS (B2B / B2C LEDGER)      -->
+            <!-- ============================================== -->
+            <div id="view-clients" class="section-view space-y-6">
+                <div class="bg-white rounded-2xl shadow-xs border border-slate-200 p-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 mb-4 gap-3">
+                        <div>
+                            <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-users text-gold-600"></i>
+                                <span data-i18n="clients_view_title">حسابات الشركات، العملاء، والمديونيات الآجلة</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="clients_view_desc">فصل دقيق بين حسابات الشركات (B2B) والعملاء الأفراد (B2C) مع كشوف الحسابات الجارية وسقوف الائتمان</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openManageCompanyModal()" class="bg-slate-900 hover:bg-slate-800 text-gold-400 font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-building-circle-check"></i>
+                                <span data-i18n="btn_new_company">إضافة شركة B2B +</span>
+                            </button>
+                            <button onclick="openManageRetailCustomerModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-user-plus"></i>
-                                <span data-i18n="btn_new_client">إضافة عميل جديد</span>
+                                <span data-i18n="btn_new_client">إضافة عميل فردي +</span>
                             </button>
                             <button onclick="openVoucherModal('receipt')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-receipt"></i>
@@ -1185,20 +1283,63 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto">
+                    <!-- Sub-tabs: Companies B2B vs Retail Customers B2C vs Suppliers Overview -->
+                    <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 mb-5 text-xs font-extrabold flex-wrap">
+                        <button type="button" onclick="switchClientTab('companies')" id="btnTabCompanies" class="clienttab-btn px-4 py-2 rounded-xl bg-gold-600 text-white shadow-xs transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-building"></i>
+                            <span data-i18n="tab_b2b_companies">الشركات والجهات المتعاقدة (B2B)</span>
+                            <span class="px-2 py-0.5 rounded-full bg-black/20 text-[10px]" id="countCompanies">3</span>
+                        </button>
+                        <button type="button" onclick="switchClientTab('retail')" id="btnTabRetail" class="clienttab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-user"></i>
+                            <span data-i18n="tab_b2c_retail">العملاء الأفراد والمسافرين (B2C)</span>
+                            <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px]" id="countRetail">3</span>
+                        </button>
+                        <button type="button" onclick="navTo('suppliers')" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer flex items-center gap-2 mr-auto">
+                            <i class="fa-solid fa-plane-departure text-gold-600"></i>
+                            <span data-i18n="tab_suppliers_link">حسابات شركات الطيران والموردين ↗</span>
+                        </button>
+                    </div>
+
+                    <!-- 1. B2B Companies Table Container -->
+                    <div id="containerCompanies" class="overflow-x-auto">
                         <table class="w-full text-right text-xs whitespace-nowrap min-w-[850px]">
                             <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_client">العميل / الشركة</th>
-                                    <th class="p-3.5" data-i18n="th_phone">الهاتف</th>
-                                    <th class="p-3.5" data-i18n="th_sales">إجمالي المبيعات</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_company_code">كود الشركة</th>
+                                    <th class="p-3.5" data-i18n="th_company_name">اسم الشركة / الوكيل</th>
+                                    <th class="p-3.5" data-i18n="th_business_type">نوع الحساب</th>
+                                    <th class="p-3.5" data-i18n="th_credit_limit">سقف الائتمان (Credit Limit)</th>
+                                    <th class="p-3.5" data-i18n="th_sales">إجمالي المسحوبات</th>
                                     <th class="p-3.5" data-i18n="th_paid">المسدد</th>
-                                    <th class="p-3.5" data-i18n="th_due">المتبقي (الآجل)</th>
+                                    <th class="p-3.5" data-i18n="th_due">المديونية الحالية</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_action">الإجراءات المحاسبية</th>
+                                </tr>
+                            </thead>
+                            <tbody id="companiesTbody" class="divide-y divide-slate-100">
+                                <!-- Populated dynamically by renderCompaniesTable() -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 2. B2C Retail Customers Table Container -->
+                    <div id="containerRetail" class="overflow-x-auto hidden">
+                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[850px]">
+                            <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
+                                <tr>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_customer_code">كود العميل</th>
+                                    <th class="p-3.5" data-i18n="th_customer_name">اسم المسافر / العميل</th>
+                                    <th class="p-3.5" data-i18n="th_phone">الهاتف</th>
+                                    <th class="p-3.5" data-i18n="th_passport">رقم الجواز / القومي</th>
+                                    <th class="p-3.5" data-i18n="th_trip_type">الرحلة والخدمة</th>
+                                    <th class="p-3.5" data-i18n="th_sales">الإجمالي</th>
+                                    <th class="p-3.5" data-i18n="th_paid">المسدد</th>
+                                    <th class="p-3.5" data-i18n="th_due">المتبقي (أقساط)</th>
                                     <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_action">الإجراء المالي</th>
                                 </tr>
                             </thead>
-                            <tbody id="clientsTbody" class="divide-y divide-slate-100">
-                                <!-- Populated by JS -->
+                            <tbody id="retailTbody" class="divide-y divide-slate-100">
+                                <!-- Populated dynamically by renderRetailCustomersTable() -->
                             </tbody>
                         </table>
                     </div>
@@ -3577,6 +3718,417 @@
         </div>
     </div>
 
+    <!-- 🏢 Current Account Ledger Modal (Multi-Currency Statement) -->
+    <div id="currentAccountLedgerModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-4xl w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-start border-b border-slate-100 dark:border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center justify-center text-xl shadow-xs">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-black text-base text-slate-900 dark:text-slate-100" id="ledgerPartyName">كشف الحساب الجاري</h3>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold" id="ledgerPartyCode">CORP-101</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gold-100 text-gold-800" id="ledgerPartyTypeBadge">حساب شركة B2B</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">سجل الحركات المالية المتبادلة كـ مدين ودائن بالعملة الأصلية والجنيه المصري (Double-Entry Multi-Currency Ledger)</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="printCurrentAccountLedger()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-print text-gold-500"></i>
+                        <span>طباعة الكشف</span>
+                    </button>
+                    <button onclick="exportLedgerToExcel()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-file-excel text-emerald-500"></i>
+                        <span>تصدير إكسيل</span>
+                    </button>
+                    <button onclick="closeCurrentAccountLedgerModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer p-1.5 text-lg">✕</button>
+                </div>
+            </div>
+
+            <!-- Ledger Summary Badges Strip -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-500 mb-0.5">الرصيد الحالي (صافي المديونية)</div>
+                    <div class="text-base font-black" id="ledgerRunningBalance">0 ج.م</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-500 mb-0.5">سقف الائتمان (Credit Limit)</div>
+                    <div class="text-base font-black text-sky-600" id="ledgerCreditLimit">100,000 ج.م</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-500 mb-0.5">إجمالي المسحوبات (مدين)</div>
+                    <div class="text-base font-black text-amber-600" id="ledgerTotalDebit">0 ج.م</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-500 mb-0.5">إجمالي المسدد (دائن)</div>
+                    <div class="text-base font-black text-emerald-600" id="ledgerTotalCredit">0 ج.م</div>
+                </div>
+            </div>
+
+            <!-- Add Ledger Entry Quick Bar -->
+            <div class="bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-2xl p-3 mb-4">
+                <form onsubmit="handleSaveLedgerEntry(event)" class="grid grid-cols-2 sm:grid-cols-6 gap-2 text-xs">
+                    <input type="hidden" id="ledFormPartyType">
+                    <input type="hidden" id="ledFormPartyId">
+                    <div>
+                        <label class="block text-[10px] font-bold mb-1">نوع المستند</label>
+                        <select id="ledDocType" class="w-full bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                            <option value="فاتورة مبيعات تذاكر">فاتورة مبيعات تذاكر</option>
+                            <option value="سند قبض وتحصيل">سند قبض وتحصيل</option>
+                            <option value="سند صرف لمورد">سند صرف لمورد</option>
+                            <option value="تسوية رصيد وعمولة">تسوية رصيد وعمولة</option>
+                            <option value="استرداد تذكرة ملغاة">استرداد تذكرة ملغاة</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold mb-1">رقم المستند / البيان</label>
+                        <input type="text" id="ledDocRef" required placeholder="مثال: INV-1090" class="w-full bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold mb-1">العملة الأصلية</label>
+                        <select id="ledCur" onchange="onLedgerCurrencyChange()" class="w-full bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold text-center">
+                            <option value="ج.م" data-rate="1.0">ج.م (EGP)</option>
+                            <option value="ريال" data-rate="13.20">ريال (SAR)</option>
+                            <option value="دولار" data-rate="49.50">دولار (USD)</option>
+                            <option value="دينار" data-rate="162.0">دينار (KWD)</option>
+                            <option value="يورو" data-rate="52.80">يورو (EUR)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold mb-1">سعر الصرف</label>
+                        <input type="number" step="0.0001" id="ledFxRate" value="1.0" class="w-full bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold text-center">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold mb-1">المبلغ (مدين/دائن)</label>
+                        <div class="flex gap-1">
+                            <input type="number" step="0.01" id="ledAmount" required placeholder="المبلغ" class="w-full bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                            <select id="ledDebitCredit" class="bg-white dark:bg-slate-800 border rounded-xl p-2 font-bold text-xs">
+                                <option value="debit">مدين (+)</option>
+                                <option value="credit">دائن (-)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold p-2 rounded-xl transition shadow-xs cursor-pointer flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>تسجيل القيد</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Ledger Table (Scrollable) -->
+            <div class="overflow-y-auto flex-1 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                <table class="w-full text-right text-xs whitespace-nowrap min-w-[750px]">
+                    <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[10px] sticky top-0 z-10">
+                        <tr>
+                            <th class="p-3">التاريخ والوقت</th>
+                            <th class="p-3">نوع ورقم المستند</th>
+                            <th class="p-3">البيان والملاحظات</th>
+                            <th class="p-3 text-center">العملة وسعر الصرف</th>
+                            <th class="p-3 text-amber-400">مدين (Debit)</th>
+                            <th class="p-3 text-emerald-400">دائن (Credit)</th>
+                            <th class="p-3 text-slate-300">القيمة بالجنيه (EGP)</th>
+                            <th class="p-3 text-center">الرصيد التراكمي</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ledgerModalTbody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                        <!-- Populated dynamically by renderLedgerModalRows() -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🛒 Desk Sales POS Modal (Fast Checkout & Inventory Deduction) -->
+    <div id="deskSaleModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gold-50 dark:bg-gold-950/30 text-gold-600 border border-gold-300 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-sm text-slate-900 dark:text-slate-100">فاتورة بيع مكتب فوري (Desk Sale POS)</h3>
+                        <p class="text-[10px] text-slate-500">بيع تذكرة وخصمها اللحظي من العهدة مع التسوية المالية</p>
+                    </div>
+                </div>
+                <button onclick="closeDeskSaleModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+
+            <form onsubmit="handleExecuteDeskSale(event)" class="space-y-3.5 text-xs">
+                <!-- 1. Select Ticket from Inventory -->
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اختر التذكرة من عهدة المكتب المتاحة (In Stock):</label>
+                    <select id="dsTicketSelect" onchange="onDeskSaleTicketSelect()" required class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                        <!-- Populated by populateDeskSaleTickets() -->
+                    </select>
+                </div>
+
+                <!-- Ticket Details Auto-populated -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 grid grid-cols-3 gap-2 text-[11px]">
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">PNR / الرحلة:</span>
+                        <strong id="dsPreviewPnr" class="text-slate-900 dark:text-slate-100 font-mono">-</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">الناقل / المورد:</span>
+                        <strong id="dsPreviewCarrier" class="text-slate-900 dark:text-slate-100">-</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">التكلفة الصافية:</span>
+                        <strong id="dsPreviewNetCost" class="text-red-500 font-mono">0 ج.م</strong>
+                    </div>
+                </div>
+
+                <!-- 2. Customer Type & Selection -->
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع العميل:</label>
+                        <select id="dsCustomerType" onchange="onDeskSaleCustomerTypeChange()" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                            <option value="corporate">شركة متعاقدة (B2B)</option>
+                            <option value="retail">عميل فردي (B2C)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل / الشركة:</label>
+                        <select id="dsCustomerSelect" onchange="onDeskSaleCustomerSelect()" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Selling Price & Payment Method -->
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع للعميل (ج.م):</label>
+                        <input type="number" id="dsSellPrice" required oninput="calculateDeskSaleMargin()" placeholder="مثال: 18500" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold text-emerald-600 text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">صافي ربح العملية:</label>
+                        <input type="text" id="dsProfitMargin" readonly class="w-full bg-slate-100 dark:bg-slate-800/40 border rounded-xl p-2 font-black text-gold-600 text-center" value="+0 ج.م">
+                    </div>
+                </div>
+
+                <!-- 4. Sales Method (Cash vs Credit) -->
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">طريقة السداد والدورة المستندية:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="dsPaymentMethod" value="cash" checked onchange="onDeskSaleMethodToggle()">
+                            <span class="font-bold">نقدي كاش (توريد خزينة فوري)</span>
+                        </label>
+                        <label class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="dsPaymentMethod" value="credit" onchange="onDeskSaleMethodToggle()">
+                            <span class="font-bold">آجل / قيد بالحساب الجاري</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Cash Drawer Choice (if cash) -->
+                <div id="dsCashDrawerWrap">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخزينة المودع بها الكاش:</label>
+                    <select id="dsDrawerSelect" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                        <option value="الخزينة النقدية الرئيسية (الكاش)">الخزينة النقدية الرئيسية (الكاش)</option>
+                        <option value="حساب إنستاباي السريع (InstaPay Business)">حساب إنستاباي السريع (InstaPay Business)</option>
+                        <option value="محافظ فودافون كاش التجارية للتحصيل">محافظ فودافون كاش التجارية للتحصيل</option>
+                    </select>
+                </div>
+
+                <!-- Credit Warning Info (if credit) -->
+                <div id="dsCreditWarningWrap" class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 text-amber-800 dark:text-amber-200 text-[11px] hidden">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+                    سيتم ترحيل المبلغ كـ <strong>قيد مدين بالحساب الجاري</strong> للشركة مع فحص سقف الائتمان تلقائياً.
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>اعتماد الفاتورة وخصم التذكرة من العهدة</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 📦 Add Ticket to Inventory Modal -->
+    <div id="addTicketInventoryModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+                <h3 class="font-black text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-ticket-simple text-gold-600"></i>
+                    <span>إضافة تذاكر لعهدة المكتب وجرد المخزون</span>
+                </h3>
+                <button onclick="closeAddTicketInventoryModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form onsubmit="handleSaveTicketInventory(event)" class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم التذكرة الإلكترونية:</label>
+                        <input type="text" id="invTicketNum" required placeholder="077-44882299" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold font-mono">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود PNR:</label>
+                        <input type="text" id="invPnr" required placeholder="MS-8890" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold font-mono uppercase">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">خط السير والرحلة:</label>
+                    <input type="text" id="invRouting" required placeholder="القاهرة - جدة - القاهرة (CAI-JED-CAI)" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">شركة الطيران / المورد:</label>
+                        <select id="invSupplier" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                            <option value="مصر للطيران (EgyptAir)">مصر للطيران (EgyptAir)</option>
+                            <option value="الخطوط السعودية (Saudia)">الخطوط السعودية (Saudia)</option>
+                            <option value="فلاي دبي / الجزيرة">فلاي دبي / الجزيرة</option>
+                            <option value="شركة دار الإيمان للفنادق (مكة)">شركة دار الإيمان للفنادق (مكة)</option>
+                            <option value="شركة ترافيل وان (دبي)">شركة ترافيل وان (دبي)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">عملة التذكرة:</label>
+                        <select id="invCur" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold text-center">
+                            <option value="ج.م">ج.م (EGP)</option>
+                            <option value="ريال">ريال (SAR)</option>
+                            <option value="دولار">دولار (USD)</option>
+                            <option value="دينار">دينار (KWD)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التكلفة الصافية من المصدر:</label>
+                        <input type="number" id="invNetCost" required placeholder="14000" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold text-red-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع المقترح:</label>
+                        <input type="number" id="invSellPrice" required placeholder="16500" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold text-emerald-600">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>إضافة التذكرة للعهدة فورياً</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🏢 Manage B2B Company Modal -->
+    <div id="manageCompanyModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+                <h3 class="font-black text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-building-circle-check text-gold-600"></i>
+                    <span id="manageCompanyTitle">إضافة شركة B2B / وكيل فرعي</span>
+                </h3>
+                <button onclick="closeManageCompanyModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form onsubmit="handleSaveCompany(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="compIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الشركة / الوكيل:</label>
+                    <input type="text" id="compName" required placeholder="مثال: شركة النيل الدولية للتجارة" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود الشركة:</label>
+                        <input type="text" id="compCode" required placeholder="CORP-104" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold font-mono">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الحساب:</label>
+                        <select id="compType" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                            <option value="حساب شركة (Corporate)">حساب شركة (Corporate)</option>
+                            <option value="وكيل فرعي B2B">وكيل فرعي B2B</option>
+                            <option value="جهة حكومية / نقابة">جهة حكومية / نقابة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف / التواصل:</label>
+                        <input type="text" id="compPhone" required placeholder="01012345678" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سقف الائتمان المسموح (ج.م):</label>
+                        <input type="number" id="compCreditLimit" required placeholder="80000" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold text-sky-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">فترة السداد بالأيام:</label>
+                    <input type="number" id="compTermsDays" required value="30" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold text-center">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>حفظ بيانات الشركة واعتماد الحساب الجاري</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 👤 Manage Retail Customer Modal -->
+    <div id="manageRetailCustomerModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+                <h3 class="font-black text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-gold-600"></i>
+                    <span id="manageRetailTitle">إضافة عميل فردي / مسافر</span>
+                </h3>
+                <button onclick="closeManageRetailCustomerModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form onsubmit="handleSaveRetailCustomer(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="custIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل / المسافر الرباعي:</label>
+                    <input type="text" id="custName" required placeholder="مثال: محمد السيد البدوي" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف:</label>
+                        <input type="text" id="custPhone" required placeholder="01234567890" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الجواز / القومي:</label>
+                        <input type="text" id="custPassport" placeholder="A12984576" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold uppercase font-mono">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الرحلة والخدمة:</label>
+                    <input type="text" id="custTripType" required placeholder="برنامج عمرة رجب / تذكرة طيران دبي" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">إجمالي الحساب:</label>
+                        <input type="number" id="custTotal" required placeholder="25000" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المسدد:</label>
+                        <input type="number" id="custPaid" required placeholder="15000" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold text-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">تاريخ القسط:</label>
+                        <input type="date" id="custDueDate" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-2 font-bold">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>حفظ بيانات العميل وجدولة الأقساط</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -3591,8 +4143,16 @@
         }
 
         // State Store
+        let savedUser = safeJsonParse('sanad_enterprise_user', null);
+        if (savedUser && (savedUser.name === 'أحمد شريف' || savedUser.role === 'admin')) {
+            savedUser.name = 'حسن يوسف الناضر';
+            savedUser.roleLabel = 'مدير عام وشريك إداري';
+            savedUser.role = 'admin';
+            savedUser.avatar = '👑';
+            try { localStorage.setItem('sanad_enterprise_user', JSON.stringify(savedUser)); } catch(e){}
+        }
         let state = {
-            user: safeJsonParse('sanad_enterprise_user', null),
+            user: savedUser,
             totalSales: 245000,
             totalProfit: 42500,
             bookings: [
@@ -3651,6 +4211,249 @@
                 { name: 'شركة الفارس للاستيراد', phone: '01599887766', sales: '42,000 ج.م', paid: '33,800 ج.م', due: '8,200 ج.م' },
                 { name: 'شركة النور للتجارة', phone: '01012345678', sales: '18,500 ج.م', paid: '18,500 ج.م', due: '0 ج.م' }
             ],
+            companies: safeJsonParse('alharamain_companies', [
+                {
+                    id: 'comp_1',
+                    code: 'CORP-101',
+                    name: 'مجموعة الأهرام تورز للسياحة',
+                    type: 'وكيل فرعي B2B',
+                    phone: '01187654321',
+                    creditLimit: 100000,
+                    termsDays: 30,
+                    currency: 'ج.م',
+                    sales: 50000,
+                    paid: 35000,
+                    due: 15000
+                },
+                {
+                    id: 'comp_2',
+                    code: 'CORP-102',
+                    name: 'شركة الفارس للاستيراد والتصدير',
+                    type: 'حساب شركة (Corporate)',
+                    phone: '01599887766',
+                    creditLimit: 80000,
+                    termsDays: 45,
+                    currency: 'ج.م',
+                    sales: 42000,
+                    paid: 33800,
+                    due: 8200
+                },
+                {
+                    id: 'comp_3',
+                    code: 'CORP-103',
+                    name: 'شركة النور للتجارة والمقاولات',
+                    type: 'حساب شركة (Corporate)',
+                    phone: '01012345678',
+                    creditLimit: 50000,
+                    termsDays: 15,
+                    currency: 'ج.م',
+                    sales: 18500,
+                    paid: 18500,
+                    due: 0
+                }
+            ]),
+            retailCustomers: safeJsonParse('alharamain_retail_customers', [
+                {
+                    id: 'cust_1',
+                    code: 'CUST-5001',
+                    name: 'الحاج عبد الله السعيد',
+                    phone: '01244556677',
+                    passport: 'A12894562 / 27508120102589',
+                    tripType: 'برنامج عمرة رجب VIP - 14 يوم',
+                    total: 28000,
+                    paid: 20000,
+                    due: 8000,
+                    dueDate: '2026-12-05'
+                },
+                {
+                    id: 'cust_2',
+                    code: 'CUST-5002',
+                    name: 'د. محمود حسن خليل',
+                    phone: '01099884433',
+                    passport: 'A24519873 / 28203150101478',
+                    tripType: 'تذكرة طيران دبي ذهاب وعودة',
+                    total: 18500,
+                    paid: 18500,
+                    due: 0,
+                    dueDate: '-'
+                },
+                {
+                    id: 'cust_3',
+                    code: 'CUST-5003',
+                    name: 'أ. سارة المنشاوي',
+                    phone: '01122334455',
+                    passport: 'A31256987 / 29011220109865',
+                    tripType: 'فندق ريكسوس شرم الشيخ + ليموزين',
+                    total: 24000,
+                    paid: 14000,
+                    due: 10000,
+                    dueDate: '2026-11-30'
+                }
+            ]),
+            currentAccountLedger: safeJsonParse('alharamain_account_ledger', [
+                {
+                    id: 'led_1',
+                    partyType: 'COMPANY',
+                    partyId: 'comp_1',
+                    partyName: 'مجموعة الأهرام تورز للسياحة',
+                    date: '2026-11-18 10:30',
+                    docType: 'فاتورة تذاكر مبيعات B2B',
+                    docRef: 'INV-B2B-1049',
+                    cur: 'ج.م',
+                    fxRate: 1.0,
+                    debitOriginal: 35000,
+                    creditOriginal: 0,
+                    debitBase: 35000,
+                    creditBase: 0,
+                    balanceAfterBase: 35000,
+                    notes: 'حجز 3 تذاكر طيران جدة والمدينة'
+                },
+                {
+                    id: 'led_2',
+                    partyType: 'COMPANY',
+                    partyId: 'comp_1',
+                    partyName: 'مجموعة الأهرام تورز للسياحة',
+                    date: '2026-11-20 14:15',
+                    docType: 'سند تحصيل نقدية وبنك',
+                    docRef: 'REC-2026-088',
+                    cur: 'ج.م',
+                    fxRate: 1.0,
+                    debitOriginal: 0,
+                    creditOriginal: 20000,
+                    debitBase: 0,
+                    creditBase: 20000,
+                    balanceAfterBase: 15000,
+                    notes: 'تحويل بنكي عبر البنك الأهلي المصري'
+                },
+                {
+                    id: 'led_3',
+                    partyType: 'COMPANY',
+                    partyId: 'comp_2',
+                    partyName: 'شركة الفارس للاستيراد والتصدير',
+                    date: '2026-11-15 11:00',
+                    docType: 'فاتورة تذاكر وفنادق دبي',
+                    docRef: 'INV-B2B-1038',
+                    cur: 'دولار',
+                    fxRate: 49.50,
+                    debitOriginal: 848.48,
+                    creditOriginal: 0,
+                    debitBase: 42000,
+                    creditBase: 0,
+                    balanceAfterBase: 42000,
+                    notes: 'بكج مؤتمر دبي التجاري'
+                },
+                {
+                    id: 'led_4',
+                    partyType: 'COMPANY',
+                    partyId: 'comp_2',
+                    partyName: 'شركة الفارس للاستيراد والتصدير',
+                    date: '2026-11-19 16:20',
+                    docType: 'سند سداد دفعة جارية',
+                    docRef: 'REC-2026-079',
+                    cur: 'ج.م',
+                    fxRate: 1.0,
+                    debitOriginal: 0,
+                    creditOriginal: 33800,
+                    debitBase: 0,
+                    creditBase: 33800,
+                    balanceAfterBase: 8200,
+                    notes: 'سداد بشيك بنك CIB معتمد'
+                },
+                {
+                    id: 'led_5',
+                    partyType: 'SUPPLIER',
+                    partyId: 'sup_1',
+                    partyName: 'مصر للطيران (EgyptAir)',
+                    date: '2026-11-21 09:10',
+                    docType: 'مطالبة تذاكر وإصدار GDS',
+                    docRef: 'GDS-MS-8812',
+                    cur: 'ج.م',
+                    fxRate: 1.0,
+                    debitOriginal: 0,
+                    creditOriginal: 18500,
+                    debitBase: 0,
+                    creditBase: 18500,
+                    balanceAfterBase: -18500,
+                    notes: 'تسوية حجز PNR: MS-9014'
+                }
+            ]),
+            ticketInventory: safeJsonParse('alharamain_ticket_inventory', [
+                {
+                    id: 'inv_1',
+                    ticketNumber: '077-2489110021',
+                    pnr: 'MS-9014',
+                    routing: 'القاهرة - دبي - القاهرة (CAI-DXB-CAI)',
+                    airline: 'مصر للطيران (EgyptAir)',
+                    supplier: 'مصر للطيران (EgyptAir)',
+                    netCost: 16000,
+                    sellPrice: 18500,
+                    cur: 'ج.م',
+                    passenger: 'شركة النور للتجارة (م. أحمد)',
+                    status: 'Issued_Sold',
+                    statusLabel: 'مباعة ومصدرة',
+                    date: '2026-11-22'
+                },
+                {
+                    id: 'inv_2',
+                    ticketNumber: '065-9921443311',
+                    pnr: 'SV-4412',
+                    routing: 'القاهرة - جدة - القاهرة (CAI-JED-CAI)',
+                    airline: 'الخطوط السعودية (Saudia)',
+                    supplier: 'الخطوط السعودية (Saudia)',
+                    netCost: 3550,
+                    sellPrice: 4200,
+                    cur: 'ريال',
+                    passenger: 'الحاج عبد الله السعيد',
+                    status: 'Issued_Sold',
+                    statusLabel: 'مباعة ومصدرة',
+                    date: '2026-11-22'
+                },
+                {
+                    id: 'inv_3',
+                    ticketNumber: '077-3311884422',
+                    pnr: 'MS-8850',
+                    routing: 'القاهرة - الرياض (CAI-RUH)',
+                    airline: 'مصر للطيران (EgyptAir)',
+                    supplier: 'مصر للطيران (EgyptAir)',
+                    netCost: 11200,
+                    sellPrice: 13500,
+                    cur: 'ج.م',
+                    passenger: '-',
+                    status: 'In_Stock',
+                    statusLabel: 'متاحة بالعهدة (In Stock)',
+                    date: '2026-11-22'
+                },
+                {
+                    id: 'inv_4',
+                    ticketNumber: '114-8844221100',
+                    pnr: 'FZ-1092',
+                    routing: 'القاهرة - الكويت (CAI-KWI)',
+                    airline: 'فلاي دبي / الجزيرة',
+                    supplier: 'شركة ترافيل وان (دبي)',
+                    netCost: 190,
+                    sellPrice: 240,
+                    cur: 'دينار',
+                    passenger: '-',
+                    status: 'In_Stock',
+                    statusLabel: 'متاحة بالعهدة (In Stock)',
+                    date: '2026-11-22'
+                },
+                {
+                    id: 'inv_5',
+                    ticketNumber: '077-5544332211',
+                    pnr: 'MS-7714',
+                    routing: 'القاهرة - إسطنبول (CAI-IST)',
+                    airline: 'مصر للطيران (EgyptAir)',
+                    supplier: 'مصر للطيران (EgyptAir)',
+                    netCost: 14500,
+                    sellPrice: 17200,
+                    cur: 'ج.م',
+                    passenger: '-',
+                    status: 'In_Stock',
+                    statusLabel: 'متاحة بالعهدة (In Stock)',
+                    date: '2026-11-22'
+                }
+            ]),
             suppliers: [
                 { name: 'مصر للطيران (EgyptAir)', type: 'خطوط طيران GDS', cur: 'ج.م', total: '142,000 ج.م', due: '18,500 ج.م' },
                 { name: 'شركة دار الإيمان للفنادق (مكة)', type: 'فنادق عمرة وحج', cur: 'ريال', total: '38,000 ريال', due: '4,500 ريال' },
@@ -3992,6 +4795,9 @@
             recalculateTotals();
             renderBookingsTables();
             renderClientsTable();
+            renderCompaniesTable();
+            renderRetailCustomersTable();
+            renderDeskSales();
             renderSuppliersTable();
             renderBankAccounts();
             renderDefinitionsTables();
@@ -4262,6 +5068,12 @@
         }
 
         function loginAsRole(name, roleLabel, roleType, avatar) {
+            const adminStaff = (state.staff && state.staff.find(s => s.role === 'admin')) || (state.staff && state.staff[0]);
+            if ((name === 'أحمد شريف' || roleType === 'admin') && adminStaff) {
+                name = adminStaff.name;
+                roleLabel = adminStaff.roleLabel;
+                avatar = adminStaff.avatar || '👑';
+            }
             state.user = { name, roleLabel, role: roleType, avatar: avatar || '👑' };
             try {
                 localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
@@ -5161,38 +5973,887 @@
             }
         });
 
-        // Table renderer helpers for Clients & Suppliers live search
-        function renderClientsTable(customList = null) {
-            const cBody = document.getElementById('clientsTbody');
-            if (!cBody) return;
-            const list = customList !== null ? customList : state.clients;
+        // ==========================================
+        // 🏢 COMPANIES B2B & RETAIL B2C SEGREGATION
+        // ==========================================
+        let currentClientTab = 'companies';
+        function switchClientTab(tabName) {
+            currentClientTab = tabName;
+            const btnComp = document.getElementById('btnTabCompanies');
+            const btnRet = document.getElementById('btnTabRetail');
+            const boxComp = document.getElementById('containerCompanies');
+            const boxRet = document.getElementById('containerRetail');
+
+            if (tabName === 'companies') {
+                if (btnComp) {
+                    btnComp.className = 'clienttab-btn px-4 py-2 rounded-xl bg-gold-600 text-white shadow-xs transition cursor-pointer flex items-center gap-2';
+                }
+                if (btnRet) {
+                    btnRet.className = 'clienttab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer flex items-center gap-2';
+                }
+                if (boxComp) boxComp.classList.remove('hidden');
+                if (boxRet) boxRet.classList.add('hidden');
+            } else {
+                if (btnComp) {
+                    btnComp.className = 'clienttab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer flex items-center gap-2';
+                }
+                if (btnRet) {
+                    btnRet.className = 'clienttab-btn px-4 py-2 rounded-xl bg-gold-600 text-white shadow-xs transition cursor-pointer flex items-center gap-2';
+                }
+                if (boxComp) boxComp.classList.add('hidden');
+                if (boxRet) boxRet.classList.remove('hidden');
+            }
+        }
+
+        function renderCompaniesTable(customList = null) {
+            const tbody = document.getElementById('companiesTbody');
+            if (!tbody) return;
+            const list = customList !== null ? customList : (state.companies || []);
             const isEn = document.documentElement.lang === 'en';
 
+            const countEl = document.getElementById('countCompanies');
+            if (countEl) countEl.innerText = list.length;
+
             if (list.length === 0) {
-                cBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">${isEn ? '🔍 No clients found matching your search' : '🔍 لم يتم العثور على عملاء مطابقين للبحث'}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400 font-bold">${isEn ? 'No corporate accounts found' : 'لا توجد شركات أو وكلاء B2B مسجلين حالياً'}</td></tr>`;
                 return;
             }
 
-            cBody.innerHTML = list.map((c, idx) => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3.5 font-bold text-slate-900">${c.name}</td>
-                    <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
-                    <td class="p-3.5 font-semibold text-slate-800">${c.sales}</td>
-                    <td class="p-3.5 text-emerald-600 font-semibold">${c.paid}</td>
-                    <td class="p-3.5 text-amber-600 font-black">${c.due}</td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        <button onclick="openVoucherModal('receipt', '${c.name.replace(/'/g, "\\'")}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
-                            ${isEn ? 'Collect' : 'تحصيل'}
-                        </button>
-                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Client' : 'تعديل بيانات العميل'}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete Client' : 'حذف العميل'}">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
+            tbody.innerHTML = list.map((c, idx) => {
+                const limit = c.creditLimit || 50000;
+                const due = c.due || 0;
+                const pctUsed = Math.min(100, Math.round((due / (limit || 1)) * 100));
+                let barColor = 'bg-emerald-500';
+                if (pctUsed > 75) barColor = 'bg-red-500';
+                else if (pctUsed > 50) barColor = 'bg-amber-500';
+
+                return `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-sky-600 dark:text-sky-400 text-xs">${c.code || 'CORP-' + (idx+101)}</td>
+                        <td class="p-3.5">
+                            <div class="font-bold text-slate-900 dark:text-slate-100">${c.name}</div>
+                            <div class="text-[10px] text-slate-400 font-mono">${c.phone || '—'}</div>
+                        </td>
+                        <td class="p-3.5">
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                ${c.type || 'حساب شركة'}
+                            </span>
+                        </td>
+                        <td class="p-3.5">
+                            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">${limit.toLocaleString()} ج.م</div>
+                            <div class="w-28 bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-1 overflow-hidden" title="المستخدم من الائتمان: ${pctUsed}%">
+                                <div class="${barColor} h-full rounded-full transition-all" style="width: ${pctUsed}%"></div>
+                            </div>
+                            <div class="text-[9px] text-slate-400 mt-0.5">${pctUsed}% مستخدم | ${c.termsDays || 30} يوم سداد</div>
+                        </td>
+                        <td class="p-3.5 font-bold text-slate-700 dark:text-slate-300">${(c.sales || 0).toLocaleString()} ج.م</td>
+                        <td class="p-3.5 font-bold text-emerald-600">${(c.paid || 0).toLocaleString()} ج.م</td>
+                        <td class="p-3.5 font-black ${due > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${due.toLocaleString()} ج.م</td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-1.5 flex-wrap">
+                            <button onclick="openCurrentAccountLedger('COMPANY', '${c.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer flex items-center gap-1" title="كشف الحساب الجاري التراكمي">
+                                <i class="fa-solid fa-file-invoice-dollar text-[10px]"></i>
+                                <span>${isEn ? 'Ledger' : 'كشف حساب'}</span>
+                            </button>
+                            <button onclick="openVoucherModal('receipt', '${c.name.replace(/'/g, "\\'")}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-700 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                                ${isEn ? 'Collect' : 'تحصيل'}
+                            </button>
+                            <button onclick="openManageCompanyModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit' : 'تعديل بيانات الشركة'}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteCompany(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete' : 'حذف الشركة'}">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderRetailCustomersTable(customList = null) {
+            const tbody = document.getElementById('retailTbody');
+            if (!tbody) return;
+            const list = customList !== null ? customList : (state.retailCustomers || []);
+            const isEn = document.documentElement.lang === 'en';
+
+            const countEl = document.getElementById('countRetail');
+            if (countEl) countEl.innerText = list.length;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400 font-bold">${isEn ? 'No retail customers found' : 'لا يوجد عملاء أفراد مسجلين حالياً'}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map((c, idx) => {
+                const total = c.total || 0;
+                const paid = c.paid || 0;
+                const due = c.due || 0;
+
+                return `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-slate-500 text-xs">${c.code || 'CUST-' + (idx+5001)}</td>
+                        <td class="p-3.5 font-bold text-slate-900 dark:text-slate-100">${c.name}</td>
+                        <td class="p-3.5 font-mono text-slate-600 dark:text-slate-400">${c.phone || '—'}</td>
+                        <td class="p-3.5 font-mono text-xs text-slate-700 dark:text-slate-300">${c.passport || '—'}</td>
+                        <td class="p-3.5 text-xs text-slate-800 dark:text-slate-200 font-medium">${c.tripType || 'خدمة سياحية'}</td>
+                        <td class="p-3.5 font-bold text-slate-800 dark:text-slate-200">${total.toLocaleString()} ج.م</td>
+                        <td class="p-3.5 font-bold text-emerald-600">${paid.toLocaleString()} ج.م</td>
+                        <td class="p-3.5">
+                            <span class="inline-block font-black ${due > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${due.toLocaleString()} ج.م</span>
+                            ${c.dueDate && c.dueDate !== '-' ? `<div class="text-[9px] text-slate-400">القسط: ${c.dueDate}</div>` : ''}
+                        </td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-1.5 flex-wrap">
+                            <button onclick="openVoucherModal('receipt', '${c.name.replace(/'/g, "\\'")}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-700 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                                ${isEn ? 'Collect' : 'سند تحصيل'}
+                            </button>
+                            <button onclick="openManageRetailCustomerModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit' : 'تعديل بيانات العميل'}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteRetailCustomer(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete' : 'حذف العميل'}">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderClientsTable(customList = null) {
+            renderCompaniesTable();
+            renderRetailCustomersTable();
+        }
+
+        // ==========================================
+        // 🛒 DESK SALES POS & TICKET INVENTORY
+        // ==========================================
+        function renderDeskSales() {
+            renderTicketInventoryTable();
+            populateDeskSaleTickets();
+            populateDeskSaleCustomers();
+        }
+
+        function renderTicketInventoryTable(customList = null) {
+            const tbody = document.getElementById('ticketInventoryTbody');
+            if (!tbody) return;
+            const list = customList !== null ? customList : (state.ticketInventory || []);
+            const isEn = document.documentElement.lang === 'en';
+
+            let inStockCount = 0;
+            let inStockValue = 0;
+            let soldCount = 0;
+            let soldSales = 0;
+            let totalProfit = 0;
+
+            list.forEach(item => {
+                if (item.status === 'In_Stock') {
+                    inStockCount++;
+                    inStockValue += (item.netCost || 0);
+                } else if (item.status === 'Issued_Sold') {
+                    soldCount++;
+                    soldSales += (item.sellPrice || 0);
+                    totalProfit += Math.max(0, (item.sellPrice || 0) - (item.netCost || 0));
+                }
+            });
+
+            // Update Metrics Cards
+            const cEl = document.getElementById('statStockCount');
+            if (cEl) cEl.innerText = `${inStockCount} ${isEn ? 'Tickets' : 'تذاكر'}`;
+            const vEl = document.getElementById('statStockValue');
+            if (vEl) vEl.innerText = `${isEn ? 'Net Cost: ' : 'القيمة الصافية: '}${inStockValue.toLocaleString()} ج.م`;
+            const scEl = document.getElementById('statSoldCount');
+            if (scEl) scEl.innerText = `${soldCount} ${isEn ? 'Sold' : 'تذكرة مباعة'}`;
+            const ssEl = document.getElementById('statSoldSales');
+            if (ssEl) ssEl.innerText = `${isEn ? 'Total Sales: ' : 'إجمالي المبيعات: '}${soldSales.toLocaleString()} ج.م`;
+            const dpEl = document.getElementById('statDeskProfit');
+            if (dpEl) dpEl.innerText = `+${totalProfit.toLocaleString()} ج.م`;
+            const sBadge = document.getElementById('sidebarStockBadge');
+            if (sBadge) sBadge.innerText = `${inStockCount} بالعهدة`;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-slate-400 font-bold">${isEn ? 'No tickets in inventory' : 'لا توجد تذاكر في عهدة المكتب حالياً، قم باستلام عهدة تذاكر جديدة'}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map((item, idx) => {
+                const profit = Math.max(0, (item.sellPrice || 0) - (item.netCost || 0));
+                const isInStock = item.status === 'In_Stock';
+
+                return `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-slate-900 dark:text-slate-100 text-xs">${item.ticketNumber}</td>
+                        <td class="p-3.5 font-mono font-bold text-sky-600 dark:text-sky-400 text-xs">${item.pnr}</td>
+                        <td class="p-3.5 font-bold text-slate-800 dark:text-slate-200 text-xs">${item.routing}</td>
+                        <td class="p-3.5 text-xs text-slate-600 dark:text-slate-400">${item.airline || item.supplier}</td>
+                        <td class="p-3.5 font-mono text-red-500 font-bold text-xs">${(item.netCost || 0).toLocaleString()} ${item.cur || 'ج.م'}</td>
+                        <td class="p-3.5 font-mono text-emerald-600 font-bold text-xs">${(item.sellPrice || 0).toLocaleString()} ${item.cur || 'ج.م'}</td>
+                        <td class="p-3.5 font-mono text-gold-600 font-bold text-xs">+${profit.toLocaleString()} ${item.cur || 'ج.م'}</td>
+                        <td class="p-3.5 text-xs text-slate-700 dark:text-slate-300 font-medium">${item.passenger || '—'}</td>
+                        <td class="p-3.5 text-center">
+                            <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black border ${isInStock ? 'bg-sky-50 text-sky-700 border-sky-300 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-700' : 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-700'}">
+                                ${isInStock ? (isEn ? '● In Stock' : '● متاحة بالعهدة') : (isEn ? '✓ Issued & Sold' : '✓ مباعة ومصدرة')}
+                            </span>
+                        </td>
+                        <td class="p-3.5 text-center">
+                            ${isInStock ? `
+                                <button onclick="openDeskSaleModal('${item.id}')" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white font-black text-[11px] px-3 py-1.5 rounded-xl shadow-xs transition cursor-pointer flex items-center justify-center gap-1 mx-auto">
+                                    <i class="fa-solid fa-cart-shopping text-[10px]"></i>
+                                    <span>${isEn ? 'Sell' : 'بيع الآن'}</span>
+                                </button>
+                            ` : `
+                                <button onclick="alert('✓ التذكرة (${item.ticketNumber}) مصدرة ومسددة ومدرجة في حسابات المبيعات.')" class="text-slate-400 hover:text-slate-600 text-[11px] font-bold p-1 cursor-pointer">
+                                    <i class="fa-solid fa-receipt mr-1"></i> ${isEn ? 'View' : 'معاينة'}
+                                </button>
+                            `}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // 🏢 MULTI-CURRENCY CURRENT ACCOUNT LEDGER
+        // ==========================================
+        let activeLedgerParty = null;
+
+        function openCurrentAccountLedger(partyType, partyIdOrName) {
+            let party = null;
+            if (partyType === 'COMPANY') {
+                party = state.companies.find(c => c.id === partyIdOrName || c.name === partyIdOrName);
+                if (!party) party = state.companies[0];
+            } else {
+                party = state.suppliers.find(s => s.name === partyIdOrName);
+                if (!party) party = state.suppliers[0];
+            }
+
+            if (!party) return;
+            activeLedgerParty = { partyType, party };
+
+            const nameEl = document.getElementById('ledgerPartyName');
+            if (nameEl) nameEl.innerText = party.name;
+            const codeEl = document.getElementById('ledgerPartyCode');
+            if (codeEl) codeEl.innerText = party.code || (partyType === 'COMPANY' ? 'CORP-ACT' : 'SUP-ACT');
+            const badgeEl = document.getElementById('ledgerPartyTypeBadge');
+            if (badgeEl) badgeEl.innerText = partyType === 'COMPANY' ? 'حساب شركة / وكيل B2B' : 'حساب شركة طيران / مورد';
+
+            document.getElementById('ledFormPartyType').value = partyType;
+            document.getElementById('ledFormPartyId').value = party.id || party.name;
+
+            const limitEl = document.getElementById('ledgerCreditLimit');
+            if (limitEl) {
+                limitEl.innerText = (party.creditLimit || 100000).toLocaleString() + ' ج.م';
+            }
+
+            renderLedgerModalRows(partyType, party.id || party.name, party.name);
+            document.getElementById('currentAccountLedgerModal').classList.remove('hidden');
+        }
+
+        function closeCurrentAccountLedgerModal() {
+            document.getElementById('currentAccountLedgerModal').classList.add('hidden');
+            activeLedgerParty = null;
+        }
+
+        function onLedgerCurrencyChange() {
+            const sel = document.getElementById('ledCur');
+            const opt = sel.options[sel.selectedIndex];
+            const rate = parseFloat(opt.getAttribute('data-rate')) || 1.0;
+            const rateInput = document.getElementById('ledFxRate');
+            if (rateInput) rateInput.value = rate;
+        }
+
+        function renderLedgerModalRows(partyType, partyId, partyName) {
+            const tbody = document.getElementById('ledgerModalTbody');
+            if (!tbody) return;
+
+            const entries = (state.currentAccountLedger || []).filter(e => 
+                (partyId && e.partyId === partyId) || (partyName && e.partyName === partyName)
+            );
+
+            let totalDebit = 0;
+            let totalCredit = 0;
+            let runningBal = 0;
+
+            if (entries.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400 font-bold">لا توجد حركات مسجلة في الحساب الجاري لهذا الحساب حتى الآن. يمكنك تسجيل حركة من الشريط أعلاه.</td></tr>`;
+            } else {
+                tbody.innerHTML = entries.map((e, idx) => {
+                    const dBase = e.debitBase || (e.debitOriginal * (e.fxRate || 1.0)) || 0;
+                    const cBase = e.creditBase || (e.creditOriginal * (e.fxRate || 1.0)) || 0;
+                    totalDebit += dBase;
+                    totalCredit += cBase;
+                    runningBal += (dBase - cBase);
+
+                    return `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                            <td class="p-3 font-mono text-[11px] text-slate-500">${e.date || '2026-11-22'}</td>
+                            <td class="p-3 font-bold text-slate-800 dark:text-slate-200">
+                                <div>${e.docType}</div>
+                                <div class="text-[10px] font-mono text-sky-600 font-bold">#${e.docRef}</div>
+                            </td>
+                            <td class="p-3 text-xs text-slate-600 dark:text-slate-400">${e.notes || '—'}</td>
+                            <td class="p-3 text-center font-mono text-xs font-bold text-slate-700 dark:text-slate-300">
+                                <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">${e.cur} @ ${e.fxRate || 1.0}</span>
+                            </td>
+                            <td class="p-3 font-mono font-bold text-amber-600">${e.debitOriginal > 0 ? (e.debitOriginal.toLocaleString() + ' ' + e.cur) : '—'}</td>
+                            <td class="p-3 font-mono font-bold text-emerald-600">${e.creditOriginal > 0 ? (e.creditOriginal.toLocaleString() + ' ' + e.cur) : '—'}</td>
+                            <td class="p-3 font-mono font-bold text-slate-900 dark:text-slate-100">${(dBase > 0 ? ('+' + dBase.toLocaleString()) : ('-' + cBase.toLocaleString()))} ج.م</td>
+                            <td class="p-3 text-center font-mono font-black ${runningBal >= 0 ? 'text-amber-600' : 'text-emerald-600'}">
+                                ${runningBal.toLocaleString()} ج.م
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Update Summary Strip
+            const dEl = document.getElementById('ledgerTotalDebit');
+            if (dEl) dEl.innerText = `${totalDebit.toLocaleString()} ج.م`;
+            const cEl = document.getElementById('ledgerTotalCredit');
+            if (cEl) cEl.innerText = `${totalCredit.toLocaleString()} ج.م`;
+            const bEl = document.getElementById('ledgerRunningBalance');
+            if (bEl) {
+                bEl.innerText = `${runningBal.toLocaleString()} ج.م`;
+                bEl.className = runningBal >= 0 ? 'text-base font-black text-amber-600' : 'text-base font-black text-emerald-600';
+            }
+        }
+
+        function handleSaveLedgerEntry(e) {
+            e.preventDefault();
+            if (!activeLedgerParty) return;
+
+            const docType = document.getElementById('ledDocType').value;
+            const docRef = document.getElementById('ledDocRef').value.trim();
+            const cur = document.getElementById('ledCur').value;
+            const fxRate = parseFloat(document.getElementById('ledFxRate').value) || 1.0;
+            const amt = parseFloat(document.getElementById('ledAmount').value) || 0;
+            const type = document.getElementById('ledDebitCredit').value;
+
+            if (amt <= 0) {
+                alert('يرجى إدخال مبلغ صحيح للقيد.');
+                return;
+            }
+
+            const debitOriginal = type === 'debit' ? amt : 0;
+            const creditOriginal = type === 'credit' ? amt : 0;
+            const debitBase = debitOriginal * fxRate;
+            const creditBase = creditOriginal * fxRate;
+
+            const party = activeLedgerParty.party;
+            const newEntry = {
+                id: 'led_' + Date.now(),
+                partyType: activeLedgerParty.partyType,
+                partyId: party.id || party.name,
+                partyName: party.name,
+                date: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                docType: docType,
+                docRef: docRef,
+                cur: cur,
+                fxRate: fxRate,
+                debitOriginal: debitOriginal,
+                creditOriginal: creditOriginal,
+                debitBase: debitBase,
+                creditBase: creditBase,
+                notes: 'تسجيل قيد يدوي بالحساب الجاري'
+            };
+
+            state.currentAccountLedger.push(newEntry);
+            localStorage.setItem('alharamain_account_ledger', JSON.stringify(state.currentAccountLedger));
+
+            // Update balance in party object if company
+            if (activeLedgerParty.partyType === 'COMPANY') {
+                if (type === 'debit') {
+                    party.sales = (party.sales || 0) + debitBase;
+                    party.due = (party.due || 0) + debitBase;
+                } else {
+                    party.paid = (party.paid || 0) + creditBase;
+                    party.due = Math.max(0, (party.due || 0) - creditBase);
+                }
+                localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
+                renderCompaniesTable();
+            }
+
+            renderLedgerModalRows(activeLedgerParty.partyType, party.id || party.name, party.name);
+            document.getElementById('ledDocRef').value = '';
+            document.getElementById('ledAmount').value = '';
+            alert(`✓ تم تسجيل حركة القيد بالحساب الجاري بنجاح: (${docRef}) بقيمة ${amt.toLocaleString()} ${cur}`);
+        }
+
+        function printCurrentAccountLedger() {
+            if (!activeLedgerParty) return;
+            const party = activeLedgerParty.party;
+            const printWindow = window.open('', '', 'width=900,height=700');
+            const entries = (state.currentAccountLedger || []).filter(e => 
+                (party.id && e.partyId === party.id) || (party.name && e.partyName === party.name)
+            );
+
+            let rowsHtml = entries.map(e => `
+                <tr style="border-bottom: 1px solid #e2e8f0; font-size: 11px;">
+                    <td style="padding: 8px;">${e.date}</td>
+                    <td style="padding: 8px;"><strong>${e.docType}</strong> (#${e.docRef})</td>
+                    <td style="padding: 8px;">${e.notes || '—'}</td>
+                    <td style="padding: 8px; text-align: center;">${e.cur} @ ${e.fxRate || 1.0}</td>
+                    <td style="padding: 8px; color: #d97706; text-align: right;">${e.debitOriginal > 0 ? (e.debitOriginal.toLocaleString() + ' ' + e.cur) : '—'}</td>
+                    <td style="padding: 8px; color: #059669; text-align: right;">${e.creditOriginal > 0 ? (e.creditOriginal.toLocaleString() + ' ' + e.cur) : '—'}</td>
+                    <td style="padding: 8px; font-weight: bold; text-align: right;">${((e.debitBase || 0) - (e.creditBase || 0)).toLocaleString()} ج.م</td>
                 </tr>
             `).join('');
+
+            printWindow.document.write(`
+                <html dir="rtl" lang="ar">
+                <head>
+                    <title>كشف حساب جاري - شركة الحرمين للسياحة</title>
+                    <style>
+                        body { font-family: sans-serif; padding: 20px; color: #1e293b; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+                        th { background: #0f172a; color: white; padding: 10px; font-size: 12px; }
+                        .header-box { border-bottom: 2px solid #b45309; padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header-box">
+                        <div>
+                            <h2 style="margin: 0; color: #b45309;">شركة الحرمين للسياحة والسفر</h2>
+                            <p style="margin: 5px 0 0; font-size: 12px; color: #64748b;">كشف الحساب الجاري المعتمد والتبادل التجاري</p>
+                        </div>
+                        <div style="text-align: left; font-size: 12px;">
+                            <strong>الطرف:</strong> ${party.name}<br>
+                            <strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar-EG')}<br>
+                            <strong>سقف الائتمان:</strong> ${(party.creditLimit || 100000).toLocaleString()} ج.م
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>المستند</th>
+                                <th>البيان</th>
+                                <th>العملة / الصرف</th>
+                                <th>مدين (+)</th>
+                                <th>دائن (-)</th>
+                                <th>المعادل (EGP)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
+                        <div>توقيع المحاسب المعتمد: ..........................</div>
+                        <div>اعتماد الإدارة المالية: ..........................</div>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => { printWindow.print(); }, 250);
+        }
+
+        function exportLedgerToExcel() {
+            if (!activeLedgerParty) return;
+            const party = activeLedgerParty.party;
+            const entries = (state.currentAccountLedger || []).filter(e => 
+                (party.id && e.partyId === party.id) || (party.name && e.partyName === party.name)
+            );
+
+            let csvContent = "\uFEFFالتاريخ,نوع المستند,رقم المرجع,البيان,العملة,سعر الصرف,مدين أصل,دائن أصل,المعادل بالجنيه\n";
+            entries.forEach(e => {
+                csvContent += `"${e.date}","${e.docType}","${e.docRef}","${e.notes || ''}","${e.cur}","${e.fxRate}","${e.debitOriginal}","${e.creditOriginal}","${(e.debitBase || 0) - (e.creditBase || 0)}"\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `كشف_حساب_${party.name}_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ==========================================
+        // 🛒 DESK POS CHECKOUT & INVENTORY HELPERS
+        // ==========================================
+        function populateDeskSaleTickets() {
+            const sel = document.getElementById('dsTicketSelect');
+            if (!sel) return;
+            const stockTickets = (state.ticketInventory || []).filter(t => t.status === 'In_Stock');
+            if (stockTickets.length === 0) {
+                sel.innerHTML = '<option value="">✕ لا توجد تذاكر متاحة بالعهدة حالياً (قم باستلام عهدة أولاً)</option>';
+                return;
+            }
+            sel.innerHTML = stockTickets.map(t => `
+                <option value="${t.id}" data-pnr="${t.pnr}" data-routing="${t.routing}" data-carrier="${t.airline || t.supplier}" data-cost="${t.netCost}" data-sell="${t.sellPrice}" data-cur="${t.cur}">
+                    ${t.ticketNumber} | PNR: ${t.pnr} | ${t.routing} | تكلفة: ${t.netCost.toLocaleString()} ${t.cur}
+                </option>
+            `).join('');
+            onDeskSaleTicketSelect();
+        }
+
+        function populateDeskSaleCustomers() {
+            const type = document.getElementById('dsCustomerType').value;
+            const sel = document.getElementById('dsCustomerSelect');
+            if (!sel) return;
+
+            if (type === 'corporate') {
+                sel.innerHTML = (state.companies || []).map(c => `
+                    <option value="${c.id}" data-type="corporate" data-name="${c.name}" data-limit="${c.creditLimit || 50000}" data-due="${c.due || 0}">
+                        🏢 ${c.name} (ائتمان متاح: ${Math.max(0, (c.creditLimit || 50000) - (c.due || 0)).toLocaleString()} ج.م)
+                    </option>
+                `).join('');
+            } else {
+                sel.innerHTML = (state.retailCustomers || []).map(r => `
+                    <option value="${r.id}" data-type="retail" data-name="${r.name}">
+                        👤 ${r.name} (${r.phone})
+                    </option>
+                `).join('');
+            }
+            onDeskSaleCustomerSelect();
+        }
+
+        function openDeskSaleModal(preselectedId = null) {
+            populateDeskSaleTickets();
+            populateDeskSaleCustomers();
+            if (preselectedId) {
+                const sel = document.getElementById('dsTicketSelect');
+                if (sel) {
+                    sel.value = preselectedId;
+                    onDeskSaleTicketSelect();
+                }
+            }
+            document.getElementById('deskSaleModal').classList.remove('hidden');
+        }
+
+        function closeDeskSaleModal() {
+            document.getElementById('deskSaleModal').classList.add('hidden');
+        }
+
+        function onDeskSaleTicketSelect() {
+            const sel = document.getElementById('dsTicketSelect');
+            if (!sel || !sel.value) return;
+            const opt = sel.options[sel.selectedIndex];
+            if (!opt) return;
+
+            document.getElementById('dsPreviewPnr').innerText = `${opt.getAttribute('data-pnr')} (${opt.getAttribute('data-routing')})`;
+            document.getElementById('dsPreviewCarrier').innerText = opt.getAttribute('data-carrier');
+            const cost = parseFloat(opt.getAttribute('data-cost')) || 0;
+            const sell = parseFloat(opt.getAttribute('data-sell')) || 0;
+            const cur = opt.getAttribute('data-cur') || 'ج.م';
+            document.getElementById('dsPreviewNetCost').innerText = `${cost.toLocaleString()} ${cur}`;
+            document.getElementById('dsSellPrice').value = sell;
+            calculateDeskSaleMargin();
+        }
+
+        function onDeskSaleCustomerTypeChange() {
+            populateDeskSaleCustomers();
+        }
+
+        function onDeskSaleCustomerSelect() {
+            // Customer select sync
+        }
+
+        function calculateDeskSaleMargin() {
+            const sel = document.getElementById('dsTicketSelect');
+            if (!sel || !sel.value) return;
+            const opt = sel.options[sel.selectedIndex];
+            const cost = parseFloat(opt.getAttribute('data-cost')) || 0;
+            const sell = parseFloat(document.getElementById('dsSellPrice').value) || 0;
+            const cur = opt.getAttribute('data-cur') || 'ج.م';
+            const margin = sell - cost;
+
+            const el = document.getElementById('dsProfitMargin');
+            if (el) {
+                el.value = (margin >= 0 ? '+' : '') + margin.toLocaleString() + ' ' + cur;
+                el.className = margin >= 0 ? 'w-full bg-slate-100 dark:bg-slate-800/40 border rounded-xl p-2 font-black text-emerald-600 text-center' : 'w-full bg-slate-100 dark:bg-slate-800/40 border rounded-xl p-2 font-black text-red-500 text-center';
+            }
+        }
+
+        function onDeskSaleMethodToggle() {
+            const method = document.querySelector('input[name="dsPaymentMethod"]:checked').value;
+            const cashWrap = document.getElementById('dsCashDrawerWrap');
+            const creditWrap = document.getElementById('dsCreditWarningWrap');
+            if (method === 'cash') {
+                if (cashWrap) cashWrap.classList.remove('hidden');
+                if (creditWrap) creditWrap.classList.add('hidden');
+            } else {
+                if (cashWrap) cashWrap.classList.add('hidden');
+                if (creditWrap) creditWrap.classList.remove('hidden');
+            }
+        }
+
+        function handleExecuteDeskSale(e) {
+            e.preventDefault();
+            const ticketId = document.getElementById('dsTicketSelect').value;
+            const ticket = (state.ticketInventory || []).find(t => t.id === ticketId);
+            if (!ticket) {
+                alert('يرجى اختيار تذكرة متاحة بالعهدة.');
+                return;
+            }
+
+            const custType = document.getElementById('dsCustomerType').value;
+            const custSel = document.getElementById('dsCustomerSelect');
+            const custOpt = custSel.options[custSel.selectedIndex];
+            const custName = custOpt ? custOpt.getAttribute('data-name') : 'عميل مكتب';
+            const sellPrice = parseFloat(document.getElementById('dsSellPrice').value) || ticket.sellPrice;
+            const method = document.querySelector('input[name="dsPaymentMethod"]:checked').value;
+            const netCost = ticket.netCost;
+            const profit = sellPrice - netCost;
+
+            // 1. Mark ticket as Issued & Sold in inventory
+            ticket.status = 'Issued_Sold';
+            ticket.passenger = custName;
+            ticket.sellPrice = sellPrice;
+            localStorage.setItem('alharamain_ticket_inventory', JSON.stringify(state.ticketInventory));
+
+            // 2. Handle Financial Accounting
+            if (method === 'cash') {
+                const drawerName = document.getElementById('dsDrawerSelect').value;
+                const drawer = state.cashDrawers.find(d => d.name === drawerName) || state.cashDrawers[0];
+                if (drawer) {
+                    drawer.bal += sellPrice;
+                }
+            } else {
+                // Credit sale: Check limit & add debit to Current Account Ledger
+                if (custType === 'corporate') {
+                    const compId = custSel.value;
+                    const comp = state.companies.find(c => c.id === compId);
+                    if (comp) {
+                        const newDue = (comp.due || 0) + sellPrice;
+                        if (newDue > (comp.creditLimit || 50000)) {
+                            if (!confirm(`⚠️ تنبيه سقف الائتمان: إجمالي مديونية الشركة (${newDue.toLocaleString()} ج.م) ستتخطى سقف الائتمان المسموح به (${(comp.creditLimit || 50000).toLocaleString()} ج.م). هل توافق الإدارة على منح الائتمان؟`)) {
+                                return;
+                            }
+                        }
+                        comp.sales = (comp.sales || 0) + sellPrice;
+                        comp.due = newDue;
+                        localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
+
+                        state.currentAccountLedger.push({
+                            id: 'led_' + Date.now(),
+                            partyType: 'COMPANY',
+                            partyId: comp.id,
+                            partyName: comp.name,
+                            date: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                            docType: 'فاتورة مبيعات تذاكر (Desk POS)',
+                            docRef: 'TKT-' + ticket.pnr,
+                            cur: ticket.cur || 'ج.م',
+                            fxRate: 1.0,
+                            debitOriginal: sellPrice,
+                            creditOriginal: 0,
+                            debitBase: sellPrice,
+                            creditBase: 0,
+                            notes: `بيع تذكرة ${ticket.ticketNumber} خط سير ${ticket.routing}`
+                        });
+                        localStorage.setItem('alharamain_account_ledger', JSON.stringify(state.currentAccountLedger));
+                    }
+                }
+            }
+
+            // 3. Add to Main Bookings Store
+            state.bookings.unshift({
+                id: Date.now(),
+                pnr: ticket.pnr,
+                client: custName,
+                service: `تذكرة طيران (${ticket.routing})`,
+                supplier: ticket.airline || ticket.supplier,
+                sell: sellPrice,
+                cost: netCost,
+                currency: ticket.cur || 'ج.م',
+                profit: profit,
+                eta: '✓ اعتماد وربط فوري'
+            });
+
+            state.totalSales += sellPrice;
+            state.totalProfit += profit;
+
+            // Re-render
+            renderTables();
+            closeDeskSaleModal();
+            alert(`✓ تم إصدار وبيع التذكرة (${ticket.ticketNumber}) بنجاح لـ (${custName}) بمبلغ ${sellPrice.toLocaleString()} ج.م وتحديث الجرد والحساب الجاري.`);
+        }
+
+        function openAddTicketInventoryModal() {
+            document.getElementById('addTicketInventoryModal').classList.remove('hidden');
+        }
+        function closeAddTicketInventoryModal() {
+            document.getElementById('addTicketInventoryModal').classList.add('hidden');
+        }
+        function handleSaveTicketInventory(e) {
+            e.preventDefault();
+            const ticketNum = document.getElementById('invTicketNum').value.trim();
+            const pnr = document.getElementById('invPnr').value.trim().toUpperCase();
+            const routing = document.getElementById('invRouting').value.trim();
+            const supplier = document.getElementById('invSupplier').value;
+            const cur = document.getElementById('invCur').value;
+            const netCost = parseFloat(document.getElementById('invNetCost').value) || 0;
+            const sellPrice = parseFloat(document.getElementById('invSellPrice').value) || 0;
+
+            state.ticketInventory.unshift({
+                id: 'inv_' + Date.now(),
+                ticketNumber: ticketNum,
+                pnr: pnr,
+                routing: routing,
+                airline: supplier,
+                supplier: supplier,
+                netCost: netCost,
+                sellPrice: sellPrice,
+                cur: cur,
+                passenger: '-',
+                status: 'In_Stock',
+                statusLabel: 'متاحة بالعهدة (In Stock)',
+                date: new Date().toISOString().slice(0, 10)
+            });
+
+            localStorage.setItem('alharamain_ticket_inventory', JSON.stringify(state.ticketInventory));
+            renderDeskSales();
+            closeAddTicketInventoryModal();
+            alert(`✓ تم استلام وإضافة التذكرة (${ticketNum}) PNR: ${pnr} إلى عهدة المكتب بنجاح.`);
+        }
+
+        // B2B Companies CRUD
+        function openManageCompanyModal(idx = null) {
+            const modal = document.getElementById('manageCompanyModal');
+            const title = document.getElementById('manageCompanyTitle');
+            if (idx !== null && state.companies[idx]) {
+                const c = state.companies[idx];
+                document.getElementById('compIndex').value = idx;
+                document.getElementById('compName').value = c.name;
+                document.getElementById('compCode').value = c.code || 'CORP-' + (idx+101);
+                document.getElementById('compType').value = c.type || 'حساب شركة (Corporate)';
+                document.getElementById('compPhone').value = c.phone || '';
+                document.getElementById('compCreditLimit').value = c.creditLimit || 50000;
+                document.getElementById('compTermsDays').value = c.termsDays || 30;
+                if (title) title.innerText = 'تعديل بيانات الشركة والائتمان';
+            } else {
+                document.getElementById('compIndex').value = '';
+                document.getElementById('compName').value = '';
+                document.getElementById('compCode').value = 'CORP-' + (state.companies.length + 101);
+                document.getElementById('compPhone').value = '';
+                document.getElementById('compCreditLimit').value = '80000';
+                document.getElementById('compTermsDays').value = '30';
+                if (title) title.innerText = 'إضافة شركة B2B / وكيل فرعي';
+            }
+            modal.classList.remove('hidden');
+        }
+        function closeManageCompanyModal() {
+            document.getElementById('manageCompanyModal').classList.add('hidden');
+        }
+        function handleSaveCompany(e) {
+            e.preventDefault();
+            const idx = document.getElementById('compIndex').value;
+            const name = document.getElementById('compName').value.trim();
+            const code = document.getElementById('compCode').value.trim();
+            const type = document.getElementById('compType').value;
+            const phone = document.getElementById('compPhone').value.trim();
+            const creditLimit = parseFloat(document.getElementById('compCreditLimit').value) || 50000;
+            const termsDays = parseInt(document.getElementById('compTermsDays').value) || 30;
+
+            const compObj = {
+                id: idx !== '' && state.companies[idx] ? state.companies[idx].id : 'comp_' + Date.now(),
+                code,
+                name,
+                type,
+                phone,
+                creditLimit,
+                termsDays,
+                currency: 'ج.م',
+                sales: idx !== '' && state.companies[idx] ? state.companies[idx].sales : 0,
+                paid: idx !== '' && state.companies[idx] ? state.companies[idx].paid : 0,
+                due: idx !== '' && state.companies[idx] ? state.companies[idx].due : 0
+            };
+
+            if (idx !== '') {
+                state.companies[parseInt(idx)] = compObj;
+            } else {
+                state.companies.unshift(compObj);
+            }
+
+            localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
+            renderCompaniesTable();
+            closeManageCompanyModal();
+            alert(`✓ تم اعتماد وحفظ بيانات الشركة (${name}) بنجاح.`);
+        }
+        function deleteCompany(idx) {
+            const c = state.companies[idx];
+            if (!c) return;
+            if (confirm(`هل أنت متأكد من حذف شركة (${c.name}) وسجل الائتمان؟`)) {
+                state.companies.splice(idx, 1);
+                localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
+                renderCompaniesTable();
+            }
+        }
+
+        // B2C Retail Customers CRUD
+        function openManageRetailCustomerModal(idx = null) {
+            const modal = document.getElementById('manageRetailCustomerModal');
+            const title = document.getElementById('manageRetailTitle');
+            if (idx !== null && state.retailCustomers[idx]) {
+                const r = state.retailCustomers[idx];
+                document.getElementById('custIndex').value = idx;
+                document.getElementById('custName').value = r.name;
+                document.getElementById('custPhone').value = r.phone || '';
+                document.getElementById('custPassport').value = r.passport || '';
+                document.getElementById('custTripType').value = r.tripType || '';
+                document.getElementById('custTotal').value = r.total || 0;
+                document.getElementById('custPaid').value = r.paid || 0;
+                document.getElementById('custDueDate').value = r.dueDate || '';
+                if (title) title.innerText = 'تعديل بيانات العميل الفردي';
+            } else {
+                document.getElementById('custIndex').value = '';
+                document.getElementById('custName').value = '';
+                document.getElementById('custPhone').value = '';
+                document.getElementById('custPassport').value = '';
+                document.getElementById('custTripType').value = '';
+                document.getElementById('custTotal').value = '';
+                document.getElementById('custPaid').value = '';
+                document.getElementById('custDueDate').value = '';
+                if (title) title.innerText = 'إضافة عميل فردي / مسافر جديد';
+            }
+            modal.classList.remove('hidden');
+        }
+        function closeManageRetailCustomerModal() {
+            document.getElementById('manageRetailCustomerModal').classList.add('hidden');
+        }
+        function handleSaveRetailCustomer(e) {
+            e.preventDefault();
+            const idx = document.getElementById('custIndex').value;
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const passport = document.getElementById('custPassport').value.trim();
+            const tripType = document.getElementById('custTripType').value.trim();
+            const total = parseFloat(document.getElementById('custTotal').value) || 0;
+            const paid = parseFloat(document.getElementById('custPaid').value) || 0;
+            const dueDate = document.getElementById('custDueDate').value;
+
+            const custObj = {
+                id: idx !== '' && state.retailCustomers[idx] ? state.retailCustomers[idx].id : 'cust_' + Date.now(),
+                code: 'CUST-' + (state.retailCustomers.length + 5001),
+                name,
+                phone,
+                passport,
+                tripType,
+                total,
+                paid,
+                due: Math.max(0, total - paid),
+                dueDate: dueDate || '-'
+            };
+
+            if (idx !== '') {
+                state.retailCustomers[parseInt(idx)] = custObj;
+            } else {
+                state.retailCustomers.unshift(custObj);
+            }
+
+            localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
+            renderRetailCustomersTable();
+            closeManageRetailCustomerModal();
+            alert(`✓ تم حفظ بيانات العميل (${name}) بنجاح.`);
+        }
+        function deleteRetailCustomer(idx) {
+            const r = state.retailCustomers[idx];
+            if (!r) return;
+            if (confirm(`هل أنت متأكد من حذف العميل (${r.name})؟`)) {
+                state.retailCustomers.splice(idx, 1);
+                localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
+                renderRetailCustomersTable();
+            }
         }
 
         function renderSuppliersTable(customList = null) {
@@ -5208,12 +6869,19 @@
 
             sBody.innerHTML = list.map((s, idx) => `
                 <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3.5 font-bold text-slate-900">${s.name}</td>
+                    <td class="p-3.5 font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-plane-departure text-gold-600 text-xs"></i>
+                        <span>${s.name}</span>
+                    </td>
                     <td class="p-3.5 text-slate-600">${s.type}</td>
                     <td class="p-3.5 font-bold text-slate-800">${s.cur}</td>
                     <td class="p-3.5 font-semibold text-slate-800">${s.total}</td>
                     <td class="p-3.5 text-red-600 font-black">${s.due}</td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                    <td class="p-3.5 text-center flex items-center justify-center gap-1.5 flex-wrap">
+                        <button onclick="openCurrentAccountLedger('SUPPLIER', '${s.name.replace(/'/g, "\\'")}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer flex items-center gap-1" title="كشف الحساب الجاري المالي للمورد">
+                            <i class="fa-solid fa-file-invoice-dollar text-[10px]"></i>
+                            <span>${isEn ? 'Ledger' : 'كشف حساب'}</span>
+                        </button>
                         <button onclick="openVoucherModal('payment', '${s.name.replace(/'/g, "\\'")}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
                             ${isEn ? 'Pay' : 'سداد'}
                         </button>
@@ -5264,7 +6932,8 @@
                 brand_title: 'الحرمين للسياحة',
                 dashboard: 'لوحة المؤشرات والعمليات',
                 bookings: 'إدارة الحجوزات والتذاكر',
-                clients: 'حسابات العملاء والأقساط',
+                desksales: 'مبيعات المكتب وجرد التذاكر',
+                clients: 'حسابات الشركات والعملاء والأقساط',
                 suppliers: 'شركات الطيران والموردين',
                 banks: 'أرصدة البنوك والمطابقة',
                 treasury: 'الخزائن وفروق العملات',
@@ -5370,7 +7039,8 @@
                 brand_title: 'Al-Haramain Travel',
                 dashboard: 'Dashboard & Operations',
                 bookings: 'Bookings & Ticketing',
-                clients: 'Clients & Receivables',
+                desksales: 'Desk Sales & Ticket Stock',
+                clients: 'Corporate & Client Accounts',
                 suppliers: 'Airlines & Suppliers',
                 banks: 'Bank Accounts & Reconcile',
                 treasury: 'Treasury & FX Vault',
@@ -6480,25 +8150,27 @@
 
         function syncCurrentUserUI() {
             const adminStaff = (state.staff && state.staff.find(s => s.role === 'admin')) || (state.staff && state.staff[0]);
-            if (!state.user) {
-                if (adminStaff) {
-                    state.user = {
-                        name: adminStaff.name,
-                        roleLabel: adminStaff.roleLabel,
-                        role: adminStaff.role,
-                        avatar: adminStaff.avatar
-                    };
+            
+            // Unconditionally migrate any legacy or cached 'أحمد شريف' admin account to the true GM
+            if (state.user) {
+                if (state.user.name === 'أحمد شريف' || !state.user.role || state.user.role === 'admin') {
+                    if (adminStaff) {
+                        state.user.name = adminStaff.name;
+                        state.user.roleLabel = adminStaff.roleLabel;
+                        state.user.role = adminStaff.role || 'admin';
+                        state.user.avatar = adminStaff.avatar || '👑';
+                        try {
+                            localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+                        } catch(e) {}
+                    }
                 }
-            } else if (state.user.role === 'admin' && adminStaff) {
-                // If saved user was 'أحمد شريف' but staff admin was renamed to 'حسن يوسف الناضر', sync it automatically!
-                if (state.user.name === 'أحمد شريف' && adminStaff.name !== 'أحمد شريف') {
-                    state.user.name = adminStaff.name;
-                    state.user.roleLabel = adminStaff.roleLabel;
-                    state.user.avatar = adminStaff.avatar;
-                    try {
-                        localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
-                    } catch(e) {}
-                }
+            } else if (adminStaff) {
+                state.user = {
+                    name: adminStaff.name,
+                    roleLabel: adminStaff.roleLabel,
+                    role: adminStaff.role,
+                    avatar: adminStaff.avatar
+                };
             }
 
             const u = state.user || (adminStaff ? {
@@ -6548,11 +8220,11 @@
         window.addEventListener('DOMContentLoaded', () => {
             initTheme();
             initLanguage();
+            syncCurrentUserUI();
 
             try {
                 renderTables();
                 renderGatewayRoles();
-                syncCurrentUserUI();
             } catch (err) {
                 console.error('Error rendering tables:', err);
             }
