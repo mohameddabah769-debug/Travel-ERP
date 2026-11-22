@@ -375,14 +375,22 @@
                     </div>
 
                     <!-- Client Debts -->
-                    <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 hover:shadow-md transition">
+                    <div onclick="openDebtsModal()" class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 hover:border-amber-400 hover:shadow-lg transition cursor-pointer group relative overflow-hidden" title="انقر لعرض تفاصيل العملاء المديونين والتحصيل الفوري">
+                        <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-100 transition"></div>
                         <div class="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
-                            <span>مستحقات آجلة لدى العملاء</span>
-                            <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                            <span class="group-hover:text-amber-700 transition flex items-center gap-1.5">
+                                مستحقات آجلة لدى العملاء
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500 opacity-0 group-hover:opacity-100 transition"></i>
+                            </span>
+                            <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm group-hover:bg-amber-500 group-hover:text-white transition shadow-xs"><i class="fa-solid fa-hand-holding-dollar"></i></span>
                         </div>
-                        <h3 class="text-2xl font-black text-amber-600" id="dashTotalDebts">31,200 ج.م</h3>
-                        <div class="mt-2 text-[11px] text-slate-500 font-medium">
-                            5 ملفات بأقساط مجدولة قيد السداد
+                        <h3 class="text-2xl font-black text-amber-600 flex items-baseline justify-between">
+                            <span id="dashTotalDebts">31,200 ج.م</span>
+                            <span class="text-[11px] font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full group-hover:bg-amber-200 transition">عرض التفاصيل <i class="fa-solid fa-chevron-left text-[9px] mr-0.5"></i></span>
+                        </h3>
+                        <div class="mt-2 text-[11px] text-slate-500 font-medium flex items-center justify-between">
+                            <span id="dashDebtsCountText">3 عملاء بأقساط ومستحقات قيد السداد</span>
+                            <span class="text-amber-600 font-bold group-hover:underline">فتح الكشف ↗</span>
                         </div>
                     </div>
 
@@ -1316,6 +1324,85 @@
     </div>
 
     <!-- ============================================== -->
+    <!-- 📋 MODAL: CLIENT DEBTS DRILL-DOWN (كشف المديونيات والمستحقات) -->
+    <!-- ============================================== -->
+    <div id="debtsModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-amber-200/50 max-h-[90vh] overflow-y-auto">
+            <!-- Header -->
+            <div class="flex justify-between items-start pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-inner border border-amber-200">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg font-black text-slate-900">كشف مديونيات ومستحقات العملاء (الآجل والأقساط)</h3>
+                            <span class="bg-amber-100 text-amber-800 text-[11px] font-black px-2.5 py-0.5 rounded-full" id="debtsModalCountBadge">3 عملاء مستحق عليهم</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">تفاصيل المبالغ المتبقية في ذمة العملاء مع إمكانية التحصيل الفوري أو المتابعة المباشرة عبر واتساب</p>
+                    </div>
+                </div>
+                <button onclick="closeDebtsModal()" class="text-slate-400 hover:text-slate-700 text-xl cursor-pointer w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Total Banner -->
+            <div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-50 to-orange-500/10 border border-amber-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg font-bold shadow-md">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-amber-800">إجمالي المديونيات المستحقة للشركة طرف العملاء</div>
+                        <div class="text-2xl font-black text-amber-700" id="debtsModalTotalAmount">31,200 ج.م</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 shadow-xs flex items-center gap-2 transition cursor-pointer">
+                        <i class="fa-solid fa-print text-amber-600"></i>
+                        <span>طباعة الكشف</span>
+                    </button>
+                    <button onclick="openVoucherModal('receipt')" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold rounded-xl shadow-xs flex items-center gap-2 transition cursor-pointer">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span>سند قبض عام</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table of Debts -->
+            <div class="mt-5 overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-900 text-slate-200 text-[11px] font-bold uppercase tracking-wider">
+                        <tr>
+                            <th class="p-3.5">العميل / الشركة</th>
+                            <th class="p-3.5">رقم التواصل / واتساب</th>
+                            <th class="p-3.5">إجمالي المبيعات</th>
+                            <th class="p-3.5">المسدد</th>
+                            <th class="p-3.5 text-amber-400">المبلغ المستحق (المديونية)</th>
+                            <th class="p-3.5 text-center">إجراءات المتابعة والتحصيل</th>
+                        </tr>
+                    </thead>
+                    <tbody id="debtsModalTbody" class="divide-y divide-slate-100 bg-white">
+                        <!-- Populated dynamically by openDebtsModal() -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer Notes & Actions -->
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100 text-xs text-slate-500">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-amber-500"></i>
+                    <span>الضغط على "تحصيل الآن" يفتح سند قبض مجهز تلقائياً باسم العميل والمبلغ المطلوب لسرعة التوريد للحسابات.</span>
+                </div>
+                <button onclick="closeDebtsModal()" class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl transition cursor-pointer">
+                    إغلاق النافذة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
     <script>
@@ -1783,12 +1870,26 @@
         function handleVoucherSubmit(e) {
             e.preventDefault();
             const type = document.getElementById('vType').value;
-            const party = document.getElementById('vParty').value;
+            const party = document.getElementById('vParty').value.trim();
             const amt = parseFloat(document.getElementById('vAmount').value) || 0;
             const acc = document.getElementById('vAccount').value;
 
+            // Automatically adjust client due/paid if party matches
+            if (type === 'receipt' && amt > 0) {
+                const client = state.clients.find(c => c.name === party);
+                if (client) {
+                    const currentDue = parseFloat((client.due || '').replace(/[^0-9.-]/g, '')) || 0;
+                    const currentPaid = parseFloat((client.paid || '').replace(/[^0-9.-]/g, '')) || 0;
+                    const newDue = Math.max(0, currentDue - amt);
+                    const newPaid = currentPaid + amt;
+                    client.due = newDue.toLocaleString() + ' ج.م';
+                    client.paid = newPaid.toLocaleString() + ' ج.م';
+                }
+            }
+
             closeVoucherModal();
             document.getElementById('voucherForm').reset();
+            renderTables();
             alert(`✓ تم اعتماد سند ال${type === 'receipt' ? 'قبض' : 'صرف'} بمبلغ ${amt.toLocaleString()} ج.م للطرف: ${party} على حساب (${acc}) وتوليد الإيصال المالي بنجاح.`);
         }
 
@@ -1817,12 +1918,18 @@
 
             // Recalculate debts
             let debts = 0;
+            let debtsCount = 0;
             state.clients.forEach(c => {
                 const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
-                debts += dueVal;
+                if (dueVal > 0) {
+                    debts += dueVal;
+                    debtsCount++;
+                }
             });
             const debtsEl = document.getElementById('dashTotalDebts');
             if (debtsEl) debtsEl.innerText = debts.toLocaleString() + ' ج.م';
+            const countEl = document.getElementById('dashDebtsCountText');
+            if (countEl) countEl.innerText = `${debtsCount} عملاء بأقساط ومستحقات قيد السداد`;
         }
 
         // 🏦 BANK CRUD HANDLERS
@@ -2077,6 +2184,96 @@
             document.getElementById('topbarSar').innerText = sar.toFixed(2);
             closeFxModal();
             alert(`✓ تم تحديث أسعار الصرف بنجاح:\n- 1 USD = ${usd.toFixed(2)} ج.م\n- 1 SAR = ${sar.toFixed(2)} ج.م`);
+        }
+
+        // 📋 CLIENT DEBTS DRILL-DOWN HANDLERS
+        function openDebtsModal() {
+            renderDebtsModal();
+            document.getElementById('debtsModal').classList.remove('hidden');
+        }
+
+        function closeDebtsModal() {
+            document.getElementById('debtsModal').classList.add('hidden');
+        }
+
+        function renderDebtsModal() {
+            const tbody = document.getElementById('debtsModalTbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            let totalDue = 0;
+            let count = 0;
+
+            state.clients.forEach((c, idx) => {
+                const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
+                if (dueVal > 0) {
+                    totalDue += dueVal;
+                    count++;
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-amber-50/40 transition font-medium border-b border-slate-100';
+                    const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
+                    const waPhone = cleanPhone.startsWith('0') ? '2' + cleanPhone : cleanPhone;
+
+                    tr.innerHTML = `
+                        <td class="p-3.5">
+                            <div class="font-extrabold text-slate-900 text-sm">${c.name}</div>
+                            <div class="text-[10px] text-slate-400 mt-0.5">عميل نشط - حساب آجل</div>
+                        </td>
+                        <td class="p-3.5">
+                            <div class="font-mono font-bold text-slate-700">${c.phone || '—'}</div>
+                            ${cleanPhone ? `
+                                <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('السلام عليكم أ/ ' + c.name + '، نود تذكيركم بمستحقات شركة الحرمين للسياحة وقدرها ' + c.due + '. شاكرين ومقدرين حسن تعاونكم.')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-bold hover:underline mt-0.5" title="مراسلة واتساب">
+                                    <i class="fa-brands fa-whatsapp text-emerald-500"></i> تذكير واتساب
+                                </a>
+                            ` : ''}
+                        </td>
+                        <td class="p-3.5 font-bold text-slate-600">${c.sales}</td>
+                        <td class="p-3.5 font-bold text-emerald-600">${c.paid}</td>
+                        <td class="p-3.5">
+                            <span class="inline-block bg-amber-100 text-amber-900 font-black px-3 py-1 rounded-xl text-sm border border-amber-300">
+                                ${c.due}
+                            </span>
+                        </td>
+                        <td class="p-3.5 text-center">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <button onclick="collectClientDebt('${c.name.replace(/'/g, "\\'")}', ${dueVal})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-xs text-xs flex items-center gap-1 transition cursor-pointer" title="تسجيل سند قبض وتحصيل فوري">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                    <span>تحصيل الآن</span>
+                                </button>
+                                <button onclick="closeDebtsModal(); openManageClientModal(${idx});" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-1.5 rounded-xl text-xs transition cursor-pointer" title="تعديل حساب وبيانات العميل">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            if (count === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="p-8 text-center text-slate-400 font-bold">
+                            <i class="fa-solid fa-circle-check text-emerald-500 text-3xl mb-2"></i>
+                            <div>لا توجد أي مديونيات متأخرة على العملاء حالياً، جميع الحسابات مسددة بالكامل!</div>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            const badge = document.getElementById('debtsModalCountBadge');
+            if (badge) badge.innerText = `${count} عملاء مستحق عليهم`;
+
+            const totalEl = document.getElementById('debtsModalTotalAmount');
+            if (totalEl) totalEl.innerText = `${totalDue.toLocaleString()} ج.م`;
+        }
+
+        function collectClientDebt(clientName, amount) {
+            closeDebtsModal();
+            openVoucherModal('receipt', clientName);
+            const amtInput = document.getElementById('vAmount');
+            if (amtInput) amtInput.value = amount;
         }
 
         // Initialize on DOM Ready
