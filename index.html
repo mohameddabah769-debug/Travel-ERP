@@ -508,10 +508,10 @@
 
         /* 🔍 GLOBAL SEARCH INPUT BULLETPROOF STYLING */
         #searchContainer {
-            min-width: 260px !important;
+            min-width: 180px !important;
         }
         #globalSearchInput {
-            min-width: 250px !important;
+            min-width: 170px !important;
             width: 100% !important;
             color: #0f172a !important;
             background-color: #f8fafc !important;
@@ -785,7 +785,7 @@
         <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
             <!-- Left: Ticker & Status -->
             <div class="flex items-center gap-2.5 text-xs font-semibold shrink-0">
-                <div class="hidden lg:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
+                <div class="hidden 2xl:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
                     <!-- Populated dynamically by renderCurrencyTicker() -->
                 </div>
                 <div class="flex items-center gap-1.5 text-slate-500 text-xs shrink-0">
@@ -795,7 +795,7 @@
             </div>
 
             <!-- Center: Global Live Search Bar & Floating Instant Results -->
-            <div class="flex-1 min-w-[280px] max-w-xl mx-2 relative" id="searchContainer">
+            <div class="flex-1 min-w-[180px] max-w-xl mx-2 relative" id="searchContainer">
                 <div class="relative w-full">
                     <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" onfocus="handleSearchFocus()" placeholder="بحث شامل وذكي (PNR، عميل، مورد، طيران، بنك، موظف)..." autocomplete="off" class="w-full bg-slate-50/90 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pr-9 pl-14 py-2.5 text-xs font-bold text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-600 focus:bg-white dark:focus:bg-slate-950 transition shadow-inner">
                     <span class="absolute right-3 top-2.5 text-slate-400 text-xs pointer-events-none search-icon-pos">
@@ -832,11 +832,11 @@
 
                 <button onclick="openBookingModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-plus text-xs"></i>
-                    <span class="hidden sm:inline" data-i18n="new_booking">حجز ملف جديد</span>
+                    <span class="hidden xl:inline" data-i18n="new_booking">حجز ملف جديد</span>
                 </button>
                 <button onclick="openVoucherModal()" class="bg-slate-800 hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-receipt text-xs"></i>
-                    <span class="hidden sm:inline" data-i18n="new_voucher">سند مالي</span>
+                    <span class="hidden xl:inline" data-i18n="new_voucher">سند مالي</span>
                 </button>
 
                 <!-- User Profile Pill -->
