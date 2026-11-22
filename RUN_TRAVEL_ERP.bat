@@ -1,33 +1,33 @@
 @echo off
-chcp 65001 >nul
-title شركة الحرمين للسياحة والسفر - نظام الإدارة والحسابات
+chcp 65001 >nul 2>&1
+title Al-Haramain Travel ERP - شركة الحرمين للسياحة والسفر
 color 0B
 
 echo ======================================================================
-echo    🕋  شركة الحرمين للسياحة والسفر - Al-Haramain Travel ERP
-echo        نظام إدارة رحلات العمرة والحج، الطيران، والحسابات
+echo    Al-Haramain Travel ERP - Al-Haramain Travel and Tourism
+echo    Powered by Sanad Digital Solutions
 echo ======================================================================
 echo.
-echo [1/3] جاري فحص بيئة التشغيل وقاعدة البيانات...
+echo [1/3] Checking environment and database...
 
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [خطأ] بايثون غير مثبت على هذا الجهاز! يرجى تثبيت Python 3.10+ أولاً.
+    echo [ERROR] Python is not installed or not in PATH! Please install Python 3.10+
     pause
     exit /b
 )
 
-echo [2/3] جاري تهيئة قاعدة البيانات المحلية (travel_erp.db)...
-python -c "from app.database import init_db; from app.seed import seed_database; init_db(); seed_database()"
+echo [2/3] Initializing local database (travel_erp.db)...
+python -c "from app.database import init_db; from app.seed import seed_database; init_db(); seed_database()" >nul 2>&1
 
-echo [3/3] جاري تشغيل السيرفر وفتح السيستم في المتصفح...
+echo [3/3] Opening Al-Haramain ERP in your default browser...
 start http://localhost:5000
 
 echo.
 echo ======================================================================
-echo  🚀 السيستم يعمل الآن على: http://localhost:5000
-echo  📄 العرض الفني والمالي: http://localhost:5000/proposal.html
-echo  (لا تغلق هذه النافذة طالما أنك تستخدم السيستم)
+echo  Server is LIVE at: http://localhost:5000
+echo  Local Network URL: http://127.0.0.1:5000
+echo  Proposal URL:      http://localhost:5000/proposal.html
 echo ======================================================================
 echo.
 

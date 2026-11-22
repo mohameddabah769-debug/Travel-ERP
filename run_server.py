@@ -7,7 +7,7 @@ from app.routes_api import api_bp
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path="")
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "sanad-travel-erp-secret-key-2026")
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "al-haramain-travel-erp-secret-key-2026")
 
 # Enable CORS for all API endpoints
 @app.after_request
@@ -34,25 +34,23 @@ def proposal():
 # Health check
 @app.route("/health")
 def health():
-    return jsonify({"status": "healthy", "service": "Sanad Travel ERP", "version": "1.2.0"})
+    return jsonify({"status": "healthy", "service": "Al-Haramain Travel ERP", "version": "2.4.0"})
 
 def main():
-    print("=" * 65)
-    print(" 🕋  شركة الحرمين للسياحة والسفر - نظام الإدارة والحسابات")
-    print("     Al-Haramain Travel ERP | Powered by Sanad Digital")
-    print("=" * 65)
-    
     # Initialize DB & Seed if empty
     init_db()
     seed_database()
 
     port = int(os.getenv("PORT", 5000))
-    print(f"\n🚀 السيستم يعمل الآن بنجاح على الرابط التالي:")
-    print(f"👉 http://localhost:{port}")
-    print(f"👉 http://127.0.0.1:{port}")
-    print(f"\n📄 العرض الفني والمالي (Proposal):")
-    print(f"👉 http://localhost:{port}/proposal.html")
-    print("\nاضغط Ctrl+C لإيقاف السيرفر في أي وقت.\n" + "=" * 65)
+    print("=" * 65)
+    print(" [AL-HARAMAIN TRAVEL ERP] - Enterprise System v2.4")
+    print(" Al-Haramain Travel & Tourism | Powered by Sanad Digital")
+    print("=" * 65)
+    print(f" -> Dashboard URL: http://localhost:{port}")
+    print(f" -> Local IP URL:  http://127.0.0.1:{port}")
+    print(f" -> Proposal URL:  http://localhost:{port}/proposal.html")
+    print("=" * 65)
+    print(" Server is running. Press CTRL+C to stop.\n")
 
     app.run(host="0.0.0.0", port=port, debug=False)
 
