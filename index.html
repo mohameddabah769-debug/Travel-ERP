@@ -243,6 +243,13 @@
                     <i class="fa-solid fa-file-invoice-dollar w-5 text-center text-sm"></i>
                     <span>الأرباح وقائمة الدخل P&L</span>
                 </button>
+                <button onclick="navTo('definitions')" id="nav-definitions" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-sliders w-5 text-center text-sm"></i>
+                        <span>التعريفات العامة والإعدادات</span>
+                    </div>
+                    <span class="bg-gold-500/20 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full">شامل</span>
+                </button>
                 <button onclick="navTo('permissions')" id="nav-permissions" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-user-shield w-5 text-center text-sm"></i>
                     <span>صلاحيات فريق العمل</span>
@@ -867,6 +874,293 @@
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- 8. SYSTEM MASTER DATA & DEFINITIONS (التعريفات العامة) -->
+            <!-- ============================================== -->
+            <div id="view-definitions" class="section-view space-y-6">
+                <!-- Top Header Banner -->
+                <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-gold-600 to-amber-500 text-navy-950 flex items-center justify-center text-2xl font-black shadow-md">
+                                <i class="fa-solid fa-sliders"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-xl text-slate-900">التعريفات العامة والبيانات التأسيسية للنظام (Master Data)</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">تهيئة باقات الخدمات السياحية، شجرة الحسابات، الخزائن وطرق الدفع، وبيانات ترخيص شركة الحرمين</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openManageServiceModal()" class="bg-slate-900 hover:bg-slate-800 text-gold-400 text-xs font-extrabold px-4 py-2.5 rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>إضافة خدمة جديدة +</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Sub-Tabs -->
+                    <div class="flex items-center gap-2 overflow-x-auto pt-4 text-xs font-bold scrollbar-none" id="defSubTabs">
+                        <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span>باقات وخدمات السياحة</span>
+                            <span class="bg-gold-500/20 text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountServices">7</span>
+                        </button>
+                        <button onclick="switchDefTab('accounts')" id="deftab-btn-accounts" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-sitemap"></i>
+                            <span>دليل بنود المصروفات والإيراد</span>
+                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountAccounts">8</span>
+                        </button>
+                        <button onclick="switchDefTab('drawers')" id="deftab-btn-drawers" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-cash-register"></i>
+                            <span>الخزائن وطرق الدفع والتحصيل</span>
+                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountDrawers">5</span>
+                        </button>
+                        <button onclick="switchDefTab('company')" id="deftab-btn-company" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-building-shield"></i>
+                            <span>بيانات وهوية شركة الحرمين</span>
+                        </button>
+                        <button onclick="switchDefTab('eta')" id="deftab-btn-eta" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-receipt"></i>
+                            <span>إعدادات الضرائب والفوترة ETA</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 1: SERVICES CATALOG -->
+                <div id="defpane-services" class="defpane space-y-4">
+                    <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">كتالوج الخدمات والباقات السياحية المعتمدة</h4>
+                                <p class="text-xs text-slate-500">تظهر هذه الخدمات في قوائم الحجز وتحدد أسعار البيع والتكلفة الافتراضية وهامش الربح</p>
+                            </div>
+                            <button onclick="openManageServiceModal()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-plus text-emerald-600"></i>
+                                <span>تعريف باقة سياحية جديدة</span>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
+                                    <tr>
+                                        <th class="p-3.5">كود الخدمة</th>
+                                        <th class="p-3.5">اسم الخدمة السياحية</th>
+                                        <th class="p-3.5">التصنيف</th>
+                                        <th class="p-3.5">سعر البيع المقترح</th>
+                                        <th class="p-3.5">التكلفة التقديرية</th>
+                                        <th class="p-3.5 text-emerald-400">هامش الربح المتوقع</th>
+                                        <th class="p-3.5 text-center">الحالة</th>
+                                        <th class="p-3.5 text-center">إجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="defServicesTbody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 2: CHART OF ACCOUNTS & EXPENSES -->
+                <div id="defpane-accounts" class="defpane hidden space-y-4">
+                    <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">شجرة بنود المصروفات والإيرادات (دليل الحسابات)</h4>
+                                <p class="text-xs text-slate-500">تصنيف كل حركة صرف أو توريد مالي للتحكم الكامل في قائمة الدخل ومصاريف التشغيل</p>
+                            </div>
+                            <button onclick="openManageAccountItemModal()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-plus text-emerald-600"></i>
+                                <span>إضافة بند حسابات جديد</span>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
+                                    <tr>
+                                        <th class="p-3.5">كود الحساب</th>
+                                        <th class="p-3.5">اسم البند المحاسبي</th>
+                                        <th class="p-3.5">نوع البند</th>
+                                        <th class="p-3.5">طبيعة الحساب</th>
+                                        <th class="p-3.5">المعاملة الضريبية</th>
+                                        <th class="p-3.5 text-center">إجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="defAccountsTbody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: CASH DRAWERS & TREASURY -->
+                <div id="defpane-drawers" class="defpane hidden space-y-4">
+                    <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">تعريف الخزائن النقدية والمحافظ الرقمية وطرق التحصيل</h4>
+                                <p class="text-xs text-slate-500">ربط كل عملية قبض وصرف بالخزينة أو الحساب الرقمي المخصص ومسؤول العهدة</p>
+                            </div>
+                            <button onclick="openManageCashDrawerModal()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-plus text-emerald-600"></i>
+                                <span>إضافة خزينة / محفظة جديدة</span>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
+                                    <tr>
+                                        <th class="p-3.5">اسم الخزينة / المحفظة</th>
+                                        <th class="p-3.5">النوع</th>
+                                        <th class="p-3.5">العملة</th>
+                                        <th class="p-3.5">أمين العهدة المسؤول</th>
+                                        <th class="p-3.5">سقف الرصيد المسموح</th>
+                                        <th class="p-3.5">الرصيد الدفتري الحالي</th>
+                                        <th class="p-3.5 text-center">إجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="defDrawersTbody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 4: COMPANY PROFILE -->
+                <div id="defpane-company" class="defpane hidden space-y-4">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+                            <div>
+                                <h4 class="font-black text-base text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-kaaba text-gold-600 text-lg"></i>
+                                    <span>بيانات وهوية شركة الحرمين للسياحة والسفر الرسمية</span>
+                                </h4>
+                                <p class="text-xs text-slate-500 mt-0.5">تظهر هذه البيانات تلقائياً على كل الفواتير المعتمدة، إيصالات القبض، وسندات الصرف والتقارير</p>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 text-xs font-extrabold px-3 py-1.5 rounded-xl border border-emerald-300">
+                                <i class="fa-solid fa-certificate text-emerald-600"></i>
+                                <span>ترخيص وزارة السياحة فئة (أ) ساري</span>
+                            </span>
+                        </div>
+
+                        <form onsubmit="handleSaveCompanyProfile(event)" class="space-y-4 text-xs font-bold">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">الاسم التجاري الرسمي للشركة</label>
+                                    <input type="text" id="cpName" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">الاسم المختصر / العلامة التجارية</label>
+                                    <input type="text" id="cpBrand" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">رقم ترخيص وزارة السياحة</label>
+                                    <input type="text" id="cpLicense" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">رقم السجل التجاري</label>
+                                    <input type="text" id="cpCr" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">رقم البطاقة الضريبية</label>
+                                    <input type="text" id="cpTaxId" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">معرف التسجيل بمنظومة الفاتورة ETA</label>
+                                    <input type="text" id="cpEtaId" required class="w-full bg-slate-50 border rounded-xl p-3 font-mono font-bold text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">أرقام هواتف الإدارة والخط الساخن</label>
+                                    <input type="text" id="cpPhone" required class="w-full bg-slate-50 border rounded-xl p-3 font-bold text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">البريد الإلكتروني الرسمي</label>
+                                    <input type="email" id="cpEmail" required class="w-full bg-slate-50 border rounded-xl p-3 font-bold text-slate-900">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-700 mb-1.5">عنوان المقر الرئيسي والفروع</label>
+                                <input type="text" id="cpAddress" required class="w-full bg-slate-50 border rounded-xl p-3 font-bold text-slate-900">
+                            </div>
+
+                            <div class="pt-3 flex justify-end">
+                                <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-gold-400 font-black px-6 py-3 rounded-xl transition cursor-pointer flex items-center gap-2 shadow-md">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>حفظ واعتماد بيانات هوية الشركة</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 5: TAX & ETA SETTINGS -->
+                <div id="defpane-eta" class="defpane hidden space-y-4">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200">
+                        <div class="border-b border-slate-100 pb-4 mb-6">
+                            <h4 class="font-black text-base text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-scale-balanced text-gold-600 text-lg"></i>
+                                <span>إعدادات الضرائب والربط المباشر مع مصلحة الضرائب المصرية (ETA)</span>
+                            </h4>
+                            <p class="text-xs text-slate-500 mt-0.5">تهيئة نسب الضرائب والخصم من المنبع والربط السحابي بالفاتورة الإلكترونية</p>
+                        </div>
+
+                        <form onsubmit="handleSaveTaxSettings(event)" class="space-y-4 text-xs font-bold">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">نسبة ضريبة القيمة المضافة (VAT %)</label>
+                                    <div class="relative">
+                                        <input type="number" id="taxVat" step="0.1" value="14.0" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                        <span class="absolute left-3 top-3 text-slate-400 font-bold">%</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-1">تطبق على عمولات التذاكر والخدمات السياحية</p>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">نسبة ضريبة الخصم والتحصيل (WHT %)</label>
+                                    <div class="relative">
+                                        <input type="number" id="taxWht" step="0.1" value="1.0" required class="w-full bg-slate-50 border rounded-xl p-3 font-extrabold text-slate-900">
+                                        <span class="absolute left-3 top-3 text-slate-400 font-bold">%</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-1">خصم أرباح تجارية وصناعية 1% للموردين</p>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 mb-1.5">كود النشاط بمصلحة الضرائب</label>
+                                    <input type="text" id="taxActivityCode" value="7911" required class="w-full bg-slate-50 border rounded-xl p-3 font-mono font-bold text-slate-900">
+                                    <p class="text-[10px] text-slate-400 mt-1">كود أنشطة وكالات السفر وحجز الطيران</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-black text-slate-900 text-sm">حالة بيئة الربط مع منظومة ETA</div>
+                                        <div class="text-[11px] text-slate-500">بيئة التشغيل الحية المعتمدة (Production Live API)</div>
+                                    </div>
+                                    <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full border border-emerald-300">
+                                        ● نشط ومتصل لحظياً
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 flex justify-end">
+                                <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-gold-400 font-black px-6 py-3 rounded-xl transition cursor-pointer flex items-center gap-2 shadow-md">
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>اعتماد وتحديث إعدادات الضرائب والفوترة</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -897,20 +1191,14 @@
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">المورد / شركة الطيران</label>
                         <select id="mSupplier" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
-                            <option value="مصر للطيران">مصر للطيران (EgyptAir)</option>
-                            <option value="شركة دار الإيمان (مكة)">شركة دار الإيمان (مكة)</option>
-                            <option value="مجموعة ريكسوس">مجموعة ريكسوس</option>
-                            <option value="ترافيل وان (دبي)">ترافيل وان (دبي)</option>
+                            <!-- Populated dynamically from state.suppliers -->
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">الخدمة السياحية</label>
-                    <select id="mService" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
-                        <option value="تذكرة طيران (القاهرة - جدة)">✈️ تذكرة طيران (القاهرة - جدة)</option>
-                        <option value="برنامج عمرة VIP - 14 يوم (أبراج مكة)">🕋 برنامج عمرة VIP - 14 يوم (أبراج مكة)</option>
-                        <option value="حجز فندق ريكسوس شرم الشيخ (4 ليالي)">🏨 حجز فندق ريكسوس شرم الشيخ (4 ليالي)</option>
-                        <option value="بكج سياحة دبي (تأشيرة + فندق)">🌴 بكج سياحة دبي (تأشيرة + فندق)</option>
+                    <label class="block font-bold text-slate-700 mb-1">الخدمة السياحية (تحديد تلقائي للسعر والتكلفة)</label>
+                    <select id="mService" onchange="onBookingServiceChange(this.value)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <!-- Populated dynamically from state.services -->
                     </select>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
@@ -1402,6 +1690,188 @@
         </div>
     </div>
 
+    <!-- ✈️ Manage Service Modal (Add / Edit Tourism Service) -->
+    <div id="manageServiceModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageServiceTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-ticket text-gold-600"></i>
+                    <span>إضافة / تعديل باقة سياحية</span>
+                </h3>
+                <button onclick="closeManageServiceModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageServiceForm" onsubmit="handleSaveService(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="srvIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم الخدمة / الباقة السياحية</label>
+                    <input type="text" id="srvName" required placeholder="مثال: برنامج عمرة رجب VIP - 14 يوم" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">كود الخدمة</label>
+                        <input type="text" id="srvCode" required placeholder="TRV-UM-02" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">التصنيف</label>
+                        <select id="srvCategory" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="طيران GDS">طيران GDS</option>
+                            <option value="حج وعمرة">حج وعمرة</option>
+                            <option value="فنادق وإعاشة">فنادق وإعاشة</option>
+                            <option value="سياحة داخلية">سياحة داخلية</option>
+                            <option value="سياحة خارجية">سياحة خارجية</option>
+                            <option value="تأشيرات ووثائق">تأشيرات ووثائق</option>
+                            <option value="نقل وباصات">نقل وباصات</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
+                        <select id="srvCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="ج.م">ج.م</option>
+                            <option value="ريال">ريال</option>
+                            <option value="دولار">دولار</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر البيع المقترح</label>
+                        <input type="number" id="srvSell" required placeholder="4500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">التكلفة التقديرية</label>
+                        <input type="number" id="srvCost" required placeholder="3800" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-700">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ الخدمة في الكتالوج</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 📊 Manage Account Item Modal (Add / Edit Chart of Accounts) -->
+    <div id="manageAccountItemModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageAccountTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-gold-600"></i>
+                    <span>إضافة / تعديل بند في دليل الحسابات</span>
+                </h3>
+                <button onclick="closeManageAccountItemModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageAccountForm" onsubmit="handleSaveAccountItem(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="accIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم البند المحاسبي</label>
+                    <input type="text" id="accName" required placeholder="مثال: عمولات حجز فنادق، صيانة أجهزة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">كود الحساب</label>
+                        <input type="text" id="accCode" required placeholder="EXP-106" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">نوع البند</label>
+                        <select id="accType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="مصروفات تشغيلية">مصروفات تشغيلية</option>
+                            <option value="مصروفات إدارية">مصروفات إدارية</option>
+                            <option value="مصروفات سياحية">مصروفات سياحية</option>
+                            <option value="إيرادات نشاط">إيرادات نشاط</option>
+                            <option value="إيرادات مالية">إيرادات مالية</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">طبيعة الحساب</label>
+                        <select id="accNature" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="مدين">مدين (Debit)</option>
+                            <option value="دائن">دائن (Credit)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المعاملة الضريبية</label>
+                        <select id="accTax" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="معفى ضريبياً">معفى ضريبياً</option>
+                            <option value="خاضع للضريبة">خاضع للضريبة</option>
+                            <option value="قيمة مضافة 14%">قيمة مضافة 14%</option>
+                            <option value="خصم أرباح 1%">خصم أرباح 1%</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ البند في دليل الحسابات</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 💵 Manage Cash Drawer Modal (Add / Edit Cash Drawer / Method) -->
+    <div id="manageCashDrawerModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageDrawerTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-cash-register text-gold-600"></i>
+                    <span>إضافة / تعديل خزينة أو طريقة تحصيل</span>
+                </h3>
+                <button onclick="closeManageCashDrawerModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageDrawerForm" onsubmit="handleSaveCashDrawer(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="drwIndex">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم الخزينة أو طريقة الدفع</label>
+                    <input type="text" id="drwName" required placeholder="مثال: خزينة رحلات العمرة، محفظة أورانج كاش" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">النوع</label>
+                        <select id="drwType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="خزينة نقدية">خزينة نقدية</option>
+                            <option value="خزينة عملة">خزينة عملة</option>
+                            <option value="دفع رقمي">دفع رقمي (InstaPay)</option>
+                            <option value="محفظة إلكترونية">محفظة إلكترونية</option>
+                            <option value="بطاقات بنكية">بطاقات بنكية (POS)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
+                        <select id="drwCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="ج.م">ج.م</option>
+                            <option value="ريال">ريال</option>
+                            <option value="دولار">دولار</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">أمين العهدة / المسؤول</label>
+                    <input type="text" id="drwCustodian" required placeholder="مثال: أ. محمود الجوهري" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سقف الرصيد المسموح</label>
+                        <input type="number" id="drwLimit" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الرصيد الدفتري الحالي</label>
+                        <input type="number" id="drwBal" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ الخزينة</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -1478,7 +1948,49 @@
                 { id: 'bm', name: 'بنك مصر', type: 'حساب الشركات وسداد الطيران', cur: 'ج.م', num: 'EG98000200000000098765432', bal: 240000, activity: 'سداد تذاكر مصر للطيران', icon: 'fa-landmark', bg: 'from-blue-950/80 to-slate-900', border: 'border-blue-500/40', badge: 'bg-blue-500/20 text-blue-400' },
                 { id: 'rajhi', name: 'مصرف الراجحي (السعودية)', type: 'حساب الريال - فنادق وعمرة', cur: 'ريال', num: 'SA44800000000000045612378', bal: 85000, activity: 'سداد تسكين مكة والمدينة', icon: 'fa-kaaba', bg: 'from-amber-950/80 to-slate-900', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400' },
                 { id: 'cib', name: 'البنك التجاري الدولي CIB', type: 'حساب العملة الأجنبية - طيران دولي', cur: 'دولار', num: 'EG45001000000000078912345', bal: 18400, activity: 'تذاكر طيران دولي وتأشيرات', icon: 'fa-money-bill-wave', bg: 'from-purple-950/80 to-slate-900', border: 'border-purple-500/40', badge: 'bg-purple-500/20 text-purple-400' }
-            ]
+            ],
+            services: [
+                { code: 'TRV-FL-01', name: 'تذكرة طيران دولي (EgyptAir/Saudia)', category: 'طيران GDS', cur: 'ج.م', sell: 18500, cost: 16000, margin: '13.5%', status: 'نشط' },
+                { code: 'TRV-UM-01', name: 'برنامج عمرة VIP - 14 يوم (المولد النبوي)', category: 'حج وعمرة', cur: 'ريال', sell: 4200, cost: 3550, margin: '15.5%', status: 'نشط' },
+                { code: 'TRV-HT-01', name: 'حجز فندق ريكسوس شرم الشيخ (4 ليالي All-Inclusive)', category: 'فنادق وإعاشة', cur: 'ج.م', sell: 24000, cost: 20800, margin: '13.3%', status: 'نشط' },
+                { code: 'TRV-DX-01', name: 'بكج سياحة دبي (تأشيرة + فندق 4 نجوم)', category: 'سياحة خارجية', cur: 'ج.م', sell: 35000, cost: 30000, margin: '14.3%', status: 'نشط' },
+                { code: 'TRV-DOM-01', name: 'رحلة الأقصر وأسوان نايل كروز 5 نجوم', category: 'سياحة داخلية', cur: 'ج.م', sell: 12500, cost: 10200, margin: '18.4%', status: 'نشط' },
+                { code: 'TRV-VS-01', name: 'إصدار تأشيرة سياحية إلكترونية (eVisa)', category: 'تأشيرات ووثائق', cur: 'ج.م', sell: 3500, cost: 2800, margin: '20.0%', status: 'نشط' },
+                { code: 'TRV-TR-01', name: 'نقل سياحي وليموزين مطار القاهرة/الغردقة', category: 'نقل وباصات', cur: 'ج.م', sell: 1800, cost: 1300, margin: '27.7%', status: 'نشط' }
+            ],
+            chartOfAccounts: [
+                { code: 'EXP-101', name: 'إيجارات مقرات وفروع الشركة', type: 'مصروفات تشغيلية', nature: 'مدين', tax: 'معفى ضريبياً' },
+                { code: 'EXP-102', name: 'حملات تسويق ودعاية برامج العمرة', type: 'مصروفات تشغيلية', nature: 'مدين', tax: 'خصم أرباح 1%' },
+                { code: 'EXP-103', name: 'رواتب ومكافآت العاملين والمشرفين', type: 'مصروفات إدارية', nature: 'مدين', tax: 'معفى' },
+                { code: 'EXP-104', name: 'فواتير اتصالات وإنترنت ومطبوعات', type: 'مصروفات إدارية', nature: 'مدين', tax: 'قيمة مضافة 14%' },
+                { code: 'EXP-105', name: 'رسوم تأشيرات وبوابات سفر وموانئ', type: 'مصروفات سياحية', nature: 'مدين', tax: 'معفى' },
+                { code: 'REV-201', name: 'عمولات وأرباح تذاكر طيران GDS', type: 'إيرادات نشاط', nature: 'دائن', tax: 'قيمة مضافة 14%' },
+                { code: 'REV-202', name: 'إيرادات برامج الحج والعمرة والزيارة', type: 'إيرادات نشاط', nature: 'دائن', tax: 'خاضع للضريبة' },
+                { code: 'REV-203', name: 'أرباح فروق العملات الأجنبية', type: 'إيرادات مالية', nature: 'دائن', tax: 'معفى' }
+            ],
+            cashDrawers: [
+                { id: 'c1', name: 'الخزينة النقدية الرئيسية (الكاش)', type: 'خزينة نقدية', cur: 'ج.م', custodian: 'أ. طارق ممدوح (رئيس الحسابات)', limit: 150000, bal: 45000 },
+                { id: 'c2', name: 'خزينة الريال السعودي (مكة والمدينة)', type: 'خزينة عملة', cur: 'ريال', custodian: 'محمود الجوهري', limit: 50000, bal: 18500 },
+                { id: 'c3', name: 'خزينة الدولار الأمريكي (طيران وتأشيرات)', type: 'خزينة عملة', cur: 'دولار', custodian: 'أحمد شريف (مدير عام)', limit: 20000, bal: 6200 },
+                { id: 'c4', name: 'حساب إنستاباي السريع (InstaPay Business)', type: 'دفع رقمي', cur: 'ج.م', custodian: 'الإدارة المالية', limit: 500000, bal: 72000 },
+                { id: 'c5', name: 'محافظ فودافون كاش التجارية للتحصيل', type: 'محفظة إلكترونية', cur: 'ج.م', custodian: 'قسم المبيعات', limit: 200000, bal: 34000 }
+            ],
+            companyProfile: JSON.parse(localStorage.getItem('alharamain_company_profile')) || {
+                name: 'شركة الحرمين للسياحة والسفر وخدمات الحج والعمرة',
+                brand: 'الحرمين للسياحة',
+                license: 'ترخيص وزارة السياحة والآثار فئة (أ) رقم 1842',
+                cr: '104928 - سجل تجاري جنوب القاهرة',
+                taxId: '489-312-701',
+                etaId: 'ETA-EGY-99210-ALHARAMAIN',
+                address: 'برج النور - 45 شارع مصطفى النحاس - مدينة نصر - القاهرة',
+                phone: '01012345678 / 0224012345',
+                email: 'info@alharamain-travel.com'
+            },
+            taxSettings: JSON.parse(localStorage.getItem('alharamain_tax_settings')) || {
+                vat: 14.0,
+                wht: 1.0,
+                activityCode: '7911'
+            }
         };
 
         // Navigation Tab Switching
@@ -1600,6 +2112,7 @@
             `).join('');
 
             renderBankAccounts();
+            renderDefinitionsTables();
         }
 
         // Render Live Bank Accounts with Edit & Delete Controls
@@ -1813,6 +2326,11 @@
         // MODALS HANDLERS
         // ==========================================
         function openBookingModal() {
+            renderDefinitionsTables();
+            const srvSelect = document.getElementById('mService');
+            if (srvSelect && srvSelect.value) {
+                onBookingServiceChange(srvSelect.value);
+            }
             document.getElementById('bookingModal').classList.remove('hidden');
         }
         function closeBookingModal() {
@@ -1859,7 +2377,11 @@
         }
 
         function openVoucherModal(type = 'receipt', party = '') {
+            renderDefinitionsTables();
             document.getElementById('vType').value = type;
+            if (party) document.getElementById('vParty').value = party;
+            document.getElementById('voucherModal').classList.remove('hidden');
+        }
             if (party) document.getElementById('vParty').value = party;
             document.getElementById('voucherModal').classList.remove('hidden');
         }
@@ -2274,6 +2796,380 @@
             openVoucherModal('receipt', clientName);
             const amtInput = document.getElementById('vAmount');
             if (amtInput) amtInput.value = amount;
+        }
+
+        // ==========================================
+        // 🛠️ SYSTEM MASTER DATA & DEFINITIONS LOGIC
+        // ==========================================
+
+        // Sub-tabs switching in definitions view
+        function switchDefTab(tabName) {
+            document.querySelectorAll('.defpane').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.deftab-btn').forEach(b => {
+                b.className = 'deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition';
+            });
+
+            const targetPane = document.getElementById('defpane-' + tabName);
+            if (targetPane) targetPane.classList.remove('hidden');
+
+            const targetBtn = document.getElementById('deftab-btn-' + tabName);
+            if (targetBtn) {
+                targetBtn.className = 'deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition';
+            }
+        }
+
+        // Render Definitions Tables & Dropdowns
+        function renderDefinitionsTables() {
+            // 1. Services Table
+            const sBody = document.getElementById('defServicesTbody');
+            if (sBody) {
+                sBody.innerHTML = state.services.map((s, idx) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-slate-800">${s.code}</td>
+                        <td class="p-3.5 font-extrabold text-slate-900">${s.name}</td>
+                        <td class="p-3.5"><span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded">${s.category}</span></td>
+                        <td class="p-3.5 font-black text-emerald-600">${s.sell.toLocaleString()} ${s.cur}</td>
+                        <td class="p-3.5 font-bold text-slate-600">${s.cost.toLocaleString()} ${s.cur}</td>
+                        <td class="p-3.5 font-black text-amber-600">${s.margin || Math.round(((s.sell - s.cost) / (s.sell || 1)) * 100) + '%'}</td>
+                        <td class="p-3.5 text-center"><span class="text-emerald-600 font-bold">● ${s.status || 'نشط'}</span></td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                            <button onclick="openManageServiceModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الخدمة">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteService(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الخدمة">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            const countSrv = document.getElementById('defCountServices');
+            if (countSrv) countSrv.innerText = state.services.length;
+
+            // 2. Chart of Accounts Table
+            const aBody = document.getElementById('defAccountsTbody');
+            if (aBody) {
+                aBody.innerHTML = state.chartOfAccounts.map((a, idx) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-slate-800">${a.code}</td>
+                        <td class="p-3.5 font-extrabold text-slate-900">${a.name}</td>
+                        <td class="p-3.5"><span class="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded">${a.type}</span></td>
+                        <td class="p-3.5 font-bold ${a.nature === 'مدين' ? 'text-red-600' : 'text-emerald-600'}">${a.nature}</td>
+                        <td class="p-3.5 text-slate-600">${a.tax}</td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                            <button onclick="openManageAccountItemModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل البند">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteAccountItem(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف البند">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            const countAcc = document.getElementById('defCountAccounts');
+            if (countAcc) countAcc.innerText = state.chartOfAccounts.length;
+
+            // 3. Cash Drawers & Payment Methods Table
+            const dBody = document.getElementById('defDrawersTbody');
+            if (dBody) {
+                dBody.innerHTML = state.cashDrawers.map((d, idx) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-extrabold text-slate-900">${d.name}</td>
+                        <td class="p-3.5"><span class="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded">${d.type}</span></td>
+                        <td class="p-3.5 font-bold text-slate-800">${d.cur}</td>
+                        <td class="p-3.5 font-bold text-slate-700">${d.custodian}</td>
+                        <td class="p-3.5 font-mono text-slate-600">${typeof d.limit === 'number' ? d.limit.toLocaleString() + ' ' + d.cur : d.limit}</td>
+                        <td class="p-3.5 font-black text-emerald-600">${typeof d.bal === 'number' ? d.bal.toLocaleString() + ' ' + d.cur : d.bal}</td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                            <button onclick="openManageCashDrawerModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الخزينة">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteCashDrawer(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الخزينة">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            const countDrw = document.getElementById('defCountDrawers');
+            if (countDrw) countDrw.innerText = state.cashDrawers.length;
+
+            // 4. Fill Company Profile Inputs
+            if (state.companyProfile) {
+                const cp = state.companyProfile;
+                if (document.getElementById('cpName')) document.getElementById('cpName').value = cp.name || '';
+                if (document.getElementById('cpBrand')) document.getElementById('cpBrand').value = cp.brand || '';
+                if (document.getElementById('cpLicense')) document.getElementById('cpLicense').value = cp.license || '';
+                if (document.getElementById('cpCr')) document.getElementById('cpCr').value = cp.cr || '';
+                if (document.getElementById('cpTaxId')) document.getElementById('cpTaxId').value = cp.taxId || '';
+                if (document.getElementById('cpEtaId')) document.getElementById('cpEtaId').value = cp.etaId || '';
+                if (document.getElementById('cpPhone')) document.getElementById('cpPhone').value = cp.phone || '';
+                if (document.getElementById('cpEmail')) document.getElementById('cpEmail').value = cp.email || '';
+                if (document.getElementById('cpAddress')) document.getElementById('cpAddress').value = cp.address || '';
+            }
+
+            // 5. Fill Tax Settings Inputs
+            if (state.taxSettings) {
+                const ts = state.taxSettings;
+                if (document.getElementById('taxVat')) document.getElementById('taxVat').value = ts.vat || 14.0;
+                if (document.getElementById('taxWht')) document.getElementById('taxWht').value = ts.wht || 1.0;
+                if (document.getElementById('taxActivityCode')) document.getElementById('taxActivityCode').value = ts.activityCode || '7911';
+            }
+
+            // 6. Populate Booking Modal Dropdowns dynamically
+            const srvSelect = document.getElementById('mService');
+            if (srvSelect && state.services.length > 0) {
+                const curVal = srvSelect.value;
+                srvSelect.innerHTML = state.services.map(s => `
+                    <option value="${s.name}">${s.name} [${s.category}]</option>
+                `).join('');
+                if (curVal && state.services.find(s => s.name === curVal)) {
+                    srvSelect.value = curVal;
+                }
+            }
+
+            const suppSelect = document.getElementById('mSupplier');
+            if (suppSelect && state.suppliers.length > 0) {
+                const curVal = suppSelect.value;
+                suppSelect.innerHTML = state.suppliers.map(s => `
+                    <option value="${s.name}">${s.name} (${s.type})</option>
+                `).join('');
+                if (curVal && state.suppliers.find(s => s.name === curVal)) {
+                    suppSelect.value = curVal;
+                }
+            }
+
+            // 7. Populate Voucher Accounts dropdown dynamically
+            const accSelect = document.getElementById('vAccount');
+            if (accSelect) {
+                const curVal = accSelect.value;
+                let optHtml = '<optgroup label="🏦 الحسابات البنكية المعتمدة">';
+                state.bankAccounts.forEach(b => {
+                    optHtml += `<option value="${b.name}">${b.name} (${b.cur})</option>`;
+                });
+                optHtml += '</optgroup><optgroup label="💵 الخزائن النقدية والمحافظ الرقمية">';
+                state.cashDrawers.forEach(c => {
+                    optHtml += `<option value="${c.name}">${c.name} (${c.cur})</option>`;
+                });
+                optHtml += '</optgroup>';
+                accSelect.innerHTML = optHtml;
+                if (curVal) accSelect.value = curVal;
+            }
+        }
+
+        // Auto fill booking form when service is chosen
+        function onBookingServiceChange(serviceName) {
+            const srv = state.services.find(s => s.name === serviceName);
+            if (!srv) return;
+            const sellInp = document.getElementById('mSell');
+            const costInp = document.getElementById('mCost');
+            const curInp = document.getElementById('mCurrency');
+            if (sellInp) sellInp.value = srv.sell;
+            if (costInp) costInp.value = srv.cost;
+            if (curInp) curInp.value = srv.cur;
+
+            // Auto select matching supplier if possible
+            const suppSelect = document.getElementById('mSupplier');
+            if (suppSelect) {
+                if (srv.category.includes('طيران')) {
+                    const supp = state.suppliers.find(s => s.type.includes('طيران'));
+                    if (supp) suppSelect.value = supp.name;
+                } else if (srv.category.includes('عمرة') || srv.category.includes('حج')) {
+                    const supp = state.suppliers.find(s => s.type.includes('عمرة'));
+                    if (supp) suppSelect.value = supp.name;
+                } else if (srv.category.includes('فنادق')) {
+                    const supp = state.suppliers.find(s => s.type.includes('فنادق'));
+                    if (supp) suppSelect.value = supp.name;
+                }
+            }
+        }
+
+        // ✈️ SERVICES CRUD
+        function openManageServiceModal(idx = null) {
+            const form = document.getElementById('manageServiceForm');
+            form.reset();
+            if (idx !== null && idx !== undefined && state.services[idx]) {
+                const s = state.services[idx];
+                document.getElementById('manageServiceTitle').innerText = 'تعديل بيانات الباقة السياحية';
+                document.getElementById('srvIndex').value = idx;
+                document.getElementById('srvName').value = s.name;
+                document.getElementById('srvCode').value = s.code;
+                document.getElementById('srvCategory').value = s.category;
+                document.getElementById('srvCur').value = s.cur;
+                document.getElementById('srvSell').value = s.sell;
+                document.getElementById('srvCost').value = s.cost;
+            } else {
+                document.getElementById('manageServiceTitle').innerText = 'تعريف باقة سياحية جديدة';
+                document.getElementById('srvIndex').value = '';
+                document.getElementById('srvCode').value = 'TRV-PKG-' + Math.floor(10 + Math.random() * 90);
+            }
+            document.getElementById('manageServiceModal').classList.remove('hidden');
+        }
+        function closeManageServiceModal() {
+            document.getElementById('manageServiceModal').classList.add('hidden');
+        }
+        function handleSaveService(e) {
+            e.preventDefault();
+            const idx = document.getElementById('srvIndex').value;
+            const name = document.getElementById('srvName').value.trim();
+            const code = document.getElementById('srvCode').value.trim();
+            const category = document.getElementById('srvCategory').value;
+            const cur = document.getElementById('srvCur').value;
+            const sell = parseFloat(document.getElementById('srvSell').value) || 0;
+            const cost = parseFloat(document.getElementById('srvCost').value) || 0;
+            const margin = Math.round(((sell - cost) / (sell || 1)) * 100) + '%';
+
+            const srvObj = { code, name, category, cur, sell, cost, margin, status: 'نشط' };
+            if (idx !== '') {
+                state.services[parseInt(idx)] = srvObj;
+            } else {
+                state.services.push(srvObj);
+            }
+            renderDefinitionsTables();
+            closeManageServiceModal();
+            alert(`✓ تم حفظ الخدمة (${name}) بنجاح وإتاحتها في قوائم الحجز.`);
+        }
+        function deleteService(idx) {
+            const s = state.services[idx];
+            if (!s) return;
+            if (confirm(`هل أنت متأكد من حذف الخدمة (${s.name}) من الكتالوج؟`)) {
+                state.services.splice(idx, 1);
+                renderDefinitionsTables();
+            }
+        }
+
+        // 📊 CHART OF ACCOUNTS CRUD
+        function openManageAccountItemModal(idx = null) {
+            const form = document.getElementById('manageAccountForm');
+            form.reset();
+            if (idx !== null && idx !== undefined && state.chartOfAccounts[idx]) {
+                const a = state.chartOfAccounts[idx];
+                document.getElementById('manageAccountTitle').innerText = 'تعديل بند محاسبي';
+                document.getElementById('accIndex').value = idx;
+                document.getElementById('accName').value = a.name;
+                document.getElementById('accCode').value = a.code;
+                document.getElementById('accType').value = a.type;
+                document.getElementById('accNature').value = a.nature;
+                document.getElementById('accTax').value = a.tax;
+            } else {
+                document.getElementById('manageAccountTitle').innerText = 'إضافة بند جديد لدليل الحسابات';
+                document.getElementById('accIndex').value = '';
+                document.getElementById('accCode').value = 'ACC-' + Math.floor(100 + Math.random() * 900);
+            }
+            document.getElementById('manageAccountItemModal').classList.remove('hidden');
+        }
+        function closeManageAccountItemModal() {
+            document.getElementById('manageAccountItemModal').classList.add('hidden');
+        }
+        function handleSaveAccountItem(e) {
+            e.preventDefault();
+            const idx = document.getElementById('accIndex').value;
+            const name = document.getElementById('accName').value.trim();
+            const code = document.getElementById('accCode').value.trim();
+            const type = document.getElementById('accType').value;
+            const nature = document.getElementById('accNature').value;
+            const tax = document.getElementById('accTax').value;
+
+            const accObj = { code, name, type, nature, tax };
+            if (idx !== '') {
+                state.chartOfAccounts[parseInt(idx)] = accObj;
+            } else {
+                state.chartOfAccounts.push(accObj);
+            }
+            renderDefinitionsTables();
+            closeManageAccountItemModal();
+            alert(`✓ تم حفظ البند المحاسبي (${name}) في دليل الحسابات بنجاح.`);
+        }
+        function deleteAccountItem(idx) {
+            const a = state.chartOfAccounts[idx];
+            if (!a) return;
+            if (confirm(`هل أنت متأكد من حذف البند المحاسبي (${a.name})؟`)) {
+                state.chartOfAccounts.splice(idx, 1);
+                renderDefinitionsTables();
+            }
+        }
+
+        // 💵 CASH DRAWERS CRUD
+        function openManageCashDrawerModal(idx = null) {
+            const form = document.getElementById('manageDrawerForm');
+            form.reset();
+            if (idx !== null && idx !== undefined && state.cashDrawers[idx]) {
+                const d = state.cashDrawers[idx];
+                document.getElementById('manageDrawerTitle').innerText = 'تعديل بيانات الخزينة / المحفظة';
+                document.getElementById('drwIndex').value = idx;
+                document.getElementById('drwName').value = d.name;
+                document.getElementById('drwType').value = d.type;
+                document.getElementById('drwCur').value = d.cur;
+                document.getElementById('drwCustodian').value = d.custodian;
+                document.getElementById('drwLimit').value = d.limit;
+                document.getElementById('drwBal').value = d.bal;
+            } else {
+                document.getElementById('manageDrawerTitle').innerText = 'تعريف خزينة أو طريقة تحصيل جديدة';
+                document.getElementById('drwIndex').value = '';
+            }
+            document.getElementById('manageCashDrawerModal').classList.remove('hidden');
+        }
+        function closeManageCashDrawerModal() {
+            document.getElementById('manageCashDrawerModal').classList.add('hidden');
+        }
+        function handleSaveCashDrawer(e) {
+            e.preventDefault();
+            const idx = document.getElementById('drwIndex').value;
+            const name = document.getElementById('drwName').value.trim();
+            const type = document.getElementById('drwType').value;
+            const cur = document.getElementById('drwCur').value;
+            const custodian = document.getElementById('drwCustodian').value.trim();
+            const limit = parseFloat(document.getElementById('drwLimit').value) || 0;
+            const bal = parseFloat(document.getElementById('drwBal').value) || 0;
+
+            const drwObj = { id: 'cd_' + Date.now(), name, type, cur, custodian, limit, bal };
+            if (idx !== '') {
+                state.cashDrawers[parseInt(idx)] = drwObj;
+            } else {
+                state.cashDrawers.push(drwObj);
+            }
+            renderDefinitionsTables();
+            closeManageCashDrawerModal();
+            alert(`✓ تم حفظ الخزينة / طريقة التحصيل (${name}) بنجاح.`);
+        }
+        function deleteCashDrawer(idx) {
+            const d = state.cashDrawers[idx];
+            if (!d) return;
+            if (confirm(`هل أنت متأكد من حذف (${d.name})؟`)) {
+                state.cashDrawers.splice(idx, 1);
+                renderDefinitionsTables();
+            }
+        }
+
+        // 🏢 COMPANY PROFILE SAVE
+        function handleSaveCompanyProfile(e) {
+            e.preventDefault();
+            state.companyProfile = {
+                name: document.getElementById('cpName').value.trim(),
+                brand: document.getElementById('cpBrand').value.trim(),
+                license: document.getElementById('cpLicense').value.trim(),
+                cr: document.getElementById('cpCr').value.trim(),
+                taxId: document.getElementById('cpTaxId').value.trim(),
+                etaId: document.getElementById('cpEtaId').value.trim(),
+                phone: document.getElementById('cpPhone').value.trim(),
+                email: document.getElementById('cpEmail').value.trim(),
+                address: document.getElementById('cpAddress').value.trim()
+            };
+            localStorage.setItem('alharamain_company_profile', JSON.stringify(state.companyProfile));
+            alert('✓ تم حفظ واعتماد بيانات وهوية شركة الحرمين بنجاح وتحديثها في كل وثائق وسندات النظام.');
+        }
+
+        // ⚖️ TAX SETTINGS SAVE
+        function handleSaveTaxSettings(e) {
+            e.preventDefault();
+            state.taxSettings = {
+                vat: parseFloat(document.getElementById('taxVat').value) || 14.0,
+                wht: parseFloat(document.getElementById('taxWht').value) || 1.0,
+                activityCode: document.getElementById('taxActivityCode').value.trim()
+            };
+            localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
+            alert('✓ تم حفظ واعتماد نسب الضرائب وإعدادات الفاتورة الإلكترونية ETA بنجاح.');
         }
 
         // Initialize on DOM Ready
