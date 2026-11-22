@@ -150,7 +150,7 @@
                         </span>
                         <span class="text-[10px] text-slate-400">انقر للتبديل الفوري</span>
                     </p>
-                    <div class="grid grid-cols-2 gap-2 text-[11px]">
+                    <div class="grid grid-cols-2 gap-2 text-[11px]" id="gatewayRolesContainer">
                         <button type="button" onclick="loginAsRole('أحمد شريف', 'مدير النظام (Super Admin)', 'admin', '👑')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-gold-50 hover:border-gold-400 transition text-right cursor-pointer group">
                             <div class="font-extrabold text-slate-900 flex items-center justify-between">
                                 <span>👑 أحمد شريف</span>
@@ -787,65 +787,37 @@
             <!-- ============================================== -->
             <div id="view-permissions" class="section-view space-y-6">
                 <div class="bg-white rounded-2xl shadow-xs border border-slate-200 p-6">
-                    <div class="border-b border-slate-100 pb-4 mb-5">
-                        <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-user-shield text-gold-600"></i>
-                            <span>إدارة صلاحيات فريق العمل وسجل الرقابة المباشر (RBAC & Audit Trail)</span>
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">تحديد دقيق لصلاحيات كل موظف، مع تتبع كل عملية مضافة أو معدلة على السيستم</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 mb-5 gap-3">
+                        <div>
+                            <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-user-shield text-gold-600"></i>
+                                <span>إدارة صلاحيات فريق العمل وسجل الرقابة المباشر (RBAC & Audit Trail)</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-0.5">إضافة، تعديل، وحذف الموظفين مع تحديد دقيق للصلاحيات والأدوار التشغيلية</p>
+                        </div>
+                        <button onclick="openManageStaffModal()" class="bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 cursor-pointer shadow-xs">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>إضافة موظف جديد +</span>
+                        </button>
                     </div>
 
                     <!-- Staff Table -->
-                    <div class="overflow-x-auto mb-6">
+                    <div class="overflow-x-auto mb-6 rounded-2xl border border-slate-200 shadow-xs">
                         <table class="w-full text-right text-xs">
-                            <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
+                            <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl">الموظف</th>
+                                    <th class="p-3.5">الموظف</th>
                                     <th class="p-3.5">الدور الوظيفي</th>
                                     <th class="p-3.5">صلاحية الحجز</th>
                                     <th class="p-3.5">الاطلاع على الأرباح</th>
                                     <th class="p-3.5">سندات الصرف والقبض</th>
                                     <th class="p-3.5">الفاتورة ETA</th>
-                                    <th class="p-3.5 rounded-l-xl text-center">الحالة</th>
+                                    <th class="p-3.5 text-center">الحالة</th>
+                                    <th class="p-3.5 text-center">الإجراءات</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100">
-                                <tr>
-                                    <td class="p-3.5 font-bold text-slate-900">أحمد شريف</td>
-                                    <td class="p-3.5"><span class="bg-navy-900 text-gold-400 text-[10px] font-black px-2 py-0.5 rounded">Super Admin</span></td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ كامل</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ متاح</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ متاح</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ متاح</td>
-                                    <td class="p-3.5 text-center"><span class="text-emerald-600 font-bold">● نشط</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3.5 font-bold text-slate-900">ريهام إبراهيم</td>
-                                    <td class="p-3.5"><span class="bg-sky-100 text-sky-800 text-[10px] font-bold px-2 py-0.5 rounded">موظف حجز طيران</span></td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ طيران فقط</td>
-                                    <td class="p-3.5 text-red-500 font-bold">✕ محجوب</td>
-                                    <td class="p-3.5 text-red-500 font-bold">✕ محجوب</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ إصدار فقط</td>
-                                    <td class="p-3.5 text-center"><span class="text-emerald-600 font-bold">● نشط</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3.5 font-bold text-slate-900">محمود الجوهري</td>
-                                    <td class="p-3.5"><span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">مسؤول عمرة وحج</span></td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ فنادق وعمرة</td>
-                                    <td class="p-3.5 text-red-500 font-bold">✕ محجوب</td>
-                                    <td class="p-3.5 text-amber-600 font-bold">✓ استلام عربون</td>
-                                    <td class="p-3.5 text-red-500 font-bold">✕ محجوب</td>
-                                    <td class="p-3.5 text-center"><span class="text-emerald-600 font-bold">● نشط</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3.5 font-bold text-slate-900">أ. طارق ممدوح</td>
-                                    <td class="p-3.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">رئيس الحسابات والضرائب</span></td>
-                                    <td class="p-3.5 text-slate-400">عرض فقط</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ متاح كامل</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ متاح كامل</td>
-                                    <td class="p-3.5 text-emerald-600 font-bold">✓ اعتماد وربط</td>
-                                    <td class="p-3.5 text-center"><span class="text-emerald-600 font-bold">● نشط</span></td>
-                                </tr>
+                            <tbody id="staffTbody" class="divide-y divide-slate-100 bg-white">
+                                <!-- Populated dynamically by renderStaffTable() -->
                             </tbody>
                         </table>
                     </div>
@@ -1872,6 +1844,110 @@
         </div>
     </div>
 
+    <!-- 👥 Manage Staff & Permissions Modal (Add / Edit Staff Member) -->
+    <div id="manageStaffModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageStaffTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-gold-600"></i>
+                    <span>إضافة / تعديل موظف وصلاحيات</span>
+                </h3>
+                <button onclick="closeManageStaffModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageStaffForm" onsubmit="handleSaveStaff(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="stfIndex">
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="col-span-2">
+                        <label class="block font-bold text-slate-700 mb-1">اسم الموظف / المستخدم</label>
+                        <input type="text" id="stfName" required placeholder="مثال: سارة المنشاوي" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الأيقونة / الرمز</label>
+                        <select id="stfAvatar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center">
+                            <option value="👑">👑 مدير عام</option>
+                            <option value="✈️">✈️ طيران</option>
+                            <option value="🕋">🕋 عمرة وحج</option>
+                            <option value="💼">💼 محاسب</option>
+                            <option value="👩‍💼">👩‍💼 مبيعات</option>
+                            <option value="👨‍💼">👨‍💼 إشراف</option>
+                            <option value="🌟">🌟 VIP</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المسمى الوظيفي (العنوان)</label>
+                        <input type="text" id="stfRoleLabel" required placeholder="مثال: مسؤول مبيعات وتأشيرات" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">نوع الدور التقني (Role Key)</label>
+                        <select id="stfRoleKey" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="admin">مدير نظام كامل (Admin)</option>
+                            <option value="ticketing">موظف تذاكر طيران (Ticketing)</option>
+                            <option value="umrah">مسؤول برامج عمرة وحج (Umrah)</option>
+                            <option value="accountant">رئيس حسابات وضرائب (Accountant)</option>
+                            <option value="sales">موظف مبيعات وسياحة (Sales)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">صلاحية الحجز والملفات</label>
+                        <select id="stfBookingPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="✓ كامل (جميع الخدمات)">✓ كامل (جميع الخدمات)</option>
+                            <option value="✓ طيران فقط">✓ طيران فقط</option>
+                            <option value="✓ فنادق وعمرة فقط">✓ فنادق وعمرة فقط</option>
+                            <option value="عرض الحجوزات فقط">عرض الحجوزات فقط</option>
+                            <option value="✕ معطل">✕ معطل</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الاطلاع على الأرباح</label>
+                        <select id="stfProfitPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="✓ متاح كامل">✓ متاح كامل</option>
+                            <option value="🔒 محجوب للموظف">🔒 محجوب للموظف</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سندات الصرف والقبض</label>
+                        <select id="stfVoucherPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="✓ متاح كامل">✓ متاح كامل</option>
+                            <option value="✓ استلام عربون فقط">✓ استلام عربون فقط</option>
+                            <option value="🔒 محجوب">🔒 محجوب</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الفاتورة الإلكترونية ETA</label>
+                        <select id="stfEtaPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="✓ اعتماد وربط">✓ اعتماد وربط</option>
+                            <option value="✓ إصدار فقط">✓ إصدار فقط</option>
+                            <option value="🔒 محجوب">🔒 محجوب</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">حالة الحساب</label>
+                        <select id="stfStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="نشط">● نشط</option>
+                            <option value="موقوف مؤقتاً">○ موقوف مؤقتاً</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ بيانات الموظف والصلاحيات</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -2002,7 +2078,57 @@
                 vat: 14.0,
                 wht: 1.0,
                 activityCode: '7911'
-            })
+            }),
+            staff: safeJsonParse('alharamain_staff', [
+                {
+                    id: 'stf_1',
+                    name: 'أحمد شريف',
+                    role: 'admin',
+                    roleLabel: 'مدير عام وشريك إداري',
+                    avatar: '👑',
+                    bookingPerm: '✓ كامل (جميع الخدمات)',
+                    profitPerm: '✓ متاح كامل',
+                    voucherPerm: '✓ متاح كامل',
+                    etaPerm: '✓ اعتماد وربط',
+                    status: 'نشط'
+                },
+                {
+                    id: 'stf_2',
+                    name: 'ريهام إبراهيم',
+                    role: 'ticketing',
+                    roleLabel: 'موظف حجز طيران وتذاكر',
+                    avatar: '✈️',
+                    bookingPerm: '✓ طيران فقط',
+                    profitPerm: '🔒 محجوب للموظف',
+                    voucherPerm: '🔒 محجوب',
+                    etaPerm: '🔒 محجوب',
+                    status: 'نشط'
+                },
+                {
+                    id: 'stf_3',
+                    name: 'محمود الجوهري',
+                    role: 'umrah',
+                    roleLabel: 'مسؤول برامج عمرة وحج',
+                    avatar: '🕋',
+                    bookingPerm: '✓ فنادق وعمرة فقط',
+                    profitPerm: '✓ متاح كامل',
+                    voucherPerm: '✓ استلام عربون فقط',
+                    etaPerm: '🔒 محجوب',
+                    status: 'نشط'
+                },
+                {
+                    id: 'stf_4',
+                    name: 'أ. طارق ممدوح',
+                    role: 'accountant',
+                    roleLabel: 'رئيس قسم الحسابات والضرائب',
+                    avatar: '💼',
+                    bookingPerm: 'عرض الحجوزات فقط',
+                    profitPerm: '✓ متاح كامل',
+                    voucherPerm: '✓ متاح كامل',
+                    etaPerm: '✓ اعتماد وربط',
+                    status: 'نشط'
+                }
+            ])
         };
 
         // Navigation Tab Switching
@@ -2019,9 +2145,24 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Profit visibility helper based on staff role & custom permissions
+        function isCurrentUserProfitHidden() {
+            if (!state.user) return false;
+            if (state.user.role === 'ticketing') return true;
+            if (state.staff && state.staff.length > 0) {
+                const st = state.staff.find(s => s.name === state.user.name || (s.role && s.role === state.user.role));
+                if (st && st.profitPerm && st.profitPerm.includes('محجوب')) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // Render Tables
         function renderTables() {
             recalculateTotals();
+
+            const isProfitHidden = isCurrentUserProfitHidden();
 
             // Dashboard Table
             const dBody = document.getElementById('dashBookingsTbody');
@@ -2031,8 +2172,8 @@
                     <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
                     <td class="p-3.5 text-slate-700">${b.service}</td>
                     <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
-                    <td class="p-3.5 ${state.user && state.user.role === 'ticketing' ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                        ${state.user && state.user.role === 'ticketing' ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
+                    <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
+                        ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         ${b.eta.includes('معتمدة') 
@@ -2059,8 +2200,8 @@
                     <td class="p-3.5 text-slate-600">${b.supplier}</td>
                     <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
                     <td class="p-3.5 text-slate-600">${b.cost.toLocaleString()} ${b.currency}</td>
-                    <td class="p-3.5 ${state.user && state.user.role === 'ticketing' ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                        ${state.user && state.user.role === 'ticketing' ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
+                    <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
+                        ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         ${b.eta.includes('معتمدة') 
@@ -2125,6 +2266,7 @@
 
             renderBankAccounts();
             renderDefinitionsTables();
+            renderStaffTable();
         }
 
         // Render Live Bank Accounts with Edit & Delete Controls
@@ -2397,7 +2539,7 @@
             // Role-based visibility
             const profitKpi = document.getElementById('dashTotalProfit');
             if (profitKpi) {
-                if (roleType === 'ticketing') {
+                if (isCurrentUserProfitHidden()) {
                     profitKpi.innerText = '🔒 محجوب للموظف';
                     profitKpi.className = 'text-sm font-extrabold text-slate-400 mt-2 bg-slate-100 p-2 rounded-xl text-center';
                 } else {
@@ -3269,6 +3411,180 @@
             };
             localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
             alert('✓ تم حفظ واعتماد نسب الضرائب وإعدادات الفاتورة الإلكترونية ETA بنجاح.');
+        }
+
+        // 👥 STAFF & PERMISSIONS (CRUD & RBAC)
+        function renderStaffTable() {
+            const tbody = document.getElementById('staffTbody');
+            if (tbody && state.staff) {
+                tbody.innerHTML = state.staff.map((s, idx) => {
+                    const isProfitVisible = s.profitPerm && s.profitPerm.includes('متاح');
+                    const isVoucherAllowed = s.voucherPerm && (s.voucherPerm.includes('متاح') || s.voucherPerm.includes('عربون'));
+                    const isEtaAllowed = s.etaPerm && (s.etaPerm.includes('اعتماد') || s.etaPerm.includes('إصدار'));
+                    const isActive = s.status === 'نشط';
+
+                    let roleBadgeColor = 'bg-slate-100 text-slate-800 border-slate-300';
+                    if (s.role === 'admin') roleBadgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
+                    else if (s.role === 'ticketing') roleBadgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
+                    else if (s.role === 'umrah') roleBadgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+                    else if (s.role === 'accountant') roleBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                    else if (s.role === 'sales') roleBadgeColor = 'bg-teal-100 text-teal-800 border-teal-300';
+
+                    return `
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="p-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center text-sm shadow-xs shrink-0">${s.avatar || '👤'}</span>
+                                    <div>
+                                        <div class="font-extrabold text-slate-900">${s.name}</div>
+                                        <div class="text-[10px] text-slate-400 font-mono">ID: #STF-${idx + 1}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-3.5">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${roleBadgeColor}">
+                                    ${s.roleLabel}
+                                </span>
+                            </td>
+                            <td class="p-3.5 font-bold text-slate-700">${s.bookingPerm}</td>
+                            <td class="p-3.5">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isProfitVisible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-600 border border-red-200'}">
+                                    ${s.profitPerm}
+                                </span>
+                            </td>
+                            <td class="p-3.5">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isVoucherAllowed ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-slate-100 text-slate-500'}">
+                                    ${s.voucherPerm}
+                                </span>
+                            </td>
+                            <td class="p-3.5">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isEtaAllowed ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500'}">
+                                    ${s.etaPerm}
+                                </span>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+                                    ${isActive ? '● نشط' : '○ موقوف'}
+                                </span>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="loginAsRole('${s.name}', '${s.roleLabel}', '${s.role}', '${s.avatar}'); alert('✓ تم التبديل إلى حساب: ${s.name}');" class="px-2 py-1 rounded-lg bg-gold-50 text-gold-700 hover:bg-gold-100 border border-gold-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1" title="دخول سريع بحساب هذا الموظف">
+                                        <i class="fa-solid fa-arrow-right-to-bracket text-[9px]"></i>
+                                        <span>دخول</span>
+                                    </button>
+                                    <button onclick="openManageStaffModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="تعديل الموظف والصلاحيات">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button onclick="deleteStaff(${idx})" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="حذف الموظف">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Sync Gateway Quick Roles with active staff
+            const gatewayContainer = document.getElementById('gatewayRolesContainer');
+            if (gatewayContainer && state.staff && state.staff.length > 0) {
+                gatewayContainer.innerHTML = state.staff.map(s => `
+                    <button type="button" onclick="loginAsRole('${s.name}', '${s.roleLabel}', '${s.role}', '${s.avatar}')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-gold-50 hover:border-gold-400 transition text-right cursor-pointer group">
+                        <div class="font-extrabold text-slate-900 flex items-center justify-between">
+                            <span>${s.avatar || '👤'} ${s.name}</span>
+                            <i class="fa-solid fa-arrow-left text-[10px] text-slate-300 group-hover:text-gold-600"></i>
+                        </div>
+                        <div class="text-[10px] text-slate-500 truncate">${s.roleLabel}</div>
+                    </button>
+                `).join('');
+            }
+        }
+
+        function openManageStaffModal(idx = null) {
+            const modal = document.getElementById('manageStaffModal');
+            const title = document.getElementById('manageStaffTitle');
+            const form = document.getElementById('manageStaffForm');
+            if (!modal) return;
+
+            form.reset();
+            if (idx !== null && state.staff[idx]) {
+                const s = state.staff[idx];
+                document.getElementById('stfIndex').value = idx;
+                document.getElementById('stfName').value = s.name;
+                document.getElementById('stfAvatar').value = s.avatar || '👨‍💼';
+                document.getElementById('stfRoleLabel').value = s.roleLabel;
+                document.getElementById('stfRoleKey').value = s.role;
+                document.getElementById('stfBookingPerm').value = s.bookingPerm;
+                document.getElementById('stfProfitPerm').value = s.profitPerm;
+                document.getElementById('stfVoucherPerm').value = s.voucherPerm;
+                document.getElementById('stfEtaPerm').value = s.etaPerm;
+                document.getElementById('stfStatus').value = s.status || 'نشط';
+                title.innerHTML = '<i class="fa-solid fa-user-pen text-gold-600"></i> <span>تعديل بيانات الموظف والصلاحيات</span>';
+            } else {
+                document.getElementById('stfIndex').value = '';
+                document.getElementById('stfStatus').value = 'نشط';
+                title.innerHTML = '<i class="fa-solid fa-user-plus text-gold-600"></i> <span>إضافة موظف جديد وتحديد صلاحياته</span>';
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeManageStaffModal() {
+            const modal = document.getElementById('manageStaffModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleSaveStaff(e) {
+            e.preventDefault();
+            const idx = document.getElementById('stfIndex').value;
+            const name = document.getElementById('stfName').value.trim();
+            const avatar = document.getElementById('stfAvatar').value;
+            const roleLabel = document.getElementById('stfRoleLabel').value.trim();
+            const role = document.getElementById('stfRoleKey').value;
+            const bookingPerm = document.getElementById('stfBookingPerm').value;
+            const profitPerm = document.getElementById('stfProfitPerm').value;
+            const voucherPerm = document.getElementById('stfVoucherPerm').value;
+            const etaPerm = document.getElementById('stfEtaPerm').value;
+            const status = document.getElementById('stfStatus').value;
+
+            const staffObj = {
+                id: idx !== '' && state.staff[idx] ? state.staff[idx].id : 'stf_' + Date.now(),
+                name,
+                avatar,
+                roleLabel,
+                role,
+                bookingPerm,
+                profitPerm,
+                voucherPerm,
+                etaPerm,
+                status
+            };
+
+            if (idx !== '') {
+                state.staff[parseInt(idx)] = staffObj;
+            } else {
+                state.staff.push(staffObj);
+            }
+
+            localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+            renderStaffTable();
+            closeManageStaffModal();
+            alert(`✓ تم حفظ واعتماد بيانات الموظف والصلاحيات لـ (${name}) بنجاح.`);
+        }
+
+        function deleteStaff(idx) {
+            const s = state.staff[idx];
+            if (!s) return;
+            if (state.staff.length <= 1) {
+                alert('لا يمكن حذف الموظف الوحيد في النظام للحفاظ على أمان وصلاحيات الإدارة.');
+                return;
+            }
+            if (confirm(`هل أنت متأكد من حذف الموظف (${s.name}) وسحب كافة صلاحياته من النظام نهائياً؟`)) {
+                state.staff.splice(idx, 1);
+                localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+                renderStaffTable();
+                alert(`✓ تم حذف حساب الموظف (${s.name}) بنجاح.`);
+            }
         }
 
         // Initialize on DOM Ready
