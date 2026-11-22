@@ -27,7 +27,6 @@ echo.
 echo ======================================================================
 echo  Server is LIVE at: http://localhost:5000
 echo  Local Network URL: http://127.0.0.1:5000
-echo  Proposal URL:      http://localhost:5000/proposal.html
 echo ======================================================================
 echo.
 

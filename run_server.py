@@ -25,12 +25,6 @@ app.register_blueprint(api_bp)
 def index():
     return send_from_directory(BASE_DIR, "index.html")
 
-# Proposal Web Route -> proposal.html
-@app.route("/proposal")
-@app.route("/proposal.html")
-def proposal():
-    return send_from_directory(BASE_DIR, "proposal.html")
-
 # Health check
 @app.route("/health")
 def health():
@@ -48,7 +42,6 @@ def main():
     print("=" * 65)
     print(f" -> Dashboard URL: http://localhost:{port}")
     print(f" -> Local IP URL:  http://127.0.0.1:{port}")
-    print(f" -> Proposal URL:  http://localhost:{port}/proposal.html")
     print("=" * 65)
     print(" Server is running. Press CTRL+C to stop.\n")
 

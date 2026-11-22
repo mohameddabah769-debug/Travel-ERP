@@ -15,7 +15,6 @@
 
 ## 🌐 روابط المشروع على الإنترنت
 - **المعاينة المباشرة (GitHub Pages):** [https://mohameddabah769-debug.github.io/Travel-ERP/](https://mohameddabah769-debug.github.io/Travel-ERP/)
-- **العرض الفني والمالي (Official Proposal):** [https://mohameddabah769-debug.github.io/Travel-ERP/proposal.html](https://mohameddabah769-debug.github.io/Travel-ERP/proposal.html)
 - **مستودع الكود على GitHub:** [https://github.com/mohameddabah769-debug/Travel-ERP](https://github.com/mohameddabah769-debug/Travel-ERP)
 
 ---
@@ -31,7 +30,6 @@ Travel ERP/
 │   ├── routes_api.py        # واجهات برمجة التطبيقات RESTful API
 │   └── seed.py              # سكربت تعبئة البيانات الأولية الواقعية
 ├── index.html               # واجهة المستخدم التفاعلية المتطورة
-├── proposal.html            # صفحة العرض الفني والمالي للعميل (مجهزة للطباعة PDF)
 ├── run_server.py            # خادم الويب (Flask Backend)
 ├── RUN_TRAVEL_ERP.bat       # ملف التشغيل السريع لويندوز
 ├── requirements.txt         # متطلبات بايثون
