@@ -383,17 +383,26 @@
                 </div>
             </div>
 
-            <!-- Center: Global Live Search Bar -->
-            <div class="flex-1 max-w-md mx-2 relative">
+            <!-- Center: Global Live Search Bar & Floating Instant Results -->
+            <div class="flex-1 max-w-lg mx-2 relative" id="searchContainer">
                 <div class="relative">
-                    <input type="search" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="بحث شامل (رقم PNR، اسم العميل، التذكرة، شركة الطيران)..." class="w-full bg-slate-50/90 border border-slate-300 rounded-xl pr-9 pl-14 py-2 text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-600 focus:bg-white transition shadow-inner">
-                    <span class="absolute right-3 top-2.5 text-slate-400 text-xs pointer-events-none search-icon-pos">
+                    <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" onfocus="handleSearchFocus()" placeholder="بحث شامل وذكي (PNR، عميل، مورد، طيران، بنك، موظف)..." autocomplete="off" class="w-full bg-slate-50/90 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pr-10 pl-20 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-600 focus:bg-white dark:focus:bg-slate-950 transition shadow-inner">
+                    <span class="absolute right-3.5 top-3 text-slate-400 text-xs pointer-events-none search-icon-pos">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <button type="button" id="searchClearBtn" onclick="clearGlobalSearch()" class="hidden absolute left-2.5 top-2 text-slate-400 hover:text-slate-700 text-xs p-0.5 rounded cursor-pointer search-clear-pos" title="مسح البحث">
-                        ✕
-                    </button>
-                    <span id="searchCountBadge" class="hidden absolute left-7 top-2 bg-gold-100 text-gold-800 text-[10px] font-black px-1.5 py-0.5 rounded">0</span>
+                    <div class="absolute left-2.5 top-2.5 flex items-center gap-1.5 search-clear-pos">
+                        <span id="searchCountBadge" class="hidden bg-gold-500/20 text-gold-700 dark:text-gold-400 border border-gold-400/40 text-[10px] font-black px-1.5 py-0.5 rounded-md">0</span>
+                        <button type="button" id="searchClearBtn" onclick="clearGlobalSearch()" class="hidden text-slate-400 hover:text-red-500 text-xs w-5 h-5 rounded-md flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer" title="مسح البحث">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 📱 Floating Instant Global Search Results Dropdown -->
+                <div id="searchResultsDropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 z-50 overflow-hidden max-h-[75vh] overflow-y-auto animate-[fadeIn_0.15s_ease-in-out]">
+                    <div id="searchResultsContent" class="p-3 space-y-3 text-xs">
+                        <!-- Populated dynamically by handleGlobalSearch() -->
+                    </div>
                 </div>
             </div>
 
@@ -2679,53 +2688,8 @@
         function renderTables() {
             recalculateTotals();
             renderBookingsTables();
-
-            // Clients Table
-            const cBody = document.getElementById('clientsTbody');
-            cBody.innerHTML = state.clients.map((c, idx) => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3.5 font-bold text-slate-900">${c.name}</td>
-                    <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
-                    <td class="p-3.5 font-semibold text-slate-800">${c.sales}</td>
-                    <td class="p-3.5 text-emerald-600 font-semibold">${c.paid}</td>
-                    <td class="p-3.5 text-amber-600 font-black">${c.due}</td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        <button onclick="openVoucherModal('receipt', '${c.name}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
-                            تحصيل
-                        </button>
-                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات العميل">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف العميل">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-
-            // Suppliers Table
-            const sBody = document.getElementById('suppliersTbody');
-            sBody.innerHTML = state.suppliers.map((s, idx) => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3.5 font-bold text-slate-900">${s.name}</td>
-                    <td class="p-3.5 text-slate-600">${s.type}</td>
-                    <td class="p-3.5 font-bold text-slate-800">${s.cur}</td>
-                    <td class="p-3.5 font-semibold text-slate-800">${s.total}</td>
-                    <td class="p-3.5 text-red-600 font-black">${s.due}</td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        <button onclick="openVoucherModal('payment', '${s.name}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
-                            سداد
-                        </button>
-                        <button onclick="openManageSupplierModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات المورد">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteSupplier(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف المورد">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-
+            renderClientsTable();
+            renderSuppliersTable();
             renderBankAccounts();
             renderDefinitionsTables();
             renderStaffTable();
@@ -3559,46 +3523,388 @@
         }
 
         // ==========================================
-        // 🔍 GLOBAL LIVE SEARCH LOGIC
+        // 🔍 GLOBAL LIVE INTELLIGENT SEARCH ENGINE
         // ==========================================
+
+        // Arabic string normalizer (handles hamzas, ta marbuta, ya/alif maqsura, tashkeel)
+        function normAr(str) {
+            if (str === null || str === undefined) return '';
+            return (str + '')
+                .toLowerCase()
+                .trim()
+                .replace(/[أإآ]/g, 'ا')
+                .replace(/ة/g, 'ه')
+                .replace(/[ىي]/g, 'ي')
+                .replace(/[\u064B-\u065F]/g, '');
+        }
+
+        function handleSearchFocus() {
+            const input = document.getElementById('globalSearchInput');
+            if (input && input.value.trim()) {
+                handleGlobalSearch(input.value);
+            }
+        }
+
         function handleGlobalSearch(query) {
-            const q = (query || '').trim().toLowerCase();
+            const rawQ = (query || '').trim();
+            const nq = normAr(rawQ);
             const clearBtn = document.getElementById('searchClearBtn');
             const badge = document.getElementById('searchCountBadge');
-            
-            if (clearBtn) clearBtn.classList.toggle('hidden', !q);
+            const dropdown = document.getElementById('searchResultsDropdown');
+            const content = document.getElementById('searchResultsContent');
 
-            const filtered = state.bookings.filter(b => {
-                if (!q) return true;
-                return (
-                    (b.pnr && b.pnr.toLowerCase().includes(q)) ||
-                    (b.client && b.client.toLowerCase().includes(q)) ||
-                    (b.service && b.service.toLowerCase().includes(q)) ||
-                    (b.supplier && b.supplier.toLowerCase().includes(q)) ||
-                    ((b.sell + '').includes(q)) ||
-                    (b.currency && b.currency.toLowerCase().includes(q))
-                );
-            });
-
-            if (badge) {
-                if (q) {
-                    badge.innerText = `${filtered.length}`;
-                    badge.classList.remove('hidden');
-                } else {
-                    badge.classList.add('hidden');
-                }
+            if (!nq) {
+                if (clearBtn) clearBtn.classList.add('hidden');
+                if (badge) badge.classList.add('hidden');
+                if (dropdown) dropdown.classList.add('hidden');
+                renderBookingsTables();
+                renderClientsTable();
+                renderSuppliersTable();
+                return;
             }
 
-            renderBookingsTables(filtered);
+            if (clearBtn) clearBtn.classList.remove('hidden');
+
+            // 1. Search Bookings
+            const mBookings = state.bookings.filter(b => 
+                normAr(b.pnr).includes(nq) ||
+                normAr(b.client).includes(nq) ||
+                normAr(b.service).includes(nq) ||
+                normAr(b.supplier).includes(nq) ||
+                (b.sell + '').includes(nq) ||
+                normAr(b.currency).includes(nq)
+            );
+
+            // 2. Search Clients
+            const mClients = state.clients.filter(c =>
+                normAr(c.name).includes(nq) ||
+                (c.phone || '').includes(nq) ||
+                normAr(c.sales).includes(nq) ||
+                normAr(c.due).includes(nq)
+            );
+
+            // 3. Search Suppliers & Airlines
+            const mSuppliers = state.suppliers.filter(s =>
+                normAr(s.name).includes(nq) ||
+                normAr(s.type).includes(nq) ||
+                normAr(s.due).includes(nq)
+            );
+
+            // 4. Search Bank Accounts
+            const mBanks = state.bankAccounts.filter(b =>
+                normAr(b.name).includes(nq) ||
+                normAr(b.type).includes(nq) ||
+                (b.num || '').toLowerCase().includes(nq)
+            );
+
+            // 5. Search Staff Members
+            const mStaff = (state.staff || []).filter(st =>
+                normAr(st.name).includes(nq) ||
+                normAr(st.roleLabel).includes(nq) ||
+                normAr(st.role).includes(nq)
+            );
+
+            // 6. Search Currencies
+            const mCurrencies = (state.currencies || []).filter(c =>
+                normAr(c.name).includes(nq) ||
+                normAr(c.code).includes(nq) ||
+                normAr(c.symbol).includes(nq) ||
+                normAr(c.usage).includes(nq)
+            );
+
+            const totalMatches = mBookings.length + mClients.length + mSuppliers.length + mBanks.length + mStaff.length + mCurrencies.length;
+
+            if (badge) {
+                badge.innerText = `${totalMatches}`;
+                badge.classList.remove('hidden');
+            }
+
+            // In-page live filtering of active tables
+            renderBookingsTables(mBookings);
+            renderClientsTable(mClients);
+            renderSuppliersTable(mSuppliers);
+
+            // Render Interactive Floating Dropdown Results
+            if (dropdown && content) {
+                if (totalMatches === 0) {
+                    content.innerHTML = `
+                        <div class="p-6 text-center text-slate-400 font-bold">
+                            <i class="fa-solid fa-magnifying-glass text-gold-500 text-xl mb-2 block"></i>
+                            <div class="text-slate-700 dark:text-slate-200">لم يتم العثور على أي نتائج مطابقة لـ "${rawQ}"</div>
+                            <div class="text-[10px] text-slate-400 mt-1">تأكد من كتابة الكلمة بشكل صحيح (رقم PNR، اسم العميل، البنك، أو الخدمة)</div>
+                        </div>
+                    `;
+                } else {
+                    let html = `
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-500">
+                            <span>نتائج البحث الشامل (${totalMatches} نتيجة):</span>
+                            <span class="text-gold-600 font-extrabold cursor-pointer hover:underline" onclick="clearGlobalSearch()">إغلاق ✕</span>
+                        </div>
+                    `;
+
+                    // Bookings Group
+                    if (mBookings.length > 0) {
+                        html += `
+                            <div class="space-y-1">
+                                <div class="text-[10px] font-black text-gold-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-ticket"></i>
+                                    <span>الحجوزات والتذاكر (${mBookings.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mBookings.slice(0, 4).map(b => `
+                                        <div onclick="selectSearchResult('bookings', '${b.pnr}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-gold-50 dark:hover:bg-gold-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div>
+                                                <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-gold-600 flex items-center gap-2">
+                                                    <span class="font-mono text-gold-600">${b.pnr}</span>
+                                                    <span>${b.client}</span>
+                                                </div>
+                                                <div class="text-[10px] text-slate-400 truncate max-w-xs">${b.service}</div>
+                                            </div>
+                                            <div class="text-left shrink-0">
+                                                <div class="font-black text-emerald-600">${b.sell.toLocaleString()} ${b.currency}</div>
+                                                <div class="text-[9px] text-slate-400">${b.supplier}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Clients Group
+                    if (mClients.length > 0) {
+                        html += `
+                            <div class="space-y-1 pt-1">
+                                <div class="text-[10px] font-black text-sky-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span>العملاء والحسابات الآجلة (${mClients.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mClients.slice(0, 3).map(c => `
+                                        <div onclick="selectSearchResult('clients', '${c.name.replace(/'/g, "\\'")}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-sky-50 dark:hover:bg-sky-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div>
+                                                <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-sky-600">${c.name}</div>
+                                                <div class="text-[10px] text-slate-400 font-mono">${c.phone}</div>
+                                            </div>
+                                            <div class="text-left shrink-0">
+                                                <div class="font-black text-amber-600 text-xs">مستحق: ${c.due}</div>
+                                                <div class="text-[9px] text-slate-400">مبيعات: ${c.sales}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Suppliers Group
+                    if (mSuppliers.length > 0) {
+                        html += `
+                            <div class="space-y-1 pt-1">
+                                <div class="text-[10px] font-black text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-plane-departure"></i>
+                                    <span>شركات الطيران والموردين (${mSuppliers.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mSuppliers.slice(0, 3).map(s => `
+                                        <div onclick="selectSearchResult('suppliers', '${s.name.replace(/'/g, "\\'")}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50 dark:hover:bg-purple-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div>
+                                                <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-purple-600">${s.name}</div>
+                                                <div class="text-[10px] text-slate-400">${s.type}</div>
+                                            </div>
+                                            <div class="text-left shrink-0 font-bold text-red-600 text-xs">مستحق: ${s.due}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Banks Group
+                    if (mBanks.length > 0) {
+                        html += `
+                            <div class="space-y-1 pt-1">
+                                <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span>البنوك والخزائن (${mBanks.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mBanks.slice(0, 3).map(b => `
+                                        <div onclick="selectSearchResult('treasury', '${b.name.replace(/'/g, "\\'")}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div>
+                                                <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-emerald-600">${b.name}</div>
+                                                <div class="text-[10px] text-slate-400">${b.type}</div>
+                                            </div>
+                                            <div class="text-left shrink-0 font-black text-emerald-600 text-xs">${b.bal.toLocaleString()} ${b.cur}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Staff Group
+                    if (mStaff.length > 0) {
+                        html += `
+                            <div class="space-y-1 pt-1">
+                                <div class="text-[10px] font-black text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                    <span>فريق العمل والصلاحيات (${mStaff.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mStaff.slice(0, 3).map(st => `
+                                        <div onclick="selectSearchResult('permissions', '${st.name.replace(/'/g, "\\'")}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-blue-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-base">${st.avatar || '👤'}</span>
+                                                <div>
+                                                    <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-blue-600">${st.name}</div>
+                                                    <div class="text-[10px] text-slate-400">${st.roleLabel}</div>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">${st.status || 'نشط'}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Currencies Group
+                    if (mCurrencies.length > 0) {
+                        html += `
+                            <div class="space-y-1 pt-1">
+                                <div class="text-[10px] font-black text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-coins"></i>
+                                    <span>العملات وأسعار الصرف (${mCurrencies.length})</span>
+                                </div>
+                                <div class="space-y-1">
+                                    ${mCurrencies.slice(0, 3).map(cur => `
+                                        <div onclick="selectSearchResult('definitions', 'currencies')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-amber-50 dark:hover:bg-amber-950/40 border border-slate-200/60 dark:border-slate-700/60 transition cursor-pointer flex justify-between items-center group">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-base">${cur.flag || '💱'}</span>
+                                                <div>
+                                                    <div class="font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-amber-600">${cur.name} (${cur.code})</div>
+                                                    <div class="text-[10px] text-slate-400">${cur.usage || ''}</div>
+                                                </div>
+                                            </div>
+                                            <span class="font-black text-emerald-600 text-xs">${cur.rate.toFixed(2)} ج.م</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    content.innerHTML = html;
+                }
+                dropdown.classList.remove('hidden');
+            }
+        }
+
+        // Action when user clicks on a search result
+        function selectSearchResult(viewId, targetKey) {
+            navTo(viewId);
+            const dropdown = document.getElementById('searchResultsDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+
+            if (viewId === 'definitions' && targetKey === 'currencies') {
+                switchDefTab('currencies');
+            } else if (viewId === 'clients') {
+                openDebtsModal();
+            }
         }
 
         function clearGlobalSearch() {
             const input = document.getElementById('globalSearchInput');
+            const dropdown = document.getElementById('searchResultsDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
             if (input) {
                 input.value = '';
                 handleGlobalSearch('');
                 input.focus();
             }
+        }
+
+        // Close search dropdown on click outside
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('searchContainer');
+            const dropdown = document.getElementById('searchResultsDropdown');
+            if (container && dropdown && !container.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Close search dropdown on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('searchResultsDropdown');
+                if (dropdown) dropdown.classList.add('hidden');
+            }
+        });
+
+        // Table renderer helpers for Clients & Suppliers live search
+        function renderClientsTable(customList = null) {
+            const cBody = document.getElementById('clientsTbody');
+            if (!cBody) return;
+            const list = customList !== null ? customList : state.clients;
+
+            if (list.length === 0) {
+                cBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">🔍 لم يتم العثور على عملاء مطابقين للبحث</td></tr>`;
+                return;
+            }
+
+            cBody.innerHTML = list.map((c, idx) => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-3.5 font-bold text-slate-900">${c.name}</td>
+                    <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
+                    <td class="p-3.5 font-semibold text-slate-800">${c.sales}</td>
+                    <td class="p-3.5 text-emerald-600 font-semibold">${c.paid}</td>
+                    <td class="p-3.5 text-amber-600 font-black">${c.due}</td>
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                        <button onclick="openVoucherModal('receipt', '${c.name.replace(/'/g, "\\'")}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                            تحصيل
+                        </button>
+                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات العميل">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف العميل">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderSuppliersTable(customList = null) {
+            const sBody = document.getElementById('suppliersTbody');
+            if (!sBody) return;
+            const list = customList !== null ? customList : state.suppliers;
+
+            if (list.length === 0) {
+                sBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">🔍 لم يتم العثور على شركات طيران أو موردين مطابقين للبحث</td></tr>`;
+                return;
+            }
+
+            sBody.innerHTML = list.map((s, idx) => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-3.5 font-bold text-slate-900">${s.name}</td>
+                    <td class="p-3.5 text-slate-600">${s.type}</td>
+                    <td class="p-3.5 font-bold text-slate-800">${s.cur}</td>
+                    <td class="p-3.5 font-semibold text-slate-800">${s.total}</td>
+                    <td class="p-3.5 text-red-600 font-black">${s.due}</td>
+                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                        <button onclick="openVoucherModal('payment', '${s.name.replace(/'/g, "\\'")}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
+                            سداد
+                        </button>
+                        <button onclick="openManageSupplierModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات المورد">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteSupplier(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف المورد">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
         // ==========================================
