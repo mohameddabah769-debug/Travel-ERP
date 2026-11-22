@@ -43,16 +43,12 @@
         
         /* Custom luxury scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        html.dark ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        html.dark ::-webkit-scrollbar-thumb { background: #334155; }
         ::-webkit-scrollbar-thumb:hover { background: #d97706; }
 
-        .sidebar-link.active {
-            background: linear-gradient(90deg, rgba(217,119,6,0.15) 0%, rgba(217,119,6,0.02) 100%);
-            color: #fbbf24;
-            border-right: 4px solid #d97706;
-            font-weight: 800;
-        }
         .section-view { display: none; }
         .section-view.active { display: block; animation: fadeIn 0.25s ease-in-out; }
         @keyframes fadeIn {
@@ -60,7 +56,194 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 🌓 LUXURY DARK THEME STYLES */
+        /* ========================================================
+           ☀️ ENTERPRISE LIGHT MODE STYLES (DEFAULT)
+           ======================================================== */
+        body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        /* 📁 SIDEBAR (LIGHT MODE) */
+        .sidebar {
+            background-color: #ffffff !important;
+            border-left: 1px solid #e2e8f0 !important;
+            box-shadow: -4px 0 20px -2px rgba(0, 0, 0, 0.04) !important;
+            color: #475569 !important;
+        }
+        .sidebar .sidebar-brand-header {
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        .sidebar .sidebar-brand-title {
+            color: #0f172a !important;
+        }
+        .sidebar .sidebar-brand-sub {
+            color: #d97706 !important;
+        }
+        .sidebar-link {
+            color: #475569 !important;
+            font-weight: 700 !important;
+        }
+        .sidebar-link:hover {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.12) 0%, rgba(217, 119, 6, 0.02) 100%) !important;
+            color: #b45309 !important;
+            border-right: 4px solid #d97706 !important;
+            font-weight: 800 !important;
+        }
+        .sidebar-link .badge-amber {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+            border: 1px solid #fde68a !important;
+        }
+        .sidebar-link .badge-emerald {
+            background-color: #dcfce7 !important;
+            color: #166534 !important;
+            border: 1px solid #bbf7d0 !important;
+        }
+        .sidebar .sidebar-footer {
+            background-color: #f8fafc !important;
+            border-top: 1px solid #e2e8f0 !important;
+        }
+        .sidebar .sidebar-footer .eta-text {
+            color: #059669 !important;
+        }
+        .sidebar .sidebar-footer .eta-sub {
+            color: #64748b !important;
+        }
+        .sidebar .sidebar-footer .logout-btn {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #475569 !important;
+        }
+        .sidebar .sidebar-footer .logout-btn:hover {
+            background-color: #fef2f2 !important;
+            border-color: #fecaca !important;
+            color: #dc2626 !important;
+        }
+
+        /* 📊 TABLE HEADERS (LIGHT MODE) */
+        table thead, thead.bg-slate-900, thead.bg-slate-50 {
+            background-color: #f8fafc !important;
+            color: #1e293b !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+        }
+        table thead th {
+            color: #334155 !important;
+            font-weight: 800 !important;
+        }
+
+        /* 🌟 DASHBOARD BANNERS (LIGHT MODE) */
+        .welcome-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #fffbeb 100%) !important;
+            color: #0f172a !important;
+            border: 1.5px solid #fef3c7 !important;
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05) !important;
+        }
+        .welcome-banner h2 {
+            color: #0f172a !important;
+        }
+        .welcome-banner p {
+            color: #475569 !important;
+        }
+        .welcome-banner .welcome-tag {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+            border: 1px solid #fde68a !important;
+        }
+        .welcome-banner .stat-box {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        }
+        .welcome-banner .stat-label {
+            color: #64748b !important;
+        }
+
+        .bank-ledger-banner {
+            background-color: #ffffff !important;
+            border: 1.5px solid #e2e8f0 !important;
+            color: #0f172a !important;
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05) !important;
+        }
+        .bank-ledger-banner .bank-section-header {
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        .bank-ledger-banner h3 {
+            color: #0f172a !important;
+        }
+        .bank-ledger-banner p {
+            color: #64748b !important;
+        }
+
+        /* 🏦 BANK ACCOUNT CARDS (LIGHT MODE) */
+        .bank-account-card {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+        }
+        .bank-account-card:hover {
+            border-color: #d97706 !important;
+            box-shadow: 0 6px 15px rgba(217, 119, 6, 0.1) !important;
+        }
+        .bank-account-card .bank-card-title {
+            color: #0f172a !important;
+        }
+        .bank-account-card .bank-card-balance {
+            color: #0f172a !important;
+        }
+        .bank-account-card .bank-card-badge {
+            background-color: #f1f5f9 !important;
+            color: #334155 !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        .bank-account-card .bank-card-icon {
+            background-color: #f8fafc !important;
+            color: #d97706 !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        .bank-account-card .bank-card-action {
+            color: #64748b !important;
+        }
+        .bank-account-card .bank-card-action:hover {
+            color: #d97706 !important;
+        }
+        .bank-account-card .bank-card-iban {
+            color: #64748b !important;
+        }
+        .bank-account-card .bank-card-footer {
+            border-color: #f1f5f9 !important;
+        }
+        .bank-account-card .bank-card-activity {
+            color: #475569 !important;
+        }
+
+        /* 📑 DEFINITIONS TAB BUTTONS (LIGHT MODE) */
+        .deftab-btn {
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+            border: 1px solid #e2e8f0 !important;
+            font-weight: 700 !important;
+        }
+        .deftab-btn:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        .deftab-btn.active {
+            background-color: #0f172a !important;
+            color: #fbbf24 !important;
+            border-color: #0f172a !important;
+            font-weight: 800 !important;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15) !important;
+        }
+
+        /* ========================================================
+           🌙 LUXURY DARK THEME STYLES (html.dark)
+           ======================================================== */
         html.dark body {
             background-color: #0b1120 !important;
             color: #f1f5f9 !important;
@@ -69,6 +252,173 @@
             background-color: rgba(15, 23, 42, 0.96) !important;
             border-color: #1e293b !important;
         }
+
+        /* 📁 SIDEBAR (DARK MODE) */
+        html.dark .sidebar {
+            background-color: #0c1427 !important;
+            border-left: 1px solid #1e293b !important;
+            box-shadow: -4px 0 25px -2px rgba(0, 0, 0, 0.6) !important;
+            color: #cbd5e1 !important;
+        }
+        html.dark .sidebar .sidebar-brand-header {
+            border-bottom: 1px solid #1e293b !important;
+        }
+        html.dark .sidebar .sidebar-brand-title {
+            color: #ffffff !important;
+        }
+        html.dark .sidebar .sidebar-brand-sub {
+            color: #fbbf24 !important;
+        }
+        html.dark .sidebar-link {
+            color: #94a3b8 !important;
+        }
+        html.dark .sidebar-link:hover {
+            background-color: #1e293b !important;
+            color: #ffffff !important;
+        }
+        html.dark .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.02) 100%) !important;
+            color: #fbbf24 !important;
+            border-right: 4px solid #d97706 !important;
+        }
+        html.dark .sidebar-link .badge-amber {
+            background-color: rgba(217, 119, 6, 0.2) !important;
+            color: #fbbf24 !important;
+            border: 1px solid rgba(217, 119, 6, 0.3) !important;
+        }
+        html.dark .sidebar-link .badge-emerald {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+        }
+        html.dark .sidebar .sidebar-footer {
+            background-color: rgba(15, 23, 42, 0.7) !important;
+            border-top: 1px solid #1e293b !important;
+        }
+        html.dark .sidebar .sidebar-footer .eta-text {
+            color: #34d399 !important;
+        }
+        html.dark .sidebar .sidebar-footer .eta-sub {
+            color: #94a3b8 !important;
+        }
+        html.dark .sidebar .sidebar-footer .logout-btn {
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            color: #cbd5e1 !important;
+        }
+        html.dark .sidebar .sidebar-footer .logout-btn:hover {
+            background-color: rgba(185, 28, 28, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+        }
+
+        /* 📊 TABLE HEADERS (DARK MODE) */
+        html.dark table thead, 
+        html.dark thead.bg-slate-900, 
+        html.dark thead.bg-slate-50 {
+            background-color: #0c1427 !important;
+            color: #cbd5e1 !important;
+            border-bottom: 2px solid #1e293b !important;
+        }
+        html.dark table thead th {
+            color: #cbd5e1 !important;
+        }
+
+        /* 🌟 DASHBOARD BANNERS (DARK MODE) */
+        html.dark .welcome-banner {
+            background: linear-gradient(135deg, #0c1427 0%, #0f172a 50%, #172554 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(217, 119, 6, 0.3) !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        }
+        html.dark .welcome-banner h2 {
+            color: #ffffff !important;
+        }
+        html.dark .welcome-banner p {
+            color: #cbd5e1 !important;
+        }
+        html.dark .welcome-banner .welcome-tag {
+            background-color: rgba(217, 119, 6, 0.2) !important;
+            color: #fbbf24 !important;
+            border: 1px solid rgba(217, 119, 6, 0.3) !important;
+        }
+        html.dark .welcome-banner .stat-box {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        html.dark .welcome-banner .stat-label {
+            color: #94a3b8 !important;
+        }
+
+        html.dark .bank-ledger-banner {
+            background: linear-gradient(135deg, #0c1427 0%, #0f172a 50%, #0a0f1d 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(217, 119, 6, 0.3) !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        }
+        html.dark .bank-ledger-banner .bank-section-header {
+            border-bottom: 1px solid #1e293b !important;
+        }
+        html.dark .bank-ledger-banner h3 {
+            color: #ffffff !important;
+        }
+        html.dark .bank-ledger-banner p {
+            color: #94a3b8 !important;
+        }
+
+        /* 🏦 BANK ACCOUNT CARDS (DARK MODE) */
+        html.dark .bank-account-card {
+            background: linear-gradient(135deg, #0d1527 0%, #0b1120 100%) !important;
+            border: 1px solid #1e293b !important;
+            color: #ffffff !important;
+        }
+        html.dark .bank-account-card .bank-card-title {
+            color: #ffffff !important;
+        }
+        html.dark .bank-account-card .bank-card-balance {
+            color: #ffffff !important;
+        }
+        html.dark .bank-account-card .bank-card-badge {
+            background-color: rgba(217, 119, 6, 0.2) !important;
+            color: #fbbf24 !important;
+            border: 1px solid rgba(217, 119, 6, 0.3) !important;
+        }
+        html.dark .bank-account-card .bank-card-icon {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            color: #fbbf24 !important;
+            border: none !important;
+        }
+        html.dark .bank-account-card .bank-card-action {
+            color: #94a3b8 !important;
+        }
+        html.dark .bank-account-card .bank-card-iban {
+            color: #94a3b8 !important;
+        }
+        html.dark .bank-account-card .bank-card-footer {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        html.dark .bank-account-card .bank-card-activity {
+            color: #94a3b8 !important;
+        }
+
+        /* 📑 DEFINITIONS TAB BUTTONS (DARK MODE) */
+        html.dark .deftab-btn {
+            background-color: #1e293b !important;
+            color: #94a3b8 !important;
+            border: 1px solid #334155 !important;
+        }
+        html.dark .deftab-btn:hover {
+            background-color: #334155 !important;
+            color: #ffffff !important;
+        }
+        html.dark .deftab-btn.active {
+            background-color: #d97706 !important;
+            color: #ffffff !important;
+            border-color: #d97706 !important;
+            font-weight: 800 !important;
+        }
+
+        /* 🌓 GENERAL DARK THEME ELEMENTS */
         html.dark .bg-white {
             background-color: #131d31 !important;
             border-color: #24324f !important;
@@ -103,10 +453,6 @@
         html.dark .divide-slate-100 > * + * {
             border-color: #1e293b !important;
         }
-        html.dark table thead {
-            background-color: #0c1427 !important;
-            color: #cbd5e1 !important;
-        }
         html.dark table tbody tr:hover {
             background-color: #1a2742 !important;
         }
@@ -124,7 +470,10 @@
             right: auto !important;
             left: 0 !important;
             border-left: none !important;
-            border-right: 1px solid rgba(51, 65, 85, 0.4) !important;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+        html.dark[dir="ltr"] .sidebar {
+            border-right: 1px solid #1e293b !important;
         }
         html[dir="ltr"] .main-content {
             margin-right: 0 !important;
@@ -333,17 +682,17 @@
          MAIN APPLICATION LAYOUT (SIDEBAR + CONTENT)
          ======================================================== -->
     
-    <!-- Right Sidebar (Enterprise Dark Navy & Gold) -->
-    <aside class="sidebar w-64 bg-navy-950 text-slate-300 fixed top-0 right-0 bottom-0 z-40 flex flex-col justify-between shadow-2xl border-l border-slate-800 select-none">
+    <!-- Right Sidebar (Enterprise Theme Adaptive & Gold) -->
+    <aside class="sidebar w-64 fixed top-0 right-0 bottom-0 z-40 flex flex-col justify-between shadow-md select-none transition-colors duration-200">
         <div>
             <!-- Brand Crest Header -->
-            <div class="p-5 border-b border-slate-800/80 flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-gold-600 to-amber-400 text-navy-950 flex items-center justify-center font-black text-xl shadow-lg shadow-gold-600/20">
+            <div class="sidebar-brand-header p-5 flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-gold-600 to-amber-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-gold-600/20">
                     <i class="fa-solid fa-kaaba"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-black text-white leading-tight tracking-tight">الحرمين للسياحة</h1>
-                    <p class="text-[10px] text-gold-400 font-bold uppercase tracking-wider">Al-Haramain ERP v2.4</p>
+                    <h1 class="sidebar-brand-title text-base font-black leading-tight tracking-tight">الحرمين للسياحة</h1>
+                    <p class="sidebar-brand-sub text-[10px] font-bold uppercase tracking-wider">Al-Haramain ERP v2.4</p>
                 </div>
             </div>
 
@@ -358,7 +707,7 @@
                         <i class="fa-solid fa-ticket-simple w-5 text-center text-sm"></i>
                         <span data-i18n="bookings">إدارة الحجوزات والتذاكر</span>
                     </div>
-                    <span class="bg-gold-500/20 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full">32</span>
+                    <span class="badge-amber text-[10px] font-bold px-2 py-0.5 rounded-full">32</span>
                 </button>
                 <button onclick="navTo('clients')" id="nav-clients" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-users w-5 text-center text-sm"></i>
@@ -373,7 +722,7 @@
                         <i class="fa-solid fa-building-columns w-5 text-center text-sm"></i>
                         <span data-i18n="banks">أرصدة البنوك والمطابقة</span>
                     </div>
-                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full" id="sidebarBankCount">7 بنوك وحسابات</span>
+                    <span class="badge-emerald text-[10px] font-bold px-2 py-0.5 rounded-full" id="sidebarBankCount">7 بنوك وحسابات</span>
                 </button>
                 <button onclick="navTo('treasury')" id="nav-treasury" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-vault w-5 text-center text-sm"></i>
@@ -388,7 +737,7 @@
                         <i class="fa-solid fa-sliders w-5 text-center text-sm"></i>
                         <span data-i18n="definitions">التعريفات العامة والإعدادات</span>
                     </div>
-                    <span class="bg-gold-500/20 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full">شامل</span>
+                    <span class="badge-amber text-[10px] font-bold px-2 py-0.5 rounded-full">شامل</span>
                 </button>
                 <button onclick="navTo('permissions')" id="nav-permissions" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-user-shield w-5 text-center text-sm"></i>
@@ -398,15 +747,15 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-slate-800/80 bg-slate-900/60">
+        <div class="sidebar-footer p-4">
             <div class="flex items-center justify-between text-[11px] mb-3">
-                <span class="flex items-center gap-1.5 text-emerald-400 font-bold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>الربط الضريبي: نشط</span>
+                <span class="flex items-center gap-1.5 eta-text font-bold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span data-i18n="eta_status">الربط الضريبي: نشط</span>
                 </span>
-                <span class="text-slate-400 font-mono">ETA LIVE</span>
+                <span class="font-mono text-[10px] eta-sub">ETA LIVE</span>
             </div>
-            <button onclick="triggerLogout()" class="w-full bg-slate-800 hover:bg-red-950/80 hover:text-red-300 text-slate-300 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer border border-slate-700">
+            <button onclick="triggerLogout()" class="logout-btn w-full py-2.5 rounded-xl transition flex items-center justify-center gap-2 text-xs font-bold cursor-pointer">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span data-i18n="logout">تسجيل الخروج</span>
             </button>
@@ -469,19 +818,19 @@
                     <i class="fa-solid fa-plus text-xs"></i>
                     <span class="hidden sm:inline" data-i18n="new_booking">حجز ملف جديد</span>
                 </button>
-                <button onclick="openVoucherModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                <button onclick="openVoucherModal()" class="bg-slate-800 hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-receipt text-xs"></i>
                     <span class="hidden sm:inline" data-i18n="new_voucher">سند مالي</span>
                 </button>
 
                 <!-- User Profile Pill -->
-                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 py-1 px-2.5 rounded-2xl">
-                    <div class="w-7 h-7 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center font-bold text-xs shadow-sm" id="userPillAvatar">
+                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl">
+                    <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs" id="userPillAvatar">
                         👑
                     </div>
                     <div class="text-right leading-tight hidden lg:block">
-                        <div class="font-extrabold text-xs text-slate-800" id="userPillName">أحمد شريف</div>
-                        <div class="text-[9px] text-gold-600 font-bold" id="userPillRole">مدير النظام (Admin)</div>
+                        <div class="font-extrabold text-xs text-slate-800 dark:text-slate-100" id="userPillName">أحمد شريف</div>
+                        <div class="text-[9px] text-gold-600 dark:text-gold-400 font-bold" id="userPillRole">مدير النظام (Admin)</div>
                     </div>
                 </div>
             </div>
@@ -496,24 +845,24 @@
             <div id="view-dashboard" class="section-view active space-y-6">
                 
                 <!-- Welcome Executive Strip -->
-                <div class="bg-gradient-to-r from-navy-950 via-slate-900 to-navy-900 text-white rounded-2xl p-6 shadow-xl border border-gold-600/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="welcome-banner rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="bg-gold-500/20 text-gold-400 border border-gold-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full">شركة الحرمين للسياحة والسفر</span>
-                            <h2 class="text-xl font-black text-white">مرحباً بك في المنظومة المركزية، <span id="welcomeUserName" class="text-gold-400">أحمد شريف</span></h2>
+                            <span class="welcome-tag text-[10px] font-black px-2.5 py-0.5 rounded-full">شركة الحرمين للسياحة والسفر</span>
+                            <h2 class="text-xl font-black">مرحباً بك في المنظومة المركزية، <span id="welcomeUserName" class="text-gold-600 dark:text-gold-400">أحمد شريف</span></h2>
                         </div>
-                        <p class="text-xs text-slate-300 mt-1">
+                        <p class="text-xs mt-1">
                             نظام الحرمين السحابي لإدارة برامج العمرة والحج، تذاكر الطيران، الفنادق، والربط المباشر مع مصلحة الضرائب المصرية ETA.
                         </p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="text-right bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
-                            <div class="text-[10px] text-slate-400 font-bold">الحسابات النشطة</div>
-                            <div class="text-sm font-black text-emerald-400">42 ملف حجز نشط</div>
+                        <div class="stat-box text-right px-4 py-2.5 rounded-xl">
+                            <div class="stat-label text-[10px] font-bold">الحسابات النشطة</div>
+                            <div class="stat-val text-sm font-black text-emerald-600 dark:text-emerald-400">42 ملف حجز نشط</div>
                         </div>
-                        <div class="text-right bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
-                            <div class="text-[10px] text-slate-400 font-bold">مطابقة الفاتورة ETA</div>
-                            <div class="text-sm font-black text-gold-400">100% معتمدة</div>
+                        <div class="stat-box text-right px-4 py-2.5 rounded-xl">
+                            <div class="stat-label text-[10px] font-bold">مطابقة الفاتورة ETA</div>
+                            <div class="stat-val text-sm font-black text-gold-600 dark:text-gold-400">100% معتمدة</div>
                         </div>
                     </div>
                 </div>
@@ -585,34 +934,34 @@
                 </div>
 
                 <!-- 🏛️ Live Bank Balances Section (Smart Bank Ledger & Live Balances) -->
-                <div class="bg-gradient-to-br from-navy-900 via-slate-900 to-navy-950 text-white rounded-3xl p-6 shadow-xl border border-gold-600/30">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-5 gap-3">
+                <div class="bank-ledger-banner rounded-3xl p-6 transition">
+                    <div class="bank-section-header flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-5 gap-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-2xl bg-gold-600/20 text-gold-400 border border-gold-500/30 flex items-center justify-center text-xl shadow-sm">
+                            <div class="w-11 h-11 rounded-2xl bg-gold-500/20 text-gold-600 dark:text-gold-400 border border-gold-500/30 flex items-center justify-center text-xl shadow-sm">
                                 <i class="fa-solid fa-building-columns"></i>
                             </div>
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <h3 class="font-black text-base text-white">أرصدة الحسابات البنكية المعتمدة لشركة الحرمين</h3>
-                                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <h3 class="font-black text-base">أرصدة الحسابات البنكية المعتمدة لشركة الحرمين</h3>
+                                    <span class="bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                         تحديث لحظي (Live Ledger)
                                     </span>
                                 </div>
-                                <p class="text-xs text-slate-400 mt-0.5">متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات</p>
+                                <p class="text-xs mt-0.5">متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="openManageBankModal()" class="bg-navy-800 hover:bg-slate-800 text-gold-400 border border-gold-500/40 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-sm">
-                                <i class="fa-solid fa-plus"></i>
+                            <button onclick="openManageBankModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-navy-800 dark:hover:bg-slate-800 dark:text-gold-400 border border-slate-300 dark:border-gold-500/40 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                                <i class="fa-solid fa-plus text-gold-600 dark:text-gold-400"></i>
                                 <span>إضافة بنك جديد</span>
                             </button>
-                            <button onclick="openBankTxModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-navy-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5 cursor-pointer">
+                            <button onclick="openBankTxModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white dark:text-navy-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-plus-circle"></i>
                                 <span>حركة بنكية</span>
                             </button>
-                            <button onclick="openReconcileModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
-                                <i class="fa-solid fa-file-excel text-emerald-400"></i>
+                            <button onclick="openReconcileModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                                <i class="fa-solid fa-file-excel text-emerald-600 dark:text-emerald-400"></i>
                                 <span>مطابقة كشف البنك</span>
                             </button>
                         </div>
@@ -1036,31 +1385,31 @@
 
                     <!-- Navigation Sub-Tabs -->
                     <div class="flex items-center gap-2 overflow-x-auto pt-4 text-xs font-bold scrollbar-none" id="defSubTabs">
-                        <button onclick="switchDefTab('currencies')" id="deftab-btn-currencies" class="deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('currencies')" id="deftab-btn-currencies" class="deftab-btn active px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-coins text-gold-500"></i>
                             <span>دليل العملات وأسعار الصرف</span>
-                            <span class="bg-gold-500/20 text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountCurrencies">8</span>
+                            <span class="bg-gold-500/20 text-gold-600 dark:text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full font-black" id="defCountCurrencies">8</span>
                         </button>
-                        <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-ticket"></i>
                             <span>باقات وخدمات السياحة</span>
-                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountServices">7</span>
+                            <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountServices">7</span>
                         </button>
-                        <button onclick="switchDefTab('accounts')" id="deftab-btn-accounts" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('accounts')" id="deftab-btn-accounts" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-sitemap"></i>
                             <span>دليل بنود المصروفات والإيراد</span>
-                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountAccounts">8</span>
+                            <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountAccounts">8</span>
                         </button>
-                        <button onclick="switchDefTab('drawers')" id="deftab-btn-drawers" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('drawers')" id="deftab-btn-drawers" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-cash-register"></i>
                             <span>الخزائن وطرق الدفع والتحصيل</span>
-                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountDrawers">5</span>
+                            <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountDrawers">5</span>
                         </button>
-                        <button onclick="switchDefTab('company')" id="deftab-btn-company" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('company')" id="deftab-btn-company" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-building-shield"></i>
                             <span>بيانات وهوية شركة الحرمين</span>
                         </button>
-                        <button onclick="switchDefTab('eta')" id="deftab-btn-eta" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('eta')" id="deftab-btn-eta" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-receipt"></i>
                             <span>إعدادات الضرائب والفوترة ETA</span>
                         </button>
@@ -2751,22 +3100,22 @@
             const isTicketing = state.user && state.user.role === 'ticketing';
 
             container.innerHTML = state.bankAccounts.map(b => `
-                <div class="bg-gradient-to-br ${b.bg} p-4 rounded-2xl border ${b.border} shadow-lg relative overflow-hidden group hover:border-gold-500/60 transition">
+                <div class="bank-account-card p-4 rounded-2xl relative overflow-hidden group transition">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <span class="inline-block ${b.badge} text-[10px] font-black px-2 py-0.5 rounded-md mb-1">${b.type}</span>
-                            <h4 class="font-extrabold text-sm text-white">${b.name}</h4>
+                            <span class="inline-block bank-card-badge text-[10px] font-black px-2 py-0.5 rounded-md mb-1">${b.type}</span>
+                            <h4 class="font-extrabold text-sm bank-card-title">${b.name}</h4>
                         </div>
                         <div class="flex items-center gap-1.5">
                             ${!isTicketing ? `
-                                <button onclick="openManageBankModal('${b.id}')" class="text-slate-400 hover:text-gold-400 p-1 text-xs cursor-pointer" title="تعديل بيانات البنك">
+                                <button onclick="openManageBankModal('${b.id}')" class="bank-card-action p-1 text-xs cursor-pointer" title="تعديل بيانات البنك">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button onclick="deleteBank('${b.id}')" class="text-slate-400 hover:text-red-400 p-1 text-xs cursor-pointer" title="حذف البنك">
+                                <button onclick="deleteBank('${b.id}')" class="bank-card-action hover:text-red-500 p-1 text-xs cursor-pointer" title="حذف البنك">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             ` : ''}
-                            <span class="w-7 h-7 rounded-lg bg-white/10 text-gold-400 flex items-center justify-center text-xs shadow-inner">
+                            <span class="w-7 h-7 rounded-lg bank-card-icon flex items-center justify-center text-xs shadow-xs">
                                 <i class="fa-solid ${b.icon}"></i>
                             </span>
                         </div>
@@ -2774,22 +3123,22 @@
 
                     <div class="my-3">
                         ${isTicketing ? `
-                            <div class="bg-slate-800/80 text-slate-400 text-xs font-bold p-2.5 rounded-xl text-center border border-slate-700">
+                            <div class="bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 text-xs font-bold p-2.5 rounded-xl text-center border border-slate-200 dark:border-slate-700">
                                 🔒 محجوب للموظف (مصرح للإدارة)
                             </div>
                         ` : `
-                            <div class="text-2xl font-black text-white tracking-tight flex items-baseline gap-1">
+                            <div class="text-2xl font-black bank-card-balance tracking-tight flex items-baseline gap-1">
                                 <span>${b.bal.toLocaleString()}</span>
-                                <span class="text-xs font-bold text-gold-400">${b.cur}</span>
+                                <span class="text-xs font-bold text-gold-600 dark:text-gold-400">${b.cur}</span>
                             </div>
-                            <div class="text-[10px] text-slate-400 font-mono mt-0.5">IBAN: ${b.num.substring(0, 10)}...${b.num.slice(-4)}</div>
+                            <div class="text-[10px] bank-card-iban font-mono mt-0.5">IBAN: ${b.num.substring(0, 10)}...${b.num.slice(-4)}</div>
                         `}
                     </div>
 
-                    <div class="pt-2 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-400">
-                        <span class="truncate">${b.activity}</span>
+                    <div class="pt-2 border-t bank-card-footer flex justify-between items-center text-[11px]">
+                        <span class="truncate bank-card-activity">${b.activity}</span>
                         ${!isTicketing ? `
-                            <button onclick="openBankTxModal('${b.id}')" class="text-gold-400 hover:text-gold-300 font-bold hover:underline shrink-0 cursor-pointer">
+                            <button onclick="openBankTxModal('${b.id}')" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-bold hover:underline shrink-0 cursor-pointer">
                                 حركة +
                             </button>
                         ` : ''}
@@ -4154,7 +4503,7 @@
         function switchDefTab(tabName) {
             document.querySelectorAll('.defpane').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.deftab-btn').forEach(b => {
-                b.className = 'deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition';
+                b.classList.remove('active');
             });
 
             const targetPane = document.getElementById('defpane-' + tabName);
@@ -4162,7 +4511,7 @@
 
             const targetBtn = document.getElementById('deftab-btn-' + tabName);
             if (targetBtn) {
-                targetBtn.className = 'deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition';
+                targetBtn.classList.add('active');
             }
         }
 
