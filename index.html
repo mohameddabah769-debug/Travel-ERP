@@ -879,6 +879,28 @@
         let currentSales = 245000;
         let currentProfit = 42500;
 
+        // Backend API Bridge (Auto-detects running Flask server or falls back to static demo mode)
+        const isBackendAvailable = window.location.protocol.startsWith('http') && (window.location.port === '5000' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+        const API_URL = isBackendAvailable ? '/api' : null;
+
+        async function initBackendData() {
+            if (!API_URL) return;
+            try {
+                const res = await fetch(`${API_URL}/stats`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.total_sales_egp) currentSales = data.total_sales_egp;
+                    if (data.total_profit_egp) currentProfit = data.total_profit_egp;
+                    document.getElementById('totalSales').innerText = currentSales.toLocaleString() + ' ج.م';
+                    if (!activeUser || activeUser.type !== 'ticketing') {
+                        document.getElementById('totalProfit').innerText = currentProfit.toLocaleString() + ' ج.م';
+                    }
+                }
+            } catch (err) {
+                console.log('Operating in standalone demo mode');
+            }
+        }
+
         // Form Submit
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -920,7 +942,26 @@
                 currentSales += sell;
                 currentProfit += profit;
                 document.getElementById('totalSales').innerText = currentSales.toLocaleString() + ' ج.م';
-                document.getElementById('totalProfit').innerText = currentProfit.toLocaleString() + ' ج.م';
+                if (!activeUser || activeUser.type !== 'ticketing') {
+                    document.getElementById('totalProfit').innerText = currentProfit.toLocaleString() + ' ج.م';
+                }
+            }
+
+            // Sync with backend database if running
+            if (API_URL) {
+                fetch(`${API_URL}/bookings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_name: client,
+                        service_type: service,
+                        sell_price: sell,
+                        cost_price: cost,
+                        currency: currency,
+                        file_pnr: pnr,
+                        created_by: activeUser ? activeUser.name : 'أحمد شريف'
+                    })
+                }).catch(() => {});
             }
 
             this.reset();
@@ -1054,6 +1095,7 @@
 
         // On Page Load
         window.addEventListener('DOMContentLoaded', () => {
+            initBackendData();
             if (activeUser) {
                 completeLogin(activeUser);
             }
