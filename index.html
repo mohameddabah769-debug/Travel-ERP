@@ -233,7 +233,7 @@
                         <i class="fa-solid fa-building-columns w-5 text-center text-sm"></i>
                         <span>أرصدة البنوك والمطابقة</span>
                     </div>
-                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full">4 بنوك</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full" id="sidebarBankCount">7 بنوك وحسابات</span>
                 </button>
                 <button onclick="navTo('treasury')" id="nav-treasury" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-vault w-5 text-center text-sm"></i>
@@ -454,8 +454,8 @@
                         </div>
                     </div>
 
-                    <!-- 4 Bank Accounts Cards Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="bankAccountsContainer">
+                    <!-- 7 Bank & Wallet Accounts Cards Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="bankAccountsContainer">
                         <!-- Populated by renderBankAccounts() -->
                     </div>
                 </div>
@@ -1954,9 +1954,12 @@
             ],
             bankAccounts: [
                 { id: 'nbe', name: 'البنك الأهلي المصري', type: 'حساب جاري رئيسي للشركة', cur: 'ج.م', num: 'EG21000300000000012345678', bal: 485200, activity: '+38,500 ج.م تحصيلات اليوم', icon: 'fa-building-columns', bg: 'from-emerald-950/80 to-slate-900', border: 'border-emerald-500/40', badge: 'bg-emerald-500/20 text-emerald-400' },
-                { id: 'bm', name: 'بنك مصر', type: 'حساب الشركات وسداد الطيران', cur: 'ج.م', num: 'EG98000200000000098765432', bal: 240000, activity: 'سداد تذاكر مصر للطيران', icon: 'fa-landmark', bg: 'from-blue-950/80 to-slate-900', border: 'border-blue-500/40', badge: 'bg-blue-500/20 text-blue-400' },
-                { id: 'rajhi', name: 'مصرف الراجحي (السعودية)', type: 'حساب الريال - فنادق وعمرة', cur: 'ريال', num: 'SA44800000000000045612378', bal: 85000, activity: 'سداد تسكين مكة والمدينة', icon: 'fa-kaaba', bg: 'from-amber-950/80 to-slate-900', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400' },
-                { id: 'cib', name: 'البنك التجاري الدولي CIB', type: 'حساب العملة الأجنبية - طيران دولي', cur: 'دولار', num: 'EG45001000000000078912345', bal: 18400, activity: 'تذاكر طيران دولي وتأشيرات', icon: 'fa-money-bill-wave', bg: 'from-purple-950/80 to-slate-900', border: 'border-purple-500/40', badge: 'bg-purple-500/20 text-purple-400' }
+                { id: 'bm', name: 'بنك مصر', type: 'حساب الشركات وسداد الطيران', cur: 'ج.م', num: 'EG98000200000000098765432', bal: 240000, activity: 'سداد تذاكر مصر للطيران', icon: 'fa-landmark', bg: 'from-amber-950/80 to-slate-900', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400' },
+                { id: 'alex', name: 'بنك الإسكندرية', type: 'حساب الفروع والتحصيلات النقدية', cur: 'ج.م', num: 'EG12000800000000065432198', bal: 185000, activity: 'إيداعات نقدية فرع الإسكندرية', icon: 'fa-landmark-dome', bg: 'from-sky-950/80 to-slate-900', border: 'border-sky-500/40', badge: 'bg-sky-500/20 text-sky-400' },
+                { id: 'cib', name: 'البنك التجاري الدولي CIB', type: 'حساب العمليات والمدفوعات الكبرى', cur: 'ج.م', num: 'EG45001000000000078912345', bal: 315000, activity: '+18,200 ج.م تحويلات عملاء VIP', icon: 'fa-money-bill-wave', bg: 'from-blue-950/80 to-slate-900', border: 'border-blue-500/40', badge: 'bg-blue-500/20 text-blue-400' },
+                { id: 'ca', name: 'بنك كريدي أجريكول مصر', type: 'حساب الحجوزات وبطاقات الائتمان', cur: 'ج.م', num: 'EG33003400000000043218765', bal: 142000, activity: 'سداد فنادق ومنتجعات سياحية', icon: 'fa-wheat-awn', bg: 'from-teal-950/80 to-slate-900', border: 'border-teal-500/40', badge: 'bg-teal-500/20 text-teal-400' },
+                { id: 'post', name: 'البريد المصري (Egypt Post)', type: 'حساب الحوالات والتحصيل بالمحافظات', cur: 'ج.م', num: 'POS-EG-7788992211', bal: 92400, activity: '+12,500 ج.م حوالات عمرة صعيد مصر', icon: 'fa-envelope-open-text', bg: 'from-emerald-950/80 to-slate-900', border: 'border-emerald-600/40', badge: 'bg-emerald-600/20 text-emerald-300' },
+                { id: 'vfcash', name: 'فودافون كاش (Vodafone Cash)', type: 'محفظة الدفع الإلكتروني والتحصيل الفوري', cur: 'ج.م', num: '01099887766 - تاجر معتمد', bal: 58600, activity: 'تحصيلات حجز تذاكر فورية كاش', icon: 'fa-mobile-screen-button', bg: 'from-red-950/80 to-slate-900', border: 'border-red-500/40', badge: 'bg-red-500/20 text-red-400' }
             ],
             services: [
                 { code: 'TRV-FL-01', name: 'تذكرة طيران دولي (EgyptAir/Saudia)', category: 'طيران GDS', cur: 'ج.م', sell: 18500, cost: 16000, margin: '13.5%', status: 'نشط' },
@@ -2177,6 +2180,30 @@
                     </div>
                 </div>
             `).join('');
+
+            // Update sidebar badge
+            const sideBadge = document.getElementById('sidebarBankCount');
+            if (sideBadge) sideBadge.innerText = `${state.bankAccounts.length} بنوك وحسابات`;
+
+            // Update rcBank dropdown in reconcileModal
+            const rcSelect = document.getElementById('rcBank');
+            if (rcSelect) {
+                const curVal = rcSelect.value;
+                rcSelect.innerHTML = state.bankAccounts.map(b => `
+                    <option value="${b.id}">${b.name} (${b.type} - ${b.cur})</option>
+                `).join('');
+                if (curVal && state.bankAccounts.find(b => b.id === curVal)) rcSelect.value = curVal;
+            }
+
+            // Update btBank dropdown in bankTxModal
+            const btSelect = document.getElementById('btBank');
+            if (btSelect) {
+                const curVal = btSelect.value;
+                btSelect.innerHTML = state.bankAccounts.map(b => `
+                    <option value="${b.id}">${b.name} (${b.cur})</option>
+                `).join('');
+                if (curVal && state.bankAccounts.find(b => b.id === curVal)) btSelect.value = curVal;
+            }
         }
 
         // Bank Modals Logic
