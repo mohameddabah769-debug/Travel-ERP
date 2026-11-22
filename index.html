@@ -225,8 +225,15 @@
                     <span>حسابات العملاء والأقساط</span>
                 </button>
                 <button onclick="navTo('suppliers')" id="nav-suppliers" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
-                    <i class="fa-solid fa-building-columns w-5 text-center text-sm"></i>
+                    <i class="fa-solid fa-plane-departure w-5 text-center text-sm"></i>
                     <span>شركات الطيران والموردين</span>
+                </button>
+                <button onclick="navTo('treasury')" id="nav-banks" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-building-columns w-5 text-center text-sm"></i>
+                        <span>أرصدة البنوك والمطابقة</span>
+                    </div>
+                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full">4 بنوك</span>
                 </button>
                 <button onclick="navTo('treasury')" id="nav-treasury" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-vault w-5 text-center text-sm"></i>
@@ -392,6 +399,42 @@
                                 <span class="text-slate-900 font-black" id="dashUsdVal">3,200 $</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- 🏛️ Live Bank Balances Section (Smart Bank Ledger & Live Balances) -->
+                <div class="bg-gradient-to-br from-navy-900 via-slate-900 to-navy-950 text-white rounded-3xl p-6 shadow-xl border border-gold-600/30">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-5 gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-gold-600/20 text-gold-400 border border-gold-500/30 flex items-center justify-center text-xl shadow-sm">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-black text-base text-white">أرصدة الحسابات البنكية المعتمدة لشركة الحرمين</h3>
+                                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        تحديث لحظي (Live Ledger)
+                                    </span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-0.5">متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openBankTxModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-navy-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-plus-circle"></i>
+                                <span>حركة بنكية جديدة</span>
+                            </button>
+                            <button onclick="openReconcileModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-file-excel text-emerald-400"></i>
+                                <span>مطابقة كشف البنك Excel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Bank Accounts Cards Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="bankAccountsContainer">
+                        <!-- Populated by renderBankAccounts() -->
                     </div>
                 </div>
 
@@ -922,6 +965,105 @@
         </div>
     </div>
 
+    <!-- New Bank Transaction Modal -->
+    <div id="bankTxModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-building-columns text-gold-600"></i>
+                    <span>تسجيل حركة بنكية جديدة</span>
+                </h3>
+                <button onclick="closeBankTxModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="bankTxForm" onsubmit="handleBankTxSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">الحساب البنكي</label>
+                    <select id="btBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <option value="nbe">البنك الأهلي المصري (حساب رئيسي - EGP)</option>
+                        <option value="bm">بنك مصر (حساب الشركات وتذاكر الطيران - EGP)</option>
+                        <option value="rajhi">مصرف الراجحي (حساب العمرة والحج - SAR)</option>
+                        <option value="cib">البنك التجاري الدولي CIB (حساب الدولار - USD)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع الحركة البنكية</label>
+                    <select id="btType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <option value="deposit">📥 إيداع / تحويل بنكي وارد (زيادة الرصيد)</option>
+                        <option value="withdrawal">📤 سحب / تحويل صادر لسداد موردين (خصم من الرصيد)</option>
+                        <option value="transfer">🔄 تحويل داخلي بين بنكين</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">المبلغ</label>
+                        <input type="number" id="btAmount" required placeholder="50000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">رقم المرجع / التحويل</label>
+                        <input type="text" id="btRef" placeholder="TRF-88421" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold font-mono">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">البيان / تفاصيل التحويل</label>
+                    <input type="text" id="btDesc" required placeholder="مثال: تحويل بنكي لحساب شركة مصر للطيران" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>تأكيد الحركة وتحديث رصيد البنك لحظياً</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bank Reconciliation Modal -->
+    <div id="reconcileModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel text-emerald-600"></i>
+                    <span>مطابقة كشف حساب البنك الذكي (Bank Reconciliation)</span>
+                </h3>
+                <button onclick="closeReconcileModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <div class="space-y-4 text-xs">
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900 leading-relaxed font-semibold">
+                    💡 <strong>المطابقة الذكية:</strong> ارفع ملف كشف الحساب البنكي (Excel أو CSV) المحمّل من الأونلاين بانكنج وسيقوم السيستم بمقارنته مع سندات القبض والصرف واعتماده في ثوانٍ.
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اختر البنك المراد مطابقته:</label>
+                    <select id="rcBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <option value="nbe">البنك الأهلي المصري (حساب رئيسي - EGP)</option>
+                        <option value="bm">بنك مصر (حساب الشركات - EGP)</option>
+                        <option value="rajhi">مصرف الراجحي (حساب الريال - SAR)</option>
+                        <option value="cib">البنك التجاري الدولي CIB (حساب الدولار - USD)</option>
+                    </select>
+                </div>
+                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gold-600 mb-2"></i>
+                    <p class="font-bold text-slate-800">اسحب ملف كشف الحساب هنا أو انقر للاختيار</p>
+                    <span class="text-[10px] text-slate-400 mt-1 block">يدعم ملفات: .xlsx, .xls, .csv من بنوك مصر والسعودية</span>
+                    <input type="file" id="rcFile" class="hidden" accept=".xlsx,.xls,.csv" onchange="simulateReconcileFile(this)">
+                </div>
+                <div id="rcResult" class="hidden p-3 bg-slate-100 rounded-xl border border-slate-200">
+                    <div class="flex justify-between font-bold text-slate-800 mb-1">
+                        <span>إجمالي الحركات المطابقة:</span>
+                        <span class="text-emerald-600">28 حركة (مطابقة 100%)</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>الفروق المعلقة:</span>
+                        <span class="font-bold text-slate-900">0.00 ج.م</span>
+                    </div>
+                </div>
+                <button type="button" onclick="executeReconcile()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span>بدء المطابقة واعتماد الرصيد</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -992,6 +1134,12 @@
                 { name: 'شركة دار الإيمان للفنادق (مكة)', type: 'فنادق عمرة وحج', cur: 'ريال', total: '38,000 ريال', due: '4,500 ريال' },
                 { name: 'مجموعة ريكسوس للمنتجعات', type: 'فنادق سياحة داخلية', cur: 'ج.م', total: '65,000 ج.م', due: '7,200 ج.م' },
                 { name: 'شركة ترافيل وان (دبي)', type: 'تأشيرات وجولات', cur: 'دولار', total: '6,800 دولار', due: '950 دولار' }
+            ],
+            bankAccounts: [
+                { id: 'nbe', name: 'البنك الأهلي المصري', type: 'حساب جاري رئيسي للشركة', cur: 'ج.م', num: 'EG21000300000000012345678', bal: 485200, activity: '+38,500 ج.م تحصيلات اليوم', icon: 'fa-building-columns', bg: 'from-emerald-950/80 to-slate-900', border: 'border-emerald-500/40', badge: 'bg-emerald-500/20 text-emerald-400' },
+                { id: 'bm', name: 'بنك مصر', type: 'حساب الشركات وسداد الطيران', cur: 'ج.م', num: 'EG98000200000000098765432', bal: 240000, activity: 'سداد تذاكر مصر للطيران', icon: 'fa-landmark', bg: 'from-blue-950/80 to-slate-900', border: 'border-blue-500/40', badge: 'bg-blue-500/20 text-blue-400' },
+                { id: 'rajhi', name: 'مصرف الراجحي (السعودية)', type: 'حساب الريال - فنادق وعمرة', cur: 'ريال', num: 'SA44800000000000045612378', bal: 85000, activity: 'سداد تسكين مكة والمدينة', icon: 'fa-kaaba', bg: 'from-amber-950/80 to-slate-900', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400' },
+                { id: 'cib', name: 'البنك التجاري الدولي CIB', type: 'حساب العملة الأجنبية - طيران دولي', cur: 'دولار', num: 'EG45001000000000078912345', bal: 18400, activity: 'تذاكر طيران دولي وتأشيرات', icon: 'fa-money-bill-wave', bg: 'from-purple-950/80 to-slate-900', border: 'border-purple-500/40', badge: 'bg-purple-500/20 text-purple-400' }
             ]
         };
 
@@ -1086,6 +1234,105 @@
                     </td>
                 </tr>
             `).join('');
+
+            renderBankAccounts();
+        }
+
+        // Render Live Bank Accounts
+        function renderBankAccounts() {
+            const container = document.getElementById('bankAccountsContainer');
+            if (!container) return;
+
+            const isTicketing = state.user && state.user.role === 'ticketing';
+
+            container.innerHTML = state.bankAccounts.map(b => `
+                <div class="bg-gradient-to-br ${b.bg} p-4 rounded-2xl border ${b.border} shadow-lg relative overflow-hidden group hover:border-gold-500/60 transition">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="inline-block ${b.badge} text-[10px] font-black px-2 py-0.5 rounded-md mb-1">${b.type}</span>
+                            <h4 class="font-extrabold text-sm text-white">${b.name}</h4>
+                        </div>
+                        <span class="w-8 h-8 rounded-xl bg-white/10 text-gold-400 flex items-center justify-center text-sm shadow-inner">
+                            <i class="fa-solid ${b.icon}"></i>
+                        </span>
+                    </div>
+
+                    <div class="my-3">
+                        ${isTicketing ? `
+                            <div class="bg-slate-800/80 text-slate-400 text-xs font-bold p-2.5 rounded-xl text-center border border-slate-700">
+                                🔒 محجوب للموظف (مصرح للإدارة)
+                            </div>
+                        ` : `
+                            <div class="text-2xl font-black text-white tracking-tight flex items-baseline gap-1">
+                                <span>${b.bal.toLocaleString()}</span>
+                                <span class="text-xs font-bold text-gold-400">${b.cur}</span>
+                            </div>
+                            <div class="text-[10px] text-slate-400 font-mono mt-0.5">IBAN: ${b.num.substring(0, 10)}...${b.num.slice(-4)}</div>
+                        `}
+                    </div>
+
+                    <div class="pt-2 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-400">
+                        <span class="truncate">${b.activity}</span>
+                        ${!isTicketing ? `
+                            <button onclick="openBankTxModal('${b.id}')" class="text-gold-400 hover:text-gold-300 font-bold hover:underline shrink-0 cursor-pointer">
+                                حركة +
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Bank Modals Logic
+        function openBankTxModal(bankId = 'nbe') {
+            document.getElementById('btBank').value = bankId;
+            document.getElementById('bankTxModal').classList.remove('hidden');
+        }
+        function closeBankTxModal() {
+            document.getElementById('bankTxModal').classList.add('hidden');
+        }
+        function handleBankTxSubmit(e) {
+            e.preventDefault();
+            const bankId = document.getElementById('btBank').value;
+            const type = document.getElementById('btType').value;
+            const amount = parseFloat(document.getElementById('btAmount').value) || 0;
+            const ref = document.getElementById('btRef').value || 'TRF-' + Math.floor(10000 + Math.random() * 90000);
+            const desc = document.getElementById('btDesc').value;
+
+            const bank = state.bankAccounts.find(b => b.id === bankId);
+            if (bank) {
+                if (type === 'deposit') {
+                    bank.bal += amount;
+                    bank.activity = `+${amount.toLocaleString()} ${bank.cur} ${desc}`;
+                } else {
+                    bank.bal -= amount;
+                    bank.activity = `-${amount.toLocaleString()} ${bank.cur} ${desc}`;
+                }
+            }
+
+            renderBankAccounts();
+            closeBankTxModal();
+            document.getElementById('bankTxForm').reset();
+            alert(`✓ تم تسجيل وتأكيد الحركة البنكية بنجاح برقم مرجع (${ref}) وتحديث رصيد (${bank.name}) لحظياً إلى ${bank.bal.toLocaleString()} ${bank.cur}`);
+        }
+
+        function openReconcileModal() {
+            document.getElementById('reconcileModal').classList.remove('hidden');
+        }
+        function closeReconcileModal() {
+            document.getElementById('reconcileModal').classList.add('hidden');
+            document.getElementById('rcResult').classList.add('hidden');
+        }
+        function simulateReconcileFile(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('rcResult').classList.remove('hidden');
+            }
+        }
+        function executeReconcile() {
+            const bankId = document.getElementById('rcBank').value;
+            const bank = state.bankAccounts.find(b => b.id === bankId);
+            closeReconcileModal();
+            alert(`✓ تمت المطابقة الذكية لكشف حساب (${bank ? bank.name : 'البنك'}) بنجاح.\n- الحركات المطابقة: 28 عملية بنكية.\n- الفروق: 0.00 ج.م.\n- تم اعتماد الرصيد الفعلي في دفاتر شركة الحرمين.`);
         }
 
         // ETA Certification
