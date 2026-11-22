@@ -502,7 +502,20 @@
             background-color: #0b1120 !important;
         }
 
-        /* 🌐 BILINGUAL LTR / RTL LAYOUT ADAPTATION */
+        /* 🌐 BILINGUAL LTR / RTL LAYOUT ADAPTATION & ANTI-OVERFLOW */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }
+        html[dir="rtl"] .sidebar {
+            right: 0 !important;
+            left: auto !important;
+            border-right: none !important;
+            border-left: 1px solid #e2e8f0 !important;
+        }
+        html.dark[dir="rtl"] .sidebar {
+            border-left: 1px solid #1e293b !important;
+        }
         html[dir="ltr"] .sidebar {
             right: auto !important;
             left: 0 !important;
@@ -515,10 +528,14 @@
         html[dir="ltr"] .main-content {
             margin-right: 0 !important;
             margin-left: 16rem !important;
+            max-width: calc(100vw - 16rem) !important;
+            width: calc(100vw - 16rem) !important;
         }
         html[dir="rtl"] .main-content {
             margin-left: 0 !important;
             margin-right: 16rem !important;
+            max-width: calc(100vw - 16rem) !important;
+            width: calc(100vw - 16rem) !important;
         }
         html[dir="ltr"] .search-icon-pos {
             right: auto !important;
@@ -545,7 +562,7 @@
 
         /* 🔍 GLOBAL SEARCH INPUT BULLETPROOF STYLING */
         #searchContainer {
-            min-width: 180px !important;
+            min-width: 130px !important;
         }
         #globalSearchInput {
             min-width: 170px !important;
@@ -693,9 +710,9 @@
                         <span class="text-[10px] text-slate-400">انقر للتبديل الفوري</span>
                     </p>
                     <div class="grid grid-cols-2 gap-2 text-[11px]" id="gatewayRolesContainer">
-                        <button type="button" onclick="loginAsRole('أحمد شريف', 'مدير النظام (Super Admin)', 'admin', '👑')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-gold-50 hover:border-gold-400 transition text-right cursor-pointer group">
+                        <button type="button" onclick="loginAsRole('حسن يوسف الناضر', 'مدير عام وشريك إداري', 'admin', '👑')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-gold-50 hover:border-gold-400 transition text-right cursor-pointer group">
                             <div class="font-extrabold text-slate-900 flex items-center justify-between">
-                                <span>👑 أحمد شريف</span>
+                                <span>👑 حسن يوسف الناضر</span>
                                 <i class="fa-solid fa-arrow-left text-[10px] text-slate-300 group-hover:text-gold-600"></i>
                             </div>
                             <div class="text-[10px] text-slate-500">مدير عام (صلاحيات كاملة)</div>
@@ -879,14 +896,17 @@
                     <span class="hidden xl:inline" data-i18n="new_voucher">سند مالي</span>
                 </button>
 
-                <!-- User Profile Pill -->
-                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl shrink-0">
-                    <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs" id="userPillAvatar">
+                <!-- User Profile Pill (Interactive & Synced with Manager Profile) -->
+                <div onclick="openProfileEditModal()" class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl shrink-0 cursor-pointer hover:border-gold-500 hover:bg-gold-50/20 dark:hover:bg-slate-800/80 transition group" title="انقر لتعديل بيانات واسم المدير أو تبديل الحساب">
+                    <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition-transform" id="userPillAvatar">
                         👑
                     </div>
                     <div class="text-start leading-tight">
-                        <div class="font-extrabold text-xs text-slate-800 dark:text-slate-100" id="userPillName">أحمد شريف</div>
-                        <div class="text-[9px] text-gold-600 dark:text-gold-400 font-bold" id="userPillRole">مدير النظام (Admin)</div>
+                        <div class="font-extrabold text-xs text-slate-800 dark:text-slate-100 flex items-center gap-1">
+                            <span id="userPillName">حسن يوسف الناضر</span>
+                            <i class="fa-solid fa-pen-to-square text-[9px] text-slate-400 group-hover:text-gold-500 transition-colors"></i>
+                        </div>
+                        <div class="text-[9px] text-gold-600 dark:text-gold-400 font-bold hidden xl:block" id="userPillRole">مدير عام وشريك إداري</div>
                     </div>
                 </div>
             </div>
@@ -905,7 +925,7 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="welcome-tag text-[10px] font-black px-2.5 py-0.5 rounded-full" data-i18n="welcome_tag">شركة الحرمين للسياحة والسفر</span>
-                            <h2 class="text-xl font-black"><span id="welcomeTitlePrefix" data-i18n="welcome_title_prefix">مرحباً بك في المنظومة المركزية،</span> <span id="welcomeUserName" class="text-gold-600 dark:text-gold-400">أحمد شريف</span></h2>
+                            <h2 class="text-xl font-black"><span id="welcomeTitlePrefix" data-i18n="welcome_title_prefix">مرحباً بك في المنظومة المركزية،</span> <span id="welcomeUserName" class="text-gold-600 dark:text-gold-400">حسن يوسف الناضر</span></h2>
                         </div>
                         <p class="text-xs mt-1" data-i18n="welcome_desc">
                             نظام الحرمين السحابي لإدارة برامج العمرة والحج، تذاكر الطيران، الفنادق، والربط المباشر مع مصلحة الضرائب المصرية ETA.
@@ -1560,7 +1580,7 @@
                                             <td class="p-3 text-slate-700">فندق ريكسوس شرم الشيخ</td>
                                             <td class="p-3 font-bold text-slate-900">24,000 ج.م</td>
                                             <td class="p-3 font-black text-emerald-600">+3,200 ج.م</td>
-                                            <td class="p-3 text-slate-600">أحمد شريف</td>
+                                            <td class="p-3 text-slate-600">حسن يوسف الناضر</td>
                                         </tr>
                                         <tr class="hover:bg-slate-50">
                                             <td class="p-3 font-mono text-slate-600">11:10 ص</td>
@@ -3471,6 +3491,60 @@
         </div>
     </div>
 
+    <!-- 👑 Manage Current Profile / Manager Name Modal -->
+    <div id="manageProfileModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-gold-50 text-gold-700 border border-gold-200 flex items-center justify-center text-lg shadow-xs" id="profileModalAvatarIcon">👑</span>
+                    <div>
+                        <h3 class="font-black text-sm text-slate-900" data-i18n="edit_manager_title">تعديل الملف الشخصي واسم المدير</h3>
+                        <p class="text-[10px] text-slate-500" data-i18n="edit_manager_desc">تحديث اسم المدير وحسابه في المنظومة فورياً</p>
+                    </div>
+                </div>
+                <button onclick="closeProfileEditModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form onsubmit="handleSaveProfile(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_name_label">اسم المدير / الموظف الحالي:</label>
+                    <input type="text" id="profNameInput" required placeholder="أدخل اسم المدير الكامل" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_role_label">المسمى الوظيفي:</label>
+                        <input type="text" id="profRoleLabelInput" required placeholder="مدير عام وشريك إداري" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_avatar_label">الرمز / الأيقونة:</label>
+                        <select id="profAvatarSelect" onchange="document.getElementById('profileModalAvatarIcon').innerText = this.value;" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 text-center">
+                            <option value="👑">👑 مدير عام (Admin)</option>
+                            <option value="💼">💼 رئيس حسابات (Accountant)</option>
+                            <option value="✈️">✈️ حجز طيران (Ticketing)</option>
+                            <option value="🕋">🕋 برامج عمرة (Umrah)</option>
+                            <option value="🌟">🌟 مشرف فرع</option>
+                            <option value="👤">👤 مستخدم</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-2 flex items-center justify-between gap-2 border-t border-slate-100">
+                    <button type="button" onclick="triggerLogout(); closeProfileEditModal();" class="text-xs text-red-500 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span data-i18n="logout_switch">تبديل / خروج</span>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="closeProfileEditModal()" class="px-3 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 cursor-pointer">
+                            إلغاء
+                        </button>
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white font-extrabold shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-solid fa-check"></i>
+                            <span data-i18n="save_changes">حفظ وتحديث فوري</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
@@ -3582,7 +3656,7 @@
             cashDrawers: [
                 { id: 'c1', name: 'الخزينة النقدية الرئيسية (الكاش)', type: 'خزينة نقدية', cur: 'ج.م', custodian: 'أ. طارق ممدوح (رئيس الحسابات)', limit: 150000, bal: 45000 },
                 { id: 'c2', name: 'خزينة الريال السعودي (مكة والمدينة)', type: 'خزينة عملة', cur: 'ريال', custodian: 'محمود الجوهري', limit: 50000, bal: 18500 },
-                { id: 'c3', name: 'خزينة الدولار الأمريكي (طيران وتأشيرات)', type: 'خزينة عملة', cur: 'دولار', custodian: 'أحمد شريف (مدير عام)', limit: 20000, bal: 6200 },
+                { id: 'c3', name: 'خزينة الدولار الأمريكي (طيران وتأشيرات)', type: 'خزينة عملة', cur: 'دولار', custodian: 'حسن يوسف الناضر (مدير عام)', limit: 20000, bal: 6200 },
                 { id: 'c4', name: 'حساب إنستاباي السريع (InstaPay Business)', type: 'دفع رقمي', cur: 'ج.م', custodian: 'الإدارة المالية', limit: 500000, bal: 72000 },
                 { id: 'c5', name: 'محافظ فودافون كاش التجارية للتحصيل', type: 'محفظة إلكترونية', cur: 'ج.م', custodian: 'قسم المبيعات', limit: 200000, bal: 34000 }
             ],
@@ -3605,7 +3679,7 @@
             staff: safeJsonParse('alharamain_staff', [
                 {
                     id: 'stf_1',
-                    name: 'أحمد شريف',
+                    name: 'حسن يوسف الناضر',
                     role: 'admin',
                     roleLabel: 'مدير عام وشريك إداري',
                     avatar: '👑',
@@ -4108,30 +4182,42 @@
             }
 
             setTimeout(() => {
-                let roleName = 'مدير النظام (Admin)';
+                const adminStaff = (state.staff && state.staff.find(s => s.role === 'admin')) || (state.staff && state.staff[0]);
+                let roleName = adminStaff ? adminStaff.roleLabel : 'مدير عام وشريك إداري';
                 let roleType = 'admin';
-                let avatar = '👑';
-                let displayName = 'أحمد شريف';
+                let avatar = adminStaff ? (adminStaff.avatar || '👑') : '👑';
+                let displayName = adminStaff ? adminStaff.name : 'حسن يوسف الناضر';
 
                 const lowerU = u.toLowerCase();
                 if (lowerU.includes('ريهام') || lowerU.includes('ticket')) {
-                    displayName = 'ريهام إبراهيم';
-                    roleName = 'موظف حجز طيران وتذاكر';
+                    const st = state.staff && state.staff.find(s => s.role === 'ticketing');
+                    displayName = st ? st.name : 'ريهام إبراهيم';
+                    roleName = st ? st.roleLabel : 'موظف حجز طيران وتذاكر';
                     roleType = 'ticketing';
-                    avatar = '✈️';
+                    avatar = st ? st.avatar : '✈️';
                 } else if (lowerU.includes('محمود') || lowerU.includes('umrah')) {
-                    displayName = 'محمود الجوهري';
-                    roleName = 'مسؤول برامج عمرة وحج';
+                    const st = state.staff && state.staff.find(s => s.role === 'umrah');
+                    displayName = st ? st.name : 'محمود الجوهري';
+                    roleName = st ? st.roleLabel : 'مسؤول برامج عمرة وحج';
                     roleType = 'umrah';
-                    avatar = '🕋';
+                    avatar = st ? st.avatar : '🕋';
                 } else if (lowerU.includes('طارق') || lowerU.includes('acc')) {
-                    displayName = 'أ. طارق ممدوح';
-                    roleName = 'رئيس الحسابات والضرائب';
+                    const st = state.staff && state.staff.find(s => s.role === 'accountant');
+                    displayName = st ? st.name : 'أ. طارق ممدوح';
+                    roleName = st ? st.roleLabel : 'رئيس الحسابات والضرائب';
                     roleType = 'accountant';
-                    avatar = '💼';
+                    avatar = st ? st.avatar : '💼';
                 } else if (u !== 'admin') {
-                    displayName = u;
-                    roleName = 'موظف مصرح';
+                    const st = state.staff && state.staff.find(s => s.name.toLowerCase().includes(lowerU));
+                    if (st) {
+                        displayName = st.name;
+                        roleName = st.roleLabel;
+                        roleType = st.role;
+                        avatar = st.avatar || '👤';
+                    } else {
+                        displayName = u;
+                        roleName = 'موظف مصرح';
+                    }
                 }
 
                 loginAsRole(displayName, roleName, roleType, avatar);
@@ -4144,14 +4230,11 @@
         }
 
         function loginAsRole(name, roleLabel, roleType, avatar) {
-            state.user = { name, roleLabel, role: roleType, avatar };
-            const rem = document.getElementById('rememberDevice');
-            if (rem && rem.checked) {
-                try {
-                    localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
-                } catch (e) {
-                    console.warn(e);
-                }
+            state.user = { name, roleLabel, role: roleType, avatar: avatar || '👑' };
+            try {
+                localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+            } catch (e) {
+                console.warn(e);
             }
 
             // Update UI elements safely
@@ -4160,7 +4243,7 @@
             const upr = document.getElementById('userPillRole');
             if (upr) upr.innerText = roleLabel;
             const upa = document.getElementById('userPillAvatar');
-            if (upa) upa.innerText = avatar;
+            if (upa) upa.innerText = avatar || '👑';
             const wun = document.getElementById('welcomeUserName');
             if (wun) wun.innerText = name;
 
@@ -6257,16 +6340,28 @@
                 status
             };
 
+            let isCurrentOrAdmin = false;
             if (idx !== '') {
+                const oldStaff = state.staff[parseInt(idx)];
+                if (!state.user || state.user.name === oldStaff.name || state.user.role === oldStaff.role || oldStaff.role === 'admin' || (parseInt(idx) === 0 && (!state.user || state.user.role === 'admin'))) {
+                    isCurrentOrAdmin = true;
+                }
                 state.staff[parseInt(idx)] = staffObj;
             } else {
                 state.staff.push(staffObj);
             }
 
             localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+
+            // If the edited user is the current user or system manager, update the active user immediately!
+            if (isCurrentOrAdmin || role === 'admin') {
+                loginAsRole(staffObj.name, staffObj.roleLabel, staffObj.role, staffObj.avatar);
+            }
+
             renderStaffTable();
+            renderGatewayRoles();
             closeManageStaffModal();
-            alert(`✓ تم حفظ واعتماد بيانات الموظف والصلاحيات لـ (${name}) بنجاح.`);
+            alert(`✓ تم حفظ واعتماد بيانات الموظف والصلاحيات لـ (${name}) وتحديث المنظومة فورياً.`);
         }
 
         function deleteStaff(idx) {
@@ -6280,8 +6375,141 @@
                 state.staff.splice(idx, 1);
                 localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
                 renderStaffTable();
+                renderGatewayRoles();
                 alert(`✓ تم حذف حساب الموظف (${s.name}) بنجاح.`);
             }
+        }
+
+        // 👑 PROFILE & MANAGER NAME MANAGEMENT
+        function openProfileEditModal() {
+            const modal = document.getElementById('manageProfileModal');
+            if (!modal) return;
+            const adminStaff = (state.staff && state.staff.find(s => s.role === 'admin')) || (state.staff && state.staff[0]);
+            const u = state.user || {
+                name: (adminStaff ? adminStaff.name : 'حسن يوسف الناضر'),
+                roleLabel: (adminStaff ? adminStaff.roleLabel : 'مدير عام وشريك إداري'),
+                avatar: (adminStaff ? adminStaff.avatar : '👑')
+            };
+            document.getElementById('profNameInput').value = u.name;
+            document.getElementById('profRoleLabelInput').value = u.roleLabel;
+            document.getElementById('profAvatarSelect').value = u.avatar || '👑';
+            const icon = document.getElementById('profileModalAvatarIcon');
+            if (icon) icon.innerText = u.avatar || '👑';
+            modal.classList.remove('hidden');
+        }
+
+        function closeProfileEditModal() {
+            const modal = document.getElementById('manageProfileModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleSaveProfile(e) {
+            e.preventDefault();
+            const newName = document.getElementById('profNameInput').value.trim();
+            const newRoleLabel = document.getElementById('profRoleLabelInput').value.trim();
+            const newAvatar = document.getElementById('profAvatarSelect').value;
+            if (!newName) return;
+
+            const oldName = state.user ? state.user.name : '';
+            const roleType = (state.user && state.user.role) ? state.user.role : 'admin';
+
+            state.user = {
+                name: newName,
+                roleLabel: newRoleLabel,
+                role: roleType,
+                avatar: newAvatar
+            };
+
+            try {
+                localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+            } catch(err) {}
+
+            // Update matching staff in state.staff so tables, permissions, and audit logs stay in sync
+            if (state.staff && state.staff.length > 0) {
+                let matchedIdx = state.staff.findIndex(s => s.name === oldName || (roleType === 'admin' && s.role === 'admin'));
+                if (matchedIdx !== -1) {
+                    state.staff[matchedIdx].name = newName;
+                    state.staff[matchedIdx].roleLabel = newRoleLabel;
+                    state.staff[matchedIdx].avatar = newAvatar;
+                } else {
+                    state.staff[0].name = newName;
+                    state.staff[0].roleLabel = newRoleLabel;
+                    state.staff[0].avatar = newAvatar;
+                }
+                localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+                renderStaffTable();
+            }
+
+            syncCurrentUserUI();
+            renderGatewayRoles();
+            closeProfileEditModal();
+            alert(`✓ تم تحديث وتثبيت اسم وبيانات المدير بنجاح: (${newName})`);
+        }
+
+        function syncCurrentUserUI() {
+            const adminStaff = (state.staff && state.staff.find(s => s.role === 'admin')) || (state.staff && state.staff[0]);
+            if (!state.user) {
+                if (adminStaff) {
+                    state.user = {
+                        name: adminStaff.name,
+                        roleLabel: adminStaff.roleLabel,
+                        role: adminStaff.role,
+                        avatar: adminStaff.avatar
+                    };
+                }
+            } else if (state.user.role === 'admin' && adminStaff) {
+                // If saved user was 'أحمد شريف' but staff admin was renamed to 'حسن يوسف الناضر', sync it automatically!
+                if (state.user.name === 'أحمد شريف' && adminStaff.name !== 'أحمد شريف') {
+                    state.user.name = adminStaff.name;
+                    state.user.roleLabel = adminStaff.roleLabel;
+                    state.user.avatar = adminStaff.avatar;
+                    try {
+                        localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+                    } catch(e) {}
+                }
+            }
+
+            const u = state.user || (adminStaff ? {
+                name: adminStaff.name,
+                roleLabel: adminStaff.roleLabel,
+                role: adminStaff.role,
+                avatar: adminStaff.avatar
+            } : {
+                name: 'حسن يوسف الناضر',
+                roleLabel: 'مدير عام وشريك إداري',
+                role: 'admin',
+                avatar: '👑'
+            });
+
+            const upn = document.getElementById('userPillName');
+            if (upn) upn.innerText = u.name;
+            const upr = document.getElementById('userPillRole');
+            if (upr) upr.innerText = u.roleLabel;
+            const upa = document.getElementById('userPillAvatar');
+            if (upa) upa.innerText = u.avatar || '👑';
+            const wun = document.getElementById('welcomeUserName');
+            if (wun) wun.innerText = u.name;
+        }
+
+        function renderGatewayRoles() {
+            const container = document.getElementById('gatewayRolesContainer');
+            if (!container || !state.staff) return;
+            const isEn = document.documentElement.lang === 'en';
+            container.innerHTML = state.staff.slice(0, 4).map(s => {
+                let note = s.role === 'admin' ? (isEn ? 'Super Admin (Full Access)' : 'مدير عام (صلاحيات كاملة)') :
+                           s.role === 'ticketing' ? (isEn ? 'Ticketing Agent' : 'حجز تذاكر (الأرباح محجوبة)') :
+                           s.role === 'umrah' ? (isEn ? 'Umrah Supervisor' : 'تسكين وفنادق عمرة وحج') :
+                           (isEn ? 'Accountant & ETA' : 'محاسب (سندات واعتماد ETA)');
+                return `
+                    <button type="button" onclick="loginAsRole('${s.name}', '${s.roleLabel}', '${s.role}', '${s.avatar || '👤'}')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-gold-50 hover:border-gold-400 transition text-right cursor-pointer group">
+                        <div class="font-extrabold text-slate-900 flex items-center justify-between">
+                            <span>${s.avatar || '👤'} ${s.name}</span>
+                            <i class="fa-solid fa-arrow-left text-[10px] text-slate-300 group-hover:text-gold-600"></i>
+                        </div>
+                        <div class="text-[10px] text-slate-500">${note}</div>
+                    </button>
+                `;
+            }).join('');
         }
 
         // Initialize on DOM Ready
@@ -6291,6 +6519,8 @@
 
             try {
                 renderTables();
+                renderGatewayRoles();
+                syncCurrentUserUI();
             } catch (err) {
                 console.error('Error rendering tables:', err);
             }
