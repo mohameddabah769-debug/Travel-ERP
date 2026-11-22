@@ -981,10 +981,15 @@
 
                     <!-- Navigation Sub-Tabs -->
                     <div class="flex items-center gap-2 overflow-x-auto pt-4 text-xs font-bold scrollbar-none" id="defSubTabs">
-                        <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition">
+                        <button onclick="switchDefTab('currencies')" id="deftab-btn-currencies" class="deftab-btn active px-4 py-2 rounded-xl bg-slate-900 text-gold-400 border border-slate-800 cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-coins text-gold-500"></i>
+                            <span>دليل العملات وأسعار الصرف</span>
+                            <span class="bg-gold-500/20 text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountCurrencies">8</span>
+                        </button>
+                        <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-ticket"></i>
                             <span>باقات وخدمات السياحة</span>
-                            <span class="bg-gold-500/20 text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountServices">7</span>
+                            <span class="bg-slate-200 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full" id="defCountServices">7</span>
                         </button>
                         <button onclick="switchDefTab('accounts')" id="deftab-btn-accounts" class="deftab-btn px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-sitemap"></i>
@@ -1007,8 +1012,55 @@
                     </div>
                 </div>
 
+                <!-- SUB-TAB 0: CURRENCIES MASTER DATA (دليل تعريف العملات الكامل) -->
+                <div id="defpane-currencies" class="defpane space-y-4">
+                    <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                            <div>
+                                <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-coins text-gold-600"></i>
+                                    <span>دليل تعريف العملات وأسعار الصرف المعتمدة (Currencies Master Data)</span>
+                                </h4>
+                                <p class="text-xs text-slate-500">تعريف العملات العربية والأجنبية المستخدمة (دينار، دولار، ريال، إلخ)، أسعار الصرف (شراء / بيع / محاسبي)، والوحدات الصغرى وحسابات فروق العملة</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openManageCurrencyDefModal()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-plus text-emerald-600"></i>
+                                    <span>تعريف عملة جديدة +</span>
+                                </button>
+                                <button onclick="openFxModal()" class="bg-slate-900 hover:bg-slate-800 text-gold-400 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <span>تحديث أسعار الصرف السريع</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
+                                    <tr>
+                                        <th class="p-3.5">العملة والكود (ISO)</th>
+                                        <th class="p-3.5">الرمز</th>
+                                        <th class="p-3.5 text-emerald-400">السعر المحاسبي الرسمي</th>
+                                        <th class="p-3.5">سعر الشراء</th>
+                                        <th class="p-3.5">سعر البيع</th>
+                                        <th class="p-3.5">الوحدة الصغرى (الفكة)</th>
+                                        <th class="p-3.5">طبيعة ونطاق الاستخدام بالشركة</th>
+                                        <th class="p-3.5">حساب فروق العملة</th>
+                                        <th class="p-3.5 text-center">الحالة</th>
+                                        <th class="p-3.5 text-center">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="defCurrenciesTbody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Populated by renderDefinitionsTables() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- SUB-TAB 1: SERVICES CATALOG -->
-                <div id="defpane-services" class="defpane space-y-4">
+                <div id="defpane-services" class="defpane hidden space-y-4">
                     <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                             <div>
@@ -1823,6 +1875,111 @@
         </div>
     </div>
 
+    <!-- 💱 Manage Full Currency Definition Modal (Add / Edit Currency) -->
+    <div id="manageCurrencyDefModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="manageCurrencyDefTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-coins text-gold-600"></i>
+                    <span>تعريف عملة جديدة في النظام</span>
+                </h3>
+                <button onclick="closeManageCurrencyDefModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+            </div>
+            <form id="manageCurrencyDefForm" onsubmit="handleSaveCurrencyDef(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="curDefIndex">
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="col-span-2">
+                        <label class="block font-bold text-slate-700 mb-1">اسم العملة بالعربية</label>
+                        <input type="text" id="curDefName" required placeholder="مثال: دينار كويتي، دينار أردني" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العلم / الأيقونة</label>
+                        <select id="curDefFlag" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center">
+                            <option value="🇰🇼">🇰🇼 الكويت</option>
+                            <option value="🇸🇦">🇸🇦 السعودية</option>
+                            <option value="🇺🇸">🇺🇸 أمريكا</option>
+                            <option value="🇯🇴">🇯🇴 الأردن</option>
+                            <option value="🇧🇭">🇧🇭 البحرين</option>
+                            <option value="🇦🇪">🇦🇪 الإمارات</option>
+                            <option value="🇪🇺">🇪🇺 أوروبا</option>
+                            <option value="🇶🇦">🇶🇦 قطر</option>
+                            <option value="🇴🇲">🇴🇲 عمان</option>
+                            <option value="🇬🇧">🇬🇧 بريطانيا</option>
+                            <option value="🇪🇬">🇪🇬 مصر</option>
+                            <option value="💱">💱 أخرى</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الاسم بالإنجليزية (Name in English)</label>
+                        <input type="text" id="curDefNameEn" placeholder="Kuwaiti Dinar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">كود العملة العالمي (ISO Code)</label>
+                        <input type="text" id="curDefCode" required placeholder="KWD" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الرمز المختصر (Symbol)</label>
+                        <input type="text" id="curDefSymbol" required placeholder="دينار أو د.ك" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الوحدة الصغرى / الفكة (Subunit)</label>
+                        <input type="text" id="curDefSubunit" placeholder="1000 فلس، 100 هللة، 100 سنت" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">السعر المحاسبي الرسمي</label>
+                        <input type="number" step="0.01" id="curDefRate" required placeholder="161.50" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر الشراء (Buy Rate)</label>
+                        <input type="number" step="0.01" id="curDefBuyRate" placeholder="160.80" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر البيع (Sell Rate)</label>
+                        <input type="number" step="0.01" id="curDefSellRate" placeholder="162.00" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">طبيعة ونطاق الاستخدام بالشركة</label>
+                    <input type="text" id="curDefUsage" placeholder="سداد فنادق مكة والمدينة، طيران دولي GDS، تحويلات بنكية" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">حساب فروق العملة المرتبط</label>
+                        <select id="curDefFxAccount" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="REV-203 أرباح فروق العملات">REV-203 أرباح فروق العملات</option>
+                            <option value="حساب النقدية الرئيسي">حساب النقدية الرئيسي</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الحالة</label>
+                        <select id="curDefStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                            <option value="نشط">● نشط ومفعل</option>
+                            <option value="معلق">○ معلق مؤقتاً</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                        <span>حفظ بيانات وتعريفات العملة</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ✈️ Manage Service Modal (Add / Edit Tourism Service) -->
     <div id="manageServiceModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
@@ -2291,10 +2448,126 @@
                 }
             ]),
             currencies: safeJsonParse('alharamain_currencies', [
-                { code: 'EGP', name: 'جنيه مصري', nameEn: 'Egyptian Pound', symbol: 'ج.م', rate: 1.0, isBase: true, flag: '🇪🇬' },
-                { code: 'SAR', name: 'ريال سعودي', nameEn: 'Saudi Riyal', symbol: 'ريال', rate: 13.20, isBase: false, flag: '🇸🇦' },
-                { code: 'USD', name: 'دولار أمريكي', nameEn: 'US Dollar', symbol: 'دولار', rate: 49.50, isBase: false, flag: '🇺🇸' },
-                { code: 'KWD', name: 'دينار كويتي', nameEn: 'Kuwaiti Dinar', symbol: 'دينار', rate: 161.50, isBase: false, flag: '🇰🇼' }
+                {
+                    code: 'EGP',
+                    name: 'جنيه مصري',
+                    nameEn: 'Egyptian Pound',
+                    symbol: 'ج.م',
+                    rate: 1.0,
+                    buyRate: 1.0,
+                    sellRate: 1.0,
+                    subunit: '100 قرش',
+                    usage: 'العملة الأساسية لكافة دفاتر الحسابات والضرائب والفوترة الرسمية',
+                    fxAccount: 'حساب النقدية الرئيسي',
+                    isBase: true,
+                    flag: '🇪🇬',
+                    status: 'العملة الأساسية'
+                },
+                {
+                    code: 'SAR',
+                    name: 'ريال سعودي',
+                    nameEn: 'Saudi Riyal',
+                    symbol: 'ريال',
+                    rate: 13.20,
+                    buyRate: 13.15,
+                    sellRate: 13.25,
+                    subunit: '100 هللة',
+                    usage: 'سداد فنادق مكة والمدينة، النقل السياحي، وبرامج الحج والعمرة والتأشيرات',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇸🇦',
+                    status: 'نشط'
+                },
+                {
+                    code: 'USD',
+                    name: 'دولار أمريكي',
+                    nameEn: 'US Dollar',
+                    symbol: 'دولار',
+                    rate: 49.50,
+                    buyRate: 49.30,
+                    sellRate: 49.70,
+                    subunit: '100 سنت',
+                    usage: 'سداد تذاكر الطيران العالمية GDS، التأشيرات الدولية، وفنادق دبي والخارج',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇺🇸',
+                    status: 'نشط'
+                },
+                {
+                    code: 'KWD',
+                    name: 'دينار كويتي',
+                    nameEn: 'Kuwaiti Dinar',
+                    symbol: 'دينار',
+                    rate: 161.50,
+                    buyRate: 160.80,
+                    sellRate: 162.00,
+                    subunit: '1000 فلس',
+                    usage: 'تحصيلات عملاء الخليج، مبيعات برامج السياحة الخارجية، وإيداعات الخزينة',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇰🇼',
+                    status: 'نشط'
+                },
+                {
+                    code: 'JOD',
+                    name: 'دينار أردني',
+                    nameEn: 'Jordanian Dinar',
+                    symbol: 'دينار',
+                    rate: 70.10,
+                    buyRate: 69.80,
+                    sellRate: 70.40,
+                    subunit: '1000 فلس',
+                    usage: 'رحلات القدس، برامج طيران ترانزيت الأردنية، ومجموعات السياحة الدينية',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇯🇴',
+                    status: 'نشط'
+                },
+                {
+                    code: 'BHD',
+                    name: 'دينار بحريني',
+                    nameEn: 'Bahraini Dinar',
+                    symbol: 'دينار',
+                    rate: 131.20,
+                    buyRate: 130.60,
+                    sellRate: 131.80,
+                    subunit: '1000 فلس',
+                    usage: 'تحصيلات برامج طيران الخليج (Gulf Air) والتحويلات السياحية الخارجية',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇧🇭',
+                    status: 'نشط'
+                },
+                {
+                    code: 'AED',
+                    name: 'درهم إماراتي',
+                    nameEn: 'UAE Dirham',
+                    symbol: 'درهم',
+                    rate: 13.48,
+                    buyRate: 13.40,
+                    sellRate: 13.55,
+                    subunit: '100 فلس',
+                    usage: 'سداد تأشيرات دبي، فنادق الإمارات، وطيران الإمارات وفلاي دبي',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇦🇪',
+                    status: 'نشط'
+                },
+                {
+                    code: 'EUR',
+                    name: 'يورو أوروبي',
+                    nameEn: 'Euro',
+                    symbol: 'يورو',
+                    rate: 54.10,
+                    buyRate: 53.70,
+                    sellRate: 54.50,
+                    subunit: '100 سنت',
+                    usage: 'سياحة أوروبا، رسوم تأشيرات شنغن، وتذاكر الخطوط الجوية الأوروبية',
+                    fxAccount: 'REV-203 أرباح فروق العملات',
+                    isBase: false,
+                    flag: '🇪🇺',
+                    status: 'نشط'
+                }
             ])
         };
 
@@ -3543,6 +3816,52 @@
 
         // Render Definitions Tables & Dropdowns
         function renderDefinitionsTables() {
+            // 0. Currencies Master Data Table
+            const curBody = document.getElementById('defCurrenciesTbody');
+            if (curBody && state.currencies) {
+                curBody.innerHTML = state.currencies.map((c, idx) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl shrink-0">${c.flag || '💱'}</span>
+                                <div>
+                                    <div class="font-extrabold text-slate-900">${c.name}</div>
+                                    <div class="text-[10px] text-slate-400 font-mono">${c.nameEn || c.code} [${c.code}]</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3.5 font-bold text-slate-800">${c.symbol}</td>
+                        <td class="p-3.5 font-black text-emerald-600 text-sm">
+                            ${c.isBase ? '1.00 ج.م' : `${c.rate.toFixed(2)} ج.م`}
+                        </td>
+                        <td class="p-3.5 font-bold text-slate-700">${c.buyRate ? c.buyRate.toFixed(2) + ' ج.م' : '—'}</td>
+                        <td class="p-3.5 font-bold text-slate-700">${c.sellRate ? c.sellRate.toFixed(2) + ' ج.م' : '—'}</td>
+                        <td class="p-3.5 text-slate-600 font-medium">${c.subunit || '—'}</td>
+                        <td class="p-3.5 text-slate-600 max-w-xs truncate" title="${c.usage || ''}">${c.usage || 'معاملات عامة'}</td>
+                        <td class="p-3.5 text-slate-500 font-mono text-[10px]">${c.fxAccount || 'REV-203'}</td>
+                        <td class="p-3.5 text-center">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${c.isBase ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-blue-100 text-blue-800'}">
+                                ${c.isBase ? 'الأساسية' : (c.status || 'نشط')}
+                            </span>
+                        </td>
+                        <td class="p-3.5 text-center">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <button onclick="openManageCurrencyDefModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="تعديل تفاصيل العملة">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                ${!c.isBase ? `
+                                    <button onclick="deleteCurrency('${c.code}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="حذف العملة">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            const countCur = document.getElementById('defCountCurrencies');
+            if (countCur && state.currencies) countCur.innerText = state.currencies.length;
+
             // 1. Services Table
             const sBody = document.getElementById('defServicesTbody');
             if (sBody) {
@@ -3706,6 +4025,94 @@
                     if (supp) suppSelect.value = supp.name;
                 }
             }
+        }
+
+        // 💱 FULL CURRENCY DEFINITIONS CRUD
+        function openManageCurrencyDefModal(idx = null) {
+            const modal = document.getElementById('manageCurrencyDefModal');
+            const form = document.getElementById('manageCurrencyDefForm');
+            const title = document.getElementById('manageCurrencyDefTitle');
+            if (!modal) return;
+
+            form.reset();
+            if (idx !== null && idx !== undefined && state.currencies[idx]) {
+                const c = state.currencies[idx];
+                document.getElementById('curDefIndex').value = idx;
+                document.getElementById('curDefName').value = c.name;
+                document.getElementById('curDefNameEn').value = c.nameEn || '';
+                document.getElementById('curDefCode').value = c.code;
+                document.getElementById('curDefSymbol').value = c.symbol;
+                document.getElementById('curDefFlag').value = c.flag || '💱';
+                document.getElementById('curDefRate').value = c.rate;
+                document.getElementById('curDefBuyRate').value = c.buyRate || c.rate;
+                document.getElementById('curDefSellRate').value = c.sellRate || c.rate;
+                document.getElementById('curDefSubunit').value = c.subunit || '';
+                document.getElementById('curDefUsage').value = c.usage || '';
+                document.getElementById('curDefFxAccount').value = c.fxAccount || 'REV-203 أرباح فروق العملات';
+                document.getElementById('curDefStatus').value = c.status || 'نشط';
+                title.innerHTML = '<i class="fa-solid fa-coins text-gold-600"></i> <span>تعديل تعريفات العملة (' + c.name + ')</span>';
+            } else {
+                document.getElementById('curDefIndex').value = '';
+                document.getElementById('curDefStatus').value = 'نشط';
+                title.innerHTML = '<i class="fa-solid fa-plus-circle text-gold-600"></i> <span>تعريف عملة جديدة في النظام</span>';
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeManageCurrencyDefModal() {
+            const modal = document.getElementById('manageCurrencyDefModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleSaveCurrencyDef(e) {
+            e.preventDefault();
+            const idx = document.getElementById('curDefIndex').value;
+            const name = document.getElementById('curDefName').value.trim();
+            const nameEn = document.getElementById('curDefNameEn').value.trim() || name;
+            const code = document.getElementById('curDefCode').value.trim().toUpperCase();
+            const symbol = document.getElementById('curDefSymbol').value.trim();
+            const flag = document.getElementById('curDefFlag').value;
+            const rate = parseFloat(document.getElementById('curDefRate').value) || 1.0;
+            const buyRate = parseFloat(document.getElementById('curDefBuyRate').value) || rate;
+            const sellRate = parseFloat(document.getElementById('curDefSellRate').value) || rate;
+            const subunit = document.getElementById('curDefSubunit').value.trim();
+            const usage = document.getElementById('curDefUsage').value.trim();
+            const fxAccount = document.getElementById('curDefFxAccount').value;
+            const status = document.getElementById('curDefStatus').value;
+
+            const curObj = {
+                code,
+                name,
+                nameEn,
+                symbol,
+                flag,
+                rate,
+                buyRate,
+                sellRate,
+                subunit,
+                usage,
+                fxAccount,
+                status,
+                isBase: (code === 'EGP')
+            };
+
+            if (idx !== '') {
+                state.currencies[parseInt(idx)] = curObj;
+            } else {
+                if (state.currencies.some(c => c.code === code)) {
+                    alert(`كود العملة (${code}) موجود مسبقاً في النظام!`);
+                    return;
+                }
+                state.currencies.push(curObj);
+            }
+
+            localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+            renderDefinitionsTables();
+            renderCurrencyTicker();
+            populateCurrencyDropdowns();
+            recalculateTotals();
+            closeManageCurrencyDefModal();
+            alert(`✓ تم بنجاح حفظ واعتماد تعريفات العملة (${name} - ${code}) في النظام.`);
         }
 
         // ✈️ SERVICES CRUD
