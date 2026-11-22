@@ -502,6 +502,38 @@
             background-color: #0b1120 !important;
         }
 
+        /* Dark mode pill and badge aesthetics */
+        html.dark .bg-emerald-50, html.dark .bg-emerald-100 {
+            background-color: rgba(16, 185, 129, 0.15) !important;
+            border-color: rgba(16, 185, 129, 0.4) !important;
+            color: #34d399 !important;
+        }
+        html.dark .bg-red-50, html.dark .bg-red-100 {
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            border-color: rgba(239, 68, 68, 0.4) !important;
+            color: #f87171 !important;
+        }
+        html.dark .bg-blue-50, html.dark .bg-blue-100 {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            border-color: rgba(59, 130, 246, 0.4) !important;
+            color: #60a5fa !important;
+        }
+        html.dark .bg-amber-50, html.dark .bg-gold-50, html.dark .bg-amber-100 {
+            background-color: rgba(245, 158, 11, 0.15) !important;
+            border-color: rgba(245, 158, 11, 0.4) !important;
+            color: #fbbf24 !important;
+        }
+        html.dark .bg-purple-100 {
+            background-color: rgba(168, 85, 247, 0.15) !important;
+            border-color: rgba(168, 85, 247, 0.4) !important;
+            color: #c084fc !important;
+        }
+        html.dark .bg-sky-100 {
+            background-color: rgba(14, 165, 233, 0.15) !important;
+            border-color: rgba(14, 165, 233, 0.4) !important;
+            color: #38bdf8 !important;
+        }
+
         /* 🌐 BILINGUAL LTR / RTL LAYOUT ADAPTATION & ANTI-OVERFLOW */
         html, body {
             overflow-x: hidden !important;
@@ -6222,28 +6254,28 @@
                                 </div>
                             </td>
                             <td class="p-3.5">
-                                <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${roleBadgeColor}">
+                                <span class="inline-block whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-black border ${roleBadgeColor}">
                                     ${displayRole}
                                 </span>
                             </td>
-                            <td class="p-3.5 font-bold text-slate-700">${isEn ? (s.bookingPerm.includes('كامل') ? 'Full Access' : (s.bookingPerm.includes('إصدار') ? 'Issue Only' : s.bookingPerm)) : s.bookingPerm}</td>
+                            <td class="p-3.5 font-bold text-slate-700 whitespace-nowrap">${isEn ? (s.bookingPerm.includes('كامل') ? 'Full Access' : (s.bookingPerm.includes('إصدار') ? 'Issue Only' : s.bookingPerm)) : s.bookingPerm}</td>
                             <td class="p-3.5">
-                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isProfitVisible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-600 border border-red-200'}">
+                                <span class="inline-block whitespace-nowrap px-2.5 py-1 rounded-lg text-[11px] font-bold ${isProfitVisible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-600 border border-red-200'}">
                                     ${isEn ? (isProfitVisible ? '✓ Visible' : '🔒 Hidden') : s.profitPerm}
                                 </span>
                             </td>
                             <td class="p-3.5">
-                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isVoucherAllowed ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-slate-100 text-slate-500'}">
+                                <span class="inline-block whitespace-nowrap px-2.5 py-1 rounded-lg text-[11px] font-bold ${isVoucherAllowed ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-slate-100 text-slate-500'}">
                                     ${isEn ? (isVoucherAllowed ? '✓ Allowed' : '🔒 Restricted') : s.voucherPerm}
                                 </span>
                             </td>
                             <td class="p-3.5">
-                                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isEtaAllowed ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500'}">
+                                <span class="inline-block whitespace-nowrap px-2.5 py-1 rounded-lg text-[11px] font-bold ${isEtaAllowed ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500'}">
                                     ${isEn ? (isEtaAllowed ? '✓ Certify' : '🔒 View Only') : s.etaPerm}
                                 </span>
                             </td>
                             <td class="p-3.5 text-center">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+                                <span class="inline-block whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-bold ${isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
                                     ${isActive ? (isEn ? '● Active' : '● نشط') : (isEn ? '○ Inactive' : '○ موقوف')}
                                 </span>
                             </td>
