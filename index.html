@@ -1876,9 +1876,18 @@
     <!-- LOGIC SCRIPT                                   -->
     <!-- ============================================== -->
     <script>
+        function safeJsonParse(key, fallback) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : fallback;
+            } catch (e) {
+                return fallback;
+            }
+        }
+
         // State Store
         let state = {
-            user: JSON.parse(localStorage.getItem('sanad_enterprise_user')) || null,
+            user: safeJsonParse('sanad_enterprise_user', null),
             totalSales: 245000,
             totalProfit: 42500,
             bookings: [
@@ -1975,7 +1984,7 @@
                 { id: 'c4', name: 'حساب إنستاباي السريع (InstaPay Business)', type: 'دفع رقمي', cur: 'ج.م', custodian: 'الإدارة المالية', limit: 500000, bal: 72000 },
                 { id: 'c5', name: 'محافظ فودافون كاش التجارية للتحصيل', type: 'محفظة إلكترونية', cur: 'ج.م', custodian: 'قسم المبيعات', limit: 200000, bal: 34000 }
             ],
-            companyProfile: JSON.parse(localStorage.getItem('alharamain_company_profile')) || {
+            companyProfile: safeJsonParse('alharamain_company_profile', {
                 name: 'شركة الحرمين للسياحة والسفر وخدمات الحج والعمرة',
                 brand: 'الحرمين للسياحة',
                 license: 'ترخيص وزارة السياحة والآثار فئة (أ) رقم 1842',
@@ -1985,12 +1994,12 @@
                 address: 'برج النور - 45 شارع مصطفى النحاس - مدينة نصر - القاهرة',
                 phone: '01012345678 / 0224012345',
                 email: 'info@alharamain-travel.com'
-            },
-            taxSettings: JSON.parse(localStorage.getItem('alharamain_tax_settings')) || {
+            }),
+            taxSettings: safeJsonParse('alharamain_tax_settings', {
                 vat: 14.0,
                 wht: 1.0,
                 activityCode: '7911'
-            }
+            })
         };
 
         // Navigation Tab Switching
@@ -2268,58 +2277,124 @@
             }
         }
 
+        function dismissLoginGateway() {
+            const gw = document.getElementById('loginGateway');
+            if (!gw) return;
+            gw.style.transition = 'opacity 0.2s ease-out';
+            gw.style.opacity = '0';
+            gw.style.pointerEvents = 'none';
+            setTimeout(() => {
+                gw.style.display = 'none';
+                gw.classList.add('hidden');
+                gw.classList.remove('flex');
+            }, 200);
+        }
+
+        function showLoginGateway() {
+            const gw = document.getElementById('loginGateway');
+            if (!gw) return;
+            gw.style.pointerEvents = 'auto';
+            gw.style.display = 'flex';
+            gw.classList.remove('hidden');
+            gw.classList.add('flex');
+            gw.style.opacity = '1';
+        }
+
         function handleLoginSubmit(e) {
             e.preventDefault();
-            const u = document.getElementById('loginUser').value.trim() || 'admin';
+            const uInput = document.getElementById('loginUser');
+            const u = (uInput && uInput.value ? uInput.value.trim() : '') || 'admin';
             const btn = document.getElementById('loginBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>جاري المصادقة الأمنية...</span>';
-            btn.disabled = true;
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>جاري المصادقة الأمنية...</span>';
+                btn.disabled = true;
+            }
 
             setTimeout(() => {
-                loginAsRole(u === 'admin' ? 'أحمد شريف' : u, u === 'admin' ? 'مدير النظام (Admin)' : 'موظف مصرح', u === 'admin' ? 'admin' : 'staff', '👑');
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket text-gold-400"></i> <span>تسجيل الدخول للنظام المالي والإداري</span>';
-                btn.disabled = false;
-            }, 400);
+                let roleName = 'مدير النظام (Admin)';
+                let roleType = 'admin';
+                let avatar = '👑';
+                let displayName = 'أحمد شريف';
+
+                const lowerU = u.toLowerCase();
+                if (lowerU.includes('ريهام') || lowerU.includes('ticket')) {
+                    displayName = 'ريهام إبراهيم';
+                    roleName = 'موظف حجز طيران وتذاكر';
+                    roleType = 'ticketing';
+                    avatar = '✈️';
+                } else if (lowerU.includes('محمود') || lowerU.includes('umrah')) {
+                    displayName = 'محمود الجوهري';
+                    roleName = 'مسؤول برامج عمرة وحج';
+                    roleType = 'umrah';
+                    avatar = '🕋';
+                } else if (lowerU.includes('طارق') || lowerU.includes('acc')) {
+                    displayName = 'أ. طارق ممدوح';
+                    roleName = 'رئيس الحسابات والضرائب';
+                    roleType = 'accountant';
+                    avatar = '💼';
+                } else if (u !== 'admin') {
+                    displayName = u;
+                    roleName = 'موظف مصرح';
+                }
+
+                loginAsRole(displayName, roleName, roleType, avatar);
+
+                if (btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket text-gold-400"></i> <span>تسجيل الدخول للنظام المالي والإداري</span>';
+                    btn.disabled = false;
+                }
+            }, 100);
         }
 
         function loginAsRole(name, roleLabel, roleType, avatar) {
             state.user = { name, roleLabel, role: roleType, avatar };
-            if (document.getElementById('rememberDevice').checked) {
-                localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+            const rem = document.getElementById('rememberDevice');
+            if (rem && rem.checked) {
+                try {
+                    localStorage.setItem('sanad_enterprise_user', JSON.stringify(state.user));
+                } catch (e) {
+                    console.warn(e);
+                }
             }
 
-            // Update UI elements
-            document.getElementById('userPillName').innerText = name;
-            document.getElementById('userPillRole').innerText = roleLabel;
-            document.getElementById('userPillAvatar').innerText = avatar;
-            document.getElementById('welcomeUserName').innerText = name;
+            // Update UI elements safely
+            const upn = document.getElementById('userPillName');
+            if (upn) upn.innerText = name;
+            const upr = document.getElementById('userPillRole');
+            if (upr) upr.innerText = roleLabel;
+            const upa = document.getElementById('userPillAvatar');
+            if (upa) upa.innerText = avatar;
+            const wun = document.getElementById('welcomeUserName');
+            if (wun) wun.innerText = name;
 
             // Role-based visibility
             const profitKpi = document.getElementById('dashTotalProfit');
-            if (roleType === 'ticketing') {
-                profitKpi.innerText = '🔒 محجوب للموظف';
-                profitKpi.className = 'text-sm font-extrabold text-slate-400 mt-2 bg-slate-100 p-2 rounded-xl text-center';
-            } else {
-                profitKpi.innerText = state.totalProfit.toLocaleString() + ' ج.م';
-                profitKpi.className = 'text-2xl font-black text-emerald-600';
+            if (profitKpi) {
+                if (roleType === 'ticketing') {
+                    profitKpi.innerText = '🔒 محجوب للموظف';
+                    profitKpi.className = 'text-sm font-extrabold text-slate-400 mt-2 bg-slate-100 p-2 rounded-xl text-center';
+                } else {
+                    profitKpi.innerText = state.totalProfit.toLocaleString() + ' ج.م';
+                    profitKpi.className = 'text-2xl font-black text-emerald-600';
+                }
             }
 
-            // Dismiss Gateway with smooth fade
-            const gw = document.getElementById('loginGateway');
-            gw.style.opacity = '0';
-            setTimeout(() => {
-                gw.classList.add('hidden');
-                gw.style.opacity = '1';
-            }, 250);
+            // Instantly & smoothly dismiss gateway
+            dismissLoginGateway();
 
-            renderTables();
+            try {
+                renderTables();
+            } catch (err) {
+                console.error('Error rendering tables:', err);
+            }
         }
 
         function triggerLogout() {
-            localStorage.removeItem('sanad_enterprise_user');
+            try {
+                localStorage.removeItem('sanad_enterprise_user');
+            } catch (e) {}
             state.user = null;
-            const gw = document.getElementById('loginGateway');
-            gw.classList.remove('hidden');
+            showLoginGateway();
         }
 
         // ==========================================
@@ -3174,9 +3249,16 @@
 
         // Initialize on DOM Ready
         window.addEventListener('DOMContentLoaded', () => {
-            renderTables();
-            if (state.user) {
+            try {
+                renderTables();
+            } catch (err) {
+                console.error('Error rendering tables:', err);
+            }
+
+            if (state.user && state.user.name) {
                 loginAsRole(state.user.name, state.user.roleLabel, state.user.role, state.user.avatar);
+            } else {
+                showLoginGateway();
             }
         });
     </script>
