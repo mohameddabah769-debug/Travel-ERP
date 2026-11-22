@@ -38,8 +38,8 @@ def health():
 
 def main():
     print("=" * 65)
-    print(" ✈️  Sanad Travel ERP - نظام إدارة شركات السياحة والحسابات")
-    print("     Sanad Digital Solutions © 2026")
+    print(" 🕋  شركة الحرمين للسياحة والسفر - نظام الإدارة والحسابات")
+    print("     Al-Haramain Travel ERP | Powered by Sanad Digital")
     print("=" * 65)
     
     # Initialize DB & Seed if empty
