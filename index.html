@@ -769,10 +769,10 @@
         <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
             <!-- Left: Ticker & Status -->
             <div class="flex items-center gap-2.5 text-xs font-semibold shrink min-w-0">
-                <div class="hidden 2xl:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
+                <div class="hidden lg:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
                     <!-- Populated dynamically by renderCurrencyTicker() -->
                 </div>
-                <div class="hidden lg:flex items-center gap-1.5 text-slate-500 text-xs shrink-0">
+                <div class="flex items-center gap-1.5 text-slate-500 text-xs shrink-0">
                     <i class="fa-regular fa-clock"></i>
                     <span id="currentDateBadge">الأحد، 22 نوفمبر 2026</span>
                 </div>
@@ -828,7 +828,7 @@
                     <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs" id="userPillAvatar">
                         👑
                     </div>
-                    <div class="text-right leading-tight hidden lg:block">
+                    <div class="text-start leading-tight">
                         <div class="font-extrabold text-xs text-slate-800 dark:text-slate-100" id="userPillName">أحمد شريف</div>
                         <div class="text-[9px] text-gold-600 dark:text-gold-400 font-bold" id="userPillRole">مدير النظام (Admin)</div>
                     </div>
@@ -3149,7 +3149,10 @@
 
             // Update sidebar badge
             const sideBadge = document.getElementById('sidebarBankCount');
-            if (sideBadge) sideBadge.innerText = `${state.bankAccounts.length} بنوك وحسابات`;
+            if (sideBadge) {
+                const isEn = document.documentElement.lang === 'en';
+                sideBadge.innerText = isEn ? `${state.bankAccounts.length} Bank Accounts` : `${state.bankAccounts.length} بنوك وحسابات`;
+            }
 
             // Update rcBank dropdown in reconcileModal
             const rcSelect = document.getElementById('rcBank');
@@ -3499,11 +3502,14 @@
             state.totalSales = Math.round(s);
             state.totalProfit = Math.round(p);
 
+            const isEn = document.documentElement.lang === 'en';
+            const curSuffix = isEn ? ' EGP' : ' ج.م';
+
             const salesEl = document.getElementById('dashTotalSales');
             const profitEl = document.getElementById('dashTotalProfit');
-            if (salesEl) salesEl.innerText = state.totalSales.toLocaleString() + ' ج.م';
+            if (salesEl) salesEl.innerText = state.totalSales.toLocaleString() + curSuffix;
             if (profitEl && !isCurrentUserProfitHidden()) {
-                profitEl.innerText = state.totalProfit.toLocaleString() + ' ج.م';
+                profitEl.innerText = state.totalProfit.toLocaleString() + curSuffix;
             }
 
             // Recalculate debts
@@ -3517,9 +3523,9 @@
                 }
             });
             const debtsEl = document.getElementById('dashTotalDebts');
-            if (debtsEl) debtsEl.innerText = debts.toLocaleString() + ' ج.م';
+            if (debtsEl) debtsEl.innerText = debts.toLocaleString() + curSuffix;
             const countEl = document.getElementById('dashDebtsCountText');
-            if (countEl) countEl.innerText = `${debtsCount} عملاء بأقساط ومستحقات قيد السداد`;
+            if (countEl) countEl.innerText = isEn ? `${debtsCount} clients with active dues` : `${debtsCount} عملاء بأقساط ومستحقات قيد السداد`;
         }
 
         // 🏦 BANK CRUD HANDLERS
@@ -4580,6 +4586,7 @@
             localStorage.setItem('alharamain_lang', lang);
 
             // Re-render dynamic components with translated labels
+            if (typeof recalculateTotals === 'function') recalculateTotals();
             if (typeof renderBankAccounts === 'function') renderBankAccounts();
             if (typeof renderBookingsTables === 'function') renderBookingsTables();
             if (typeof renderClientsTable === 'function') renderClientsTable();
