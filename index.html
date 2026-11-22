@@ -691,7 +691,7 @@
                     <i class="fa-solid fa-kaaba"></i>
                 </div>
                 <div>
-                    <h1 class="sidebar-brand-title text-base font-black leading-tight tracking-tight">الحرمين للسياحة</h1>
+                    <h1 class="sidebar-brand-title text-base font-black leading-tight tracking-tight" data-i18n="brand_title">الحرمين للسياحة</h1>
                     <p class="sidebar-brand-sub text-[10px] font-bold uppercase tracking-wider">Al-Haramain ERP v2.4</p>
                 </div>
             </div>
@@ -737,7 +737,7 @@
                         <i class="fa-solid fa-sliders w-5 text-center text-sm"></i>
                         <span data-i18n="definitions">التعريفات العامة والإعدادات</span>
                     </div>
-                    <span class="badge-amber text-[10px] font-bold px-2 py-0.5 rounded-full">شامل</span>
+                    <span class="badge-amber text-[10px] font-bold px-2 py-0.5 rounded-full" data-i18n="master_badge">شامل</span>
                 </button>
                 <button onclick="navTo('permissions')" id="nav-permissions" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-user-shield w-5 text-center text-sm"></i>
@@ -824,7 +824,7 @@
                 </button>
 
                 <!-- User Profile Pill -->
-                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl">
+                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl shrink-0">
                     <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs" id="userPillAvatar">
                         👑
                     </div>
@@ -848,21 +848,21 @@
                 <div class="welcome-banner rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="welcome-tag text-[10px] font-black px-2.5 py-0.5 rounded-full">شركة الحرمين للسياحة والسفر</span>
-                            <h2 class="text-xl font-black">مرحباً بك في المنظومة المركزية، <span id="welcomeUserName" class="text-gold-600 dark:text-gold-400">أحمد شريف</span></h2>
+                            <span class="welcome-tag text-[10px] font-black px-2.5 py-0.5 rounded-full" data-i18n="welcome_tag">شركة الحرمين للسياحة والسفر</span>
+                            <h2 class="text-xl font-black"><span id="welcomeTitlePrefix" data-i18n="welcome_title_prefix">مرحباً بك في المنظومة المركزية،</span> <span id="welcomeUserName" class="text-gold-600 dark:text-gold-400">أحمد شريف</span></h2>
                         </div>
-                        <p class="text-xs mt-1">
+                        <p class="text-xs mt-1" data-i18n="welcome_desc">
                             نظام الحرمين السحابي لإدارة برامج العمرة والحج، تذاكر الطيران، الفنادق، والربط المباشر مع مصلحة الضرائب المصرية ETA.
                         </p>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="stat-box text-right px-4 py-2.5 rounded-xl">
-                            <div class="stat-label text-[10px] font-bold">الحسابات النشطة</div>
-                            <div class="stat-val text-sm font-black text-emerald-600 dark:text-emerald-400">42 ملف حجز نشط</div>
+                            <div class="stat-label text-[10px] font-bold" data-i18n="stat_active_files">الحسابات النشطة</div>
+                            <div class="stat-val text-sm font-black text-emerald-600 dark:text-emerald-400" data-i18n="stat_active_count">42 ملف حجز نشط</div>
                         </div>
                         <div class="stat-box text-right px-4 py-2.5 rounded-xl">
-                            <div class="stat-label text-[10px] font-bold">مطابقة الفاتورة ETA</div>
-                            <div class="stat-val text-sm font-black text-gold-600 dark:text-gold-400">100% معتمدة</div>
+                            <div class="stat-label text-[10px] font-bold" data-i18n="stat_eta_match">مطابقة الفاتورة ETA</div>
+                            <div class="stat-val text-sm font-black text-gold-600 dark:text-gold-400" data-i18n="stat_eta_val">100% معتمدة</div>
                         </div>
                     </div>
                 </div>
@@ -872,24 +872,24 @@
                     <!-- Sales -->
                     <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 hover:shadow-md transition">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
-                            <span>إجمالي المبيعات المحققة</span>
+                            <span data-i18n="kpi_sales">إجمالي المبيعات المحققة</span>
                             <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-chart-line"></i></span>
                         </div>
                         <h3 class="text-2xl font-black text-slate-900" id="dashTotalSales">245,000 ج.م</h3>
                         <div class="mt-2 text-[11px] text-emerald-600 font-bold flex items-center gap-1">
                             <i class="fa-solid fa-arrow-trend-up"></i>
-                            <span>+18.4% نمو المبيعات الشهرية</span>
+                            <span data-i18n="kpi_sales_growth">+18.4% نمو المبيعات الشهرية</span>
                         </div>
                     </div>
 
                     <!-- Net Profit -->
                     <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 hover:shadow-md transition">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
-                            <span>صافي الأرباح التشغيلية</span>
+                            <span data-i18n="kpi_profit">صافي الأرباح التشغيلية</span>
                             <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-sack-dollar"></i></span>
                         </div>
                         <h3 class="text-2xl font-black text-emerald-600" id="dashTotalProfit">42,500 ج.م</h3>
-                        <div class="mt-2 text-[11px] text-slate-500 font-medium">
+                        <div class="mt-2 text-[11px] text-slate-500 font-medium" data-i18n="kpi_profit_desc">
                             بعد استبعاد تكلفة تذاكر الطيران والفنادق
                         </div>
                     </div>
@@ -899,34 +899,34 @@
                         <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-100 transition"></div>
                         <div class="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
                             <span class="group-hover:text-amber-700 transition flex items-center gap-1.5">
-                                مستحقات آجلة لدى العملاء
+                                <span data-i18n="kpi_debts">مستحقات آجلة لدى العملاء</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500 opacity-0 group-hover:opacity-100 transition"></i>
                             </span>
                             <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm group-hover:bg-amber-500 group-hover:text-white transition shadow-xs"><i class="fa-solid fa-hand-holding-dollar"></i></span>
                         </div>
                         <h3 class="text-2xl font-black text-amber-600 flex items-baseline justify-between">
                             <span id="dashTotalDebts">31,200 ج.م</span>
-                            <span class="text-[11px] font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full group-hover:bg-amber-200 transition">عرض التفاصيل <i class="fa-solid fa-chevron-left text-[9px] mr-0.5"></i></span>
+                            <span class="text-[11px] font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full group-hover:bg-amber-200 transition" data-i18n="kpi_debts_details">عرض التفاصيل <i class="fa-solid fa-chevron-left text-[9px] mr-0.5"></i></span>
                         </h3>
                         <div class="mt-2 text-[11px] text-slate-500 font-medium flex items-center justify-between">
-                            <span id="dashDebtsCountText">3 عملاء بأقساط ومستحقات قيد السداد</span>
-                            <span class="text-amber-600 font-bold group-hover:underline">فتح الكشف ↗</span>
+                            <span id="dashDebtsCountText" data-i18n="kpi_debts_count">3 عملاء بأقساط ومستحقات قيد السداد</span>
+                            <span class="text-amber-600 font-bold group-hover:underline" data-i18n="kpi_debts_open">فتح الكشف ↗</span>
                         </div>
                     </div>
 
                     <!-- Foreign Currency Vaults -->
                     <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 hover:shadow-md transition">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
-                            <span>أرصدة الخزائن بالعملات</span>
+                            <span data-i18n="kpi_vaults">أرصدة الخزائن بالعملات</span>
                             <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-globe"></i></span>
                         </div>
                         <div class="space-y-1 text-xs font-bold">
                             <div class="flex justify-between items-center bg-slate-50 px-2.5 py-1 rounded-lg">
-                                <span class="text-slate-600">🇸🇦 ريال سعودي:</span>
+                                <span class="text-slate-600" data-i18n="kpi_sar">🇸🇦 ريال سعودي:</span>
                                 <span class="text-slate-900 font-black" id="dashSarVal">14,500 ر.س</span>
                             </div>
                             <div class="flex justify-between items-center bg-slate-50 px-2.5 py-1 rounded-lg">
-                                <span class="text-slate-600">🇺🇸 دولار أمريكي:</span>
+                                <span class="text-slate-600" data-i18n="kpi_usd">🇺🇸 دولار أمريكي:</span>
                                 <span class="text-slate-900 font-black" id="dashUsdVal">3,200 $</span>
                             </div>
                         </div>
@@ -942,27 +942,27 @@
                             </div>
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <h3 class="font-black text-base">أرصدة الحسابات البنكية المعتمدة لشركة الحرمين</h3>
+                                    <h3 class="font-black text-base" data-i18n="bank_banner_title">أرصدة الحسابات البنكية المعتمدة لشركة الحرمين</h3>
                                     <span class="bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                        تحديث لحظي (Live Ledger)
+                                        <span data-i18n="bank_banner_live">تحديث لحظي (Live Ledger)</span>
                                     </span>
                                 </div>
-                                <p class="text-xs mt-0.5">متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات</p>
+                                <p class="text-xs mt-0.5" data-i18n="bank_banner_desc">متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="openManageBankModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-navy-800 dark:hover:bg-slate-800 dark:text-gold-400 border border-slate-300 dark:border-gold-500/40 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-xs">
                                 <i class="fa-solid fa-plus text-gold-600 dark:text-gold-400"></i>
-                                <span>إضافة بنك جديد</span>
+                                <span data-i18n="btn_add_bank">إضافة بنك جديد</span>
                             </button>
                             <button onclick="openBankTxModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white dark:text-navy-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-plus-circle"></i>
-                                <span>حركة بنكية</span>
+                                <span data-i18n="btn_bank_tx">حركة بنكية</span>
                             </button>
                             <button onclick="openReconcileModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-xs">
                                 <i class="fa-solid fa-file-excel text-emerald-600 dark:text-emerald-400"></i>
-                                <span>مطابقة كشف البنك</span>
+                                <span data-i18n="btn_reconcile">مطابقة كشف البنك</span>
                             </button>
                         </div>
                     </div>
@@ -979,12 +979,12 @@
                         <div>
                             <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-passport text-gold-600"></i>
-                                <span>أحدث الحجوزات والملفات المالية المعتمدة</span>
+                                <span data-i18n="recent_bookings_title">أحدث الحجوزات والملفات المالية المعتمدة</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">سجل فوري لكافة تذاكر الطيران، رحلات العمرة، والفنادق مع حالة الفاتورة الإلكترونية</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="recent_bookings_desc">سجل فوري لكافة تذاكر الطيران، رحلات العمرة، والفنادق مع حالة الفاتورة الإلكترونية</p>
                         </div>
                         <button onclick="navTo('bookings')" class="text-xs font-bold text-gold-600 hover:text-gold-700 hover:underline flex items-center gap-1">
-                            <span>عرض كل الحجوزات (32)</span>
+                            <span data-i18n="btn_view_all_bookings">عرض كل الحجوزات (32)</span>
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
                     </div>
@@ -993,12 +993,12 @@
                         <table class="w-full text-right text-xs">
                             <thead class="bg-slate-50 text-slate-600 uppercase font-bold text-[11px] border-b border-slate-200/80">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl">رقم الملف / PNR</th>
-                                    <th class="p-3.5">العميل / الشركة</th>
-                                    <th class="p-3.5">الخدمة السياحية</th>
-                                    <th class="p-3.5">المبيعات</th>
-                                    <th class="p-3.5">صافي الربح</th>
-                                    <th class="p-3.5 rounded-l-xl text-center">الفاتورة الإلكترونية ETA</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم الملف / PNR</th>
+                                    <th class="p-3.5" data-i18n="th_client">العميل / الشركة</th>
+                                    <th class="p-3.5" data-i18n="th_service">الخدمة السياحية</th>
+                                    <th class="p-3.5" data-i18n="th_sales">المبيعات</th>
+                                    <th class="p-3.5" data-i18n="th_profit">صافي الربح</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة الإلكترونية ETA</th>
                                 </tr>
                             </thead>
                             <tbody id="dashBookingsTbody" class="divide-y divide-slate-100">
@@ -1019,13 +1019,13 @@
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-ticket-simple text-gold-600"></i>
-                                <span>إدارة الحجوزات والبرامج السياحية</span>
+                                <span data-i18n="bookings_view_title">إدارة الحجوزات والبرامج السياحية</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">تسجيل ومتابعة حجوزات الطيران GDS، برامج العمرة والحج، وحجوزات الفنادق</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="bookings_view_desc">تسجيل ومتابعة حجوزات الطيران GDS، برامج العمرة والحج، وحجوزات الفنادق</p>
                         </div>
                         <button onclick="openBookingModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-plus"></i>
-                            <span>تسجيل حجز جديد</span>
+                            <span data-i18n="btn_new_booking_lg">تسجيل حجز جديد</span>
                         </button>
                     </div>
 
@@ -1034,14 +1034,14 @@
                         <table class="w-full text-right text-xs">
                             <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl">رقم PNR</th>
-                                    <th class="p-3.5">العميل</th>
-                                    <th class="p-3.5">الخدمة السياحية</th>
-                                    <th class="p-3.5">المورد / شركة الطيران</th>
-                                    <th class="p-3.5">سعر البيع</th>
-                                    <th class="p-3.5">التكلفة</th>
-                                    <th class="p-3.5">الربح</th>
-                                    <th class="p-3.5 rounded-l-xl text-center">الفاتورة ETA</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم PNR</th>
+                                    <th class="p-3.5" data-i18n="th_client">العميل</th>
+                                    <th class="p-3.5" data-i18n="th_service">الخدمة السياحية</th>
+                                    <th class="p-3.5" data-i18n="th_supplier">المورد / شركة الطيران</th>
+                                    <th class="p-3.5" data-i18n="th_sales">سعر البيع</th>
+                                    <th class="p-3.5" data-i18n="th_cost">التكلفة</th>
+                                    <th class="p-3.5" data-i18n="th_profit">الربح</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة ETA</th>
                                 </tr>
                             </thead>
                             <tbody id="fullBookingsTbody" class="divide-y divide-slate-100">
@@ -1061,18 +1061,18 @@
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-users text-gold-600"></i>
-                                <span>حسابات العملاء، الأقساط، والمديونيات الآجلة</span>
+                                <span data-i18n="clients_view_title">حسابات العملاء، الأقساط، والمديونيات الآجلة</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">متابعة مديونيات الشركات والعملاء الأفراد وجدولة الأقساط الشهرية</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="clients_view_desc">متابعة مديونيات الشركات والعملاء الأفراد وجدولة الأقساط الشهرية</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="openManageClientModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-user-plus"></i>
-                                <span>إضافة عميل جديد</span>
+                                <span data-i18n="btn_new_client">إضافة عميل جديد</span>
                             </button>
                             <button onclick="openVoucherModal('receipt')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-receipt"></i>
-                                <span>سند تحصيل</span>
+                                <span data-i18n="btn_receipt_voucher">سند تحصيل</span>
                             </button>
                         </div>
                     </div>
@@ -1081,12 +1081,12 @@
                         <table class="w-full text-right text-xs">
                             <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl">العميل / الشركة</th>
-                                    <th class="p-3.5">الهاتف</th>
-                                    <th class="p-3.5">إجمالي المبيعات</th>
-                                    <th class="p-3.5">المسدد</th>
-                                    <th class="p-3.5">المتبقي (الآجل)</th>
-                                    <th class="p-3.5 rounded-l-xl text-center">الإجراء المالي</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_client">العميل / الشركة</th>
+                                    <th class="p-3.5" data-i18n="th_phone">الهاتف</th>
+                                    <th class="p-3.5" data-i18n="th_sales">إجمالي المبيعات</th>
+                                    <th class="p-3.5" data-i18n="th_paid">المسدد</th>
+                                    <th class="p-3.5" data-i18n="th_due">المتبقي (الآجل)</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_action">الإجراء المالي</th>
                                 </tr>
                             </thead>
                             <tbody id="clientsTbody" class="divide-y divide-slate-100">
@@ -1106,18 +1106,18 @@
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-building-columns text-gold-600"></i>
-                                <span>حسابات شركات الطيران والموردين والوكلاء</span>
+                                <span data-i18n="suppliers_view_title">حسابات شركات الطيران والموردين والوكلاء</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">إدارة تسويات خطوط الطيران وفنادق مكة والمدينة وموردي التأشيرات</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="suppliers_view_desc">إدارة تسويات خطوط الطيران وفنادق مكة والمدينة وموردي التأشيرات</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="openManageSupplierModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-plus-circle"></i>
-                                <span>إضافة مورد / طيران</span>
+                                <span data-i18n="btn_new_supplier">إضافة مورد / طيران</span>
                             </button>
                             <button onclick="openVoucherModal('payment')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-money-bill-transfer"></i>
-                                <span>سند صرف</span>
+                                <span data-i18n="btn_pay_supplier">سند صرف</span>
                             </button>
                         </div>
                     </div>
@@ -1126,12 +1126,12 @@
                         <table class="w-full text-right text-xs">
                             <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl">المورد / شركة الطيران</th>
-                                    <th class="p-3.5">نوع الخدمة</th>
-                                    <th class="p-3.5">العملة</th>
-                                    <th class="p-3.5">إجمالي المعاملات</th>
-                                    <th class="p-3.5">المستحق للمورد</th>
-                                    <th class="p-3.5 rounded-l-xl text-center">التسوية</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_supplier">المورد / شركة الطيران</th>
+                                    <th class="p-3.5" data-i18n="th_category">نوع الخدمة</th>
+                                    <th class="p-3.5" data-i18n="th_currency">العملة</th>
+                                    <th class="p-3.5" data-i18n="th_total_vol">إجمالي المعاملات</th>
+                                    <th class="p-3.5" data-i18n="th_payable_due">المستحق للمورد</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_action">التسوية</th>
                                 </tr>
                             </thead>
                             <tbody id="suppliersTbody" class="divide-y divide-slate-100">
@@ -1150,9 +1150,9 @@
                     <div class="border-b border-slate-100 pb-4 mb-6">
                         <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-vault text-gold-600"></i>
-                            <span>إدارة الخزائن وتعدد العملات وفروق سعر الصرف</span>
+                            <span data-i18n="treasury_view_title">إدارة الخزائن وتعدد العملات وفروق سعر الصرف</span>
                         </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">خزائن الجنيه والريال والدولار مع إعادة التقييم اللحظي للأرصدة واحتساب فروق الصرف</p>
+                        <p class="text-xs text-slate-500 mt-0.5" data-i18n="treasury_view_desc">خزائن الجنيه والريال والدولار مع إعادة التقييم اللحظي للأرصدة واحتساب فروق الصرف</p>
                     </div>
 
                     <!-- 3 Vaults -->
@@ -1231,9 +1231,9 @@
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i>
-                                <span>تقارير الأرباح، قائمة الدخل، والمصروفات التشغيلية</span>
+                                <span data-i18n="reports_view_title">تقارير الأرباح، قائمة الدخل، والمصروفات التشغيلية</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">تحليل أرباح كل رحلة وتذكرة على حدة ومقارنتها بالمصروفات الإدارية</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="reports_view_desc">تحليل أرباح كل رحلة وتذكرة على حدة ومقارنتها بالمصروفات الإدارية</p>
                         </div>
                         <button onclick="window.print()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs px-3.5 py-2 rounded-xl border border-slate-300 transition flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-print"></i>
@@ -1304,13 +1304,13 @@
                         <div>
                             <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-user-shield text-gold-600"></i>
-                                <span>إدارة صلاحيات فريق العمل وسجل الرقابة المباشر (RBAC & Audit Trail)</span>
+                                <span data-i18n="staff_view_title">إدارة صلاحيات فريق العمل وسجل الرقابة المباشر (RBAC & Audit Trail)</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">إضافة، تعديل، وحذف الموظفين مع تحديد دقيق للصلاحيات والأدوار التشغيلية</p>
+                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="staff_view_desc">إضافة، تعديل، وحذف الموظفين مع تحديد دقيق للصلاحيات والأدوار التشغيلية</p>
                         </div>
                         <button onclick="openManageStaffModal()" class="bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 cursor-pointer shadow-xs">
                             <i class="fa-solid fa-user-plus"></i>
-                            <span>إضافة موظف جديد +</span>
+                            <span data-i18n="btn_new_staff">إضافة موظف جديد +</span>
                         </button>
                     </div>
 
@@ -1319,14 +1319,14 @@
                         <table class="w-full text-right text-xs">
                             <thead class="bg-slate-900 text-slate-200 uppercase font-bold text-[11px]">
                                 <tr>
-                                    <th class="p-3.5">الموظف</th>
-                                    <th class="p-3.5">الدور الوظيفي</th>
-                                    <th class="p-3.5">صلاحية الحجز</th>
-                                    <th class="p-3.5">الاطلاع على الأرباح</th>
-                                    <th class="p-3.5">سندات الصرف والقبض</th>
-                                    <th class="p-3.5">الفاتورة ETA</th>
-                                    <th class="p-3.5 text-center">الحالة</th>
-                                    <th class="p-3.5 text-center">الإجراءات</th>
+                                    <th class="p-3.5" data-i18n="th_staff_member">الموظف</th>
+                                    <th class="p-3.5" data-i18n="th_role_perm">الدور الوظيفي</th>
+                                    <th class="p-3.5" data-i18n="th_booking_perm">صلاحية الحجز</th>
+                                    <th class="p-3.5" data-i18n="th_profit_perm">الاطلاع على الأرباح</th>
+                                    <th class="p-3.5" data-i18n="th_voucher_perm">سندات الصرف والقبض</th>
+                                    <th class="p-3.5" data-i18n="th_eta_perm">الفاتورة ETA</th>
+                                    <th class="p-3.5 text-center" data-i18n="th_status">الحالة</th>
+                                    <th class="p-3.5 text-center" data-i18n="th_actions">الإجراءات</th>
                                 </tr>
                             </thead>
                             <tbody id="staffTbody" class="divide-y divide-slate-100 bg-white">
@@ -1387,31 +1387,31 @@
                     <div class="flex items-center gap-2 overflow-x-auto pt-4 text-xs font-bold scrollbar-none" id="defSubTabs">
                         <button onclick="switchDefTab('currencies')" id="deftab-btn-currencies" class="deftab-btn active px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-coins text-gold-500"></i>
-                            <span>دليل العملات وأسعار الصرف</span>
+                            <span data-i18n="def_tab_currencies">دليل العملات وأسعار الصرف</span>
                             <span class="bg-gold-500/20 text-gold-600 dark:text-gold-300 text-[10px] px-1.5 py-0.5 rounded-full font-black" id="defCountCurrencies">8</span>
                         </button>
                         <button onclick="switchDefTab('services')" id="deftab-btn-services" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-ticket"></i>
-                            <span>باقات وخدمات السياحة</span>
+                            <span data-i18n="def_tab_services">باقات وخدمات السياحة</span>
                             <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountServices">7</span>
                         </button>
                         <button onclick="switchDefTab('accounts')" id="deftab-btn-accounts" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-sitemap"></i>
-                            <span>دليل بنود المصروفات والإيراد</span>
+                            <span data-i18n="def_tab_accounts">دليل بنود المصروفات والإيراد</span>
                             <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountAccounts">8</span>
                         </button>
                         <button onclick="switchDefTab('drawers')" id="deftab-btn-drawers" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-cash-register"></i>
-                            <span>الخزائن وطرق الدفع والتحصيل</span>
+                            <span data-i18n="def_tab_drawers">الخزائن وطرق الدفع والتحصيل</span>
                             <span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold" id="defCountDrawers">5</span>
                         </button>
                         <button onclick="switchDefTab('company')" id="deftab-btn-company" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-building-shield"></i>
-                            <span>بيانات وهوية شركة الحرمين</span>
+                            <span data-i18n="def_tab_company">بيانات وهوية شركة الحرمين</span>
                         </button>
                         <button onclick="switchDefTab('eta')" id="deftab-btn-eta" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
                             <i class="fa-solid fa-receipt"></i>
-                            <span>إعدادات الضرائب والفوترة ETA</span>
+                            <span data-i18n="def_tab_eta">إعدادات الضرائب والفوترة ETA</span>
                         </button>
                     </div>
                 </div>
@@ -3006,6 +3006,7 @@
         function renderBookingsTables(customList = null) {
             const list = customList !== null ? customList : state.bookings;
             const isProfitHidden = isCurrentUserProfitHidden();
+            const isEn = document.documentElement.lang === 'en';
 
             const dBody = document.getElementById('dashBookingsTbody');
             const fBody = document.getElementById('fullBookingsTbody');
@@ -3015,7 +3016,7 @@
                     <tr>
                         <td colspan="7" class="p-8 text-center text-slate-400 font-bold bg-slate-50/50">
                             <i class="fa-solid fa-magnifying-glass text-gold-600 text-lg mb-2 block"></i>
-                            <span>لم يتم العثور على أي حجوزات أو ملفات مطابقة للبحث</span>
+                            <span>${isEn ? 'No bookings or files found matching your search' : 'لم يتم العثور على أي حجوزات أو ملفات مطابقة للبحث'}</span>
                         </td>
                     </tr>
                 `;
@@ -3031,17 +3032,17 @@
                     <td class="p-3.5 text-slate-700">${b.service}</td>
                     <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
                     <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                        ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
+                        ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${b.profit.toLocaleString()} ${b.currency}`}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         ${b.eta.includes('معتمدة') 
-                            ? `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
-                            : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${b.eta}</button>`
+                            ? `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${isEn ? 'Certified' : b.eta}</span>`
+                            : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${isEn ? 'Submit ETA' : b.eta}</button>`
                         }
-                        <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
+                        <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Booking' : 'تعديل الحجز'}">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
+                        <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete Booking' : 'حذف الحجز'}">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
@@ -3060,17 +3061,17 @@
                         <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
                         <td class="p-3.5 text-slate-600">${b.cost.toLocaleString()} ${b.currency}</td>
                         <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                            ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
+                            ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${b.profit.toLocaleString()} ${b.currency}`}
                         </td>
                         <td class="p-3.5 text-center flex items-center justify-center gap-2">
                             ${b.eta.includes('معتمدة') 
-                                ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
-                                : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${b.eta}</button>`
+                                ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${isEn ? 'Certified' : b.eta}</span>`
+                                : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${isEn ? 'Submit ETA' : b.eta}</button>`
                             }
-                            <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
+                            <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Booking' : 'تعديل الحجز'}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
+                            <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete Booking' : 'حذف الحجز'}">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
@@ -3139,7 +3140,7 @@
                         <span class="truncate bank-card-activity">${b.activity}</span>
                         ${!isTicketing ? `
                             <button onclick="openBankTxModal('${b.id}')" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-bold hover:underline shrink-0 cursor-pointer">
-                                حركة +
+                                ${document.documentElement.lang === 'en' ? '+ Tx' : 'حركة +'}
                             </button>
                         ` : ''}
                     </div>
@@ -3763,20 +3764,21 @@
         function renderCurrencyTicker() {
             const ticker = document.getElementById('topbarCurrencyTicker');
             if (!ticker || !state.currencies) return;
+            const isEn = document.documentElement.lang === 'en';
 
             const foreign = state.currencies.filter(c => !c.isBase);
             ticker.innerHTML = `
-                <span class="text-slate-500 font-bold" data-i18n="fx_rates">أسعار الصرف:</span>
+                <span class="text-slate-500 font-bold" data-i18n="fx_rates">${isEn ? 'Exchange Rates:' : 'أسعار الصرف:'}</span>
                 <div class="flex items-center gap-2 overflow-x-auto max-w-[200px] 2xl:max-w-xs scrollbar-none">
                     ${foreign.map(c => `
                         <span class="text-slate-700 dark:text-slate-200 text-[11px] whitespace-nowrap">
-                            ${c.flag} 1 ${c.code} = <strong>${c.rate.toFixed(2)}</strong> ج.م
+                            ${c.flag} 1 ${c.code} = <strong>${c.rate.toFixed(2)}</strong> ${isEn ? 'EGP' : 'ج.م'}
                         </span>
                     `).join('<span class="text-slate-300 dark:text-slate-600">|</span>')}
                 </div>
-                <button type="button" onclick="openFxModal()" class="text-gold-600 hover:text-gold-700 dark:text-gold-400 font-bold text-[10px] bg-gold-50 dark:bg-gold-950/50 px-2 py-0.5 rounded cursor-pointer border border-gold-200 dark:border-gold-800 shrink-0 flex items-center gap-1" title="إدارة وإضافة العملات وأسعار الصرف">
+                <button type="button" onclick="openFxModal()" class="text-gold-600 hover:text-gold-700 dark:text-gold-400 font-bold text-[10px] bg-gold-50 dark:bg-gold-950/50 px-2 py-0.5 rounded cursor-pointer border border-gold-200 dark:border-gold-800 shrink-0 flex items-center gap-1" title="${isEn ? 'Manage Currencies & Rates' : 'إدارة وإضافة العملات وأسعار الصرف'}">
                     <i class="fa-solid fa-pen-to-square"></i>
-                    <span data-i18n="manage_currencies">إدارة العملات +</span>
+                    <span data-i18n="manage_currencies">${isEn ? 'Currencies +' : 'إدارة العملات +'}</span>
                 </button>
             `;
         }
@@ -4242,9 +4244,10 @@
             const cBody = document.getElementById('clientsTbody');
             if (!cBody) return;
             const list = customList !== null ? customList : state.clients;
+            const isEn = document.documentElement.lang === 'en';
 
             if (list.length === 0) {
-                cBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">🔍 لم يتم العثور على عملاء مطابقين للبحث</td></tr>`;
+                cBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">${isEn ? '🔍 No clients found matching your search' : '🔍 لم يتم العثور على عملاء مطابقين للبحث'}</td></tr>`;
                 return;
             }
 
@@ -4257,12 +4260,12 @@
                     <td class="p-3.5 text-amber-600 font-black">${c.due}</td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         <button onclick="openVoucherModal('receipt', '${c.name.replace(/'/g, "\\'")}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
-                            تحصيل
+                            ${isEn ? 'Collect' : 'تحصيل'}
                         </button>
-                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات العميل">
+                        <button onclick="openManageClientModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Client' : 'تعديل بيانات العميل'}">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف العميل">
+                        <button onclick="deleteClient(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete Client' : 'حذف العميل'}">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
@@ -4274,9 +4277,10 @@
             const sBody = document.getElementById('suppliersTbody');
             if (!sBody) return;
             const list = customList !== null ? customList : state.suppliers;
+            const isEn = document.documentElement.lang === 'en';
 
             if (list.length === 0) {
-                sBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">🔍 لم يتم العثور على شركات طيران أو موردين مطابقين للبحث</td></tr>`;
+                sBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">${isEn ? '🔍 No suppliers found matching your search' : '🔍 لم يتم العثور على شركات طيران أو موردين مطابقين للبحث'}</td></tr>`;
                 return;
             }
 
@@ -4289,12 +4293,12 @@
                     <td class="p-3.5 text-red-600 font-black">${s.due}</td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         <button onclick="openVoucherModal('payment', '${s.name.replace(/'/g, "\\'")}')" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] px-2.5 py-1 rounded-lg transition font-bold cursor-pointer">
-                            سداد
+                            ${isEn ? 'Pay' : 'سداد'}
                         </button>
-                        <button onclick="openManageSupplierModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل بيانات المورد">
+                        <button onclick="openManageSupplierModal(${idx})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Supplier' : 'تعديل بيانات المورد'}">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button onclick="deleteSupplier(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف المورد">
+                        <button onclick="deleteSupplier(${idx})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="${isEn ? 'Delete Supplier' : 'حذف المورد'}">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
@@ -4335,6 +4339,7 @@
         // ==========================================
         const translations = {
             ar: {
+                brand_title: 'الحرمين للسياحة',
                 dashboard: 'لوحة المؤشرات والعمليات',
                 bookings: 'إدارة الحجوزات والتذاكر',
                 clients: 'حسابات العملاء والأقساط',
@@ -4349,9 +4354,87 @@
                 new_voucher: 'سند مالي',
                 fx_rates: 'أسعار الصرف:',
                 manage_currencies: 'إدارة العملات +',
-                search_placeholder: 'بحث شامل (رقم PNR، اسم العميل، التذكرة، شركة الطيران)...'
+                search_placeholder: 'بحث شامل (رقم PNR، اسم العميل، التذكرة، شركة الطيران)...',
+                eta_status: 'الربط الضريبي: نشط',
+                master_badge: 'شامل',
+                welcome_tag: 'شركة الحرمين للسياحة والسفر',
+                welcome_title_prefix: 'مرحباً بك في المنظومة المركزية،',
+                welcome_desc: 'نظام الحرمين السحابي لإدارة برامج العمرة والحج، تذاكر الطيران، الفنادق، والربط المباشر مع مصلحة الضرائب المصرية ETA.',
+                stat_active_files: 'الحسابات النشطة',
+                stat_active_count: '42 ملف حجز نشط',
+                stat_eta_match: 'مطابقة الفاتورة ETA',
+                stat_eta_val: '100% معتمدة',
+                kpi_sales: 'إجمالي المبيعات المحققة',
+                kpi_sales_growth: '+18.4% نمو المبيعات الشهرية',
+                kpi_profit: 'صافي الأرباح التشغيلية',
+                kpi_profit_desc: 'بعد استبعاد تكلفة تذاكر الطيران والفنادق',
+                kpi_debts: 'مستحقات آجلة لدى العملاء',
+                kpi_debts_details: 'عرض التفاصيل',
+                kpi_debts_count: '3 عملاء بأقساط ومستحقات قيد السداد',
+                kpi_debts_open: 'فتح الكشف ↗',
+                kpi_vaults: 'أرصدة الخزائن بالعملات',
+                kpi_sar: '🇸🇦 ريال سعودي:',
+                kpi_usd: '🇺🇸 دولار أمريكي:',
+                bank_banner_title: 'أرصدة الحسابات البنكية المعتمدة لشركة الحرمين',
+                bank_banner_live: 'تحديث لحظي (Live Ledger)',
+                bank_banner_desc: 'متابعة أرصدة البنوك وحسابات التحصيل للعملات (EGP, SAR, USD) ومطابقة كشوف الحسابات',
+                btn_add_bank: 'إضافة بنك جديد',
+                btn_bank_tx: 'حركة بنكية',
+                btn_reconcile: 'مطابقة كشف البنك',
+                recent_bookings_title: 'أحدث الحجوزات والملفات المالية المعتمدة',
+                recent_bookings_desc: 'سجل فوري لكافة تذاكر الطيران، رحلات العمرة، والفنادق مع حالة الفاتورة الإلكترونية',
+                btn_view_all_bookings: 'عرض كل الحجوزات (32)',
+                th_pnr: 'رقم الملف / PNR',
+                th_client: 'العميل / الشركة',
+                th_service: 'الخدمة السياحية',
+                th_sales: 'المبيعات',
+                th_profit: 'صافي الربح',
+                th_eta: 'الفاتورة الإلكترونية ETA',
+                bookings_view_title: 'إدارة الحجوزات والبرامج السياحية',
+                bookings_view_desc: 'تسجيل ومتابعة حجوزات الطيران GDS، برامج العمرة والحج، وحجوزات الفنادق',
+                btn_new_booking_lg: 'تسجيل حجز جديد',
+                th_supplier: 'المورد / شركة الطيران',
+                th_cost: 'التكلفة',
+                clients_view_title: 'حسابات العملاء، الأقساط، والمديونيات الآجلة',
+                clients_view_desc: 'متابعة مديونيات الشركات والعملاء الأفراد وجدولة الأقساط الشهرية',
+                btn_new_client: 'إضافة عميل جديد',
+                btn_receipt_voucher: 'سند تحصيل',
+                th_phone: 'الهاتف',
+                th_paid: 'المسدد',
+                th_due: 'المتبقي (الآجل)',
+                th_action: 'الإجراء المالي',
+                suppliers_view_title: 'شركات الطيران وموردي الفنادق والخدمات',
+                suppliers_view_desc: 'متابعة مستحقات شركات الطيران (GDS) وموردي تأشيرات وباصات العمرة',
+                btn_new_supplier: 'إضافة مورد / طيران',
+                btn_pay_supplier: 'سند صرف لمورد',
+                th_category: 'النوع / التصنيف',
+                th_total_vol: 'إجمالي التعامل',
+                th_payable_due: 'المستحق للمورد',
+                treasury_view_title: 'إدارة الخزائن وتعدد العملات وفروق سعر الصرف',
+                treasury_view_desc: 'كشف حركات الخزائن النقدية، محافظ الكاش، وفروق تحويل العملات الأجنبية',
+                reports_view_title: 'الأرباح وقائمة الدخل P&L',
+                reports_view_desc: 'تحليل الإيرادات، تكاليف الطيران والفنادق، وصافي الأرباح',
+                staff_view_title: 'صلاحيات فريق العمل والمستخدمين',
+                staff_view_desc: 'التحكم في أدوار وصلاحيات الوصول لحسابات التذاكر والحسابات والمديرين',
+                btn_new_staff: 'إضافة موظف جديد',
+                th_staff_member: 'الموظف',
+                th_role_perm: 'المسمى والصلاحية',
+                th_booking_perm: 'صلاحية الحجز',
+                th_profit_perm: 'عرض الأرباح',
+                th_voucher_perm: 'السندات المالية',
+                th_eta_perm: 'الفاتورة ETA',
+                th_status: 'الحالة',
+                th_actions: 'إجراءات',
+                def_view_title: 'دليل التعريفات العامة والإعدادات',
+                def_tab_currencies: 'دليل العملات وأسعار الصرف',
+                def_tab_services: 'باقات وخدمات السياحة',
+                def_tab_accounts: 'دليل بنود المصروفات والإيراد',
+                def_tab_drawers: 'الخزائن وطرق الدفع والتحصيل',
+                def_tab_company: 'بيانات وهوية شركة الحرمين',
+                def_tab_eta: 'إعدادات الضرائب والفوترة ETA'
             },
             en: {
+                brand_title: 'Al-Haramain Travel',
                 dashboard: 'Dashboard & Operations',
                 bookings: 'Bookings & Ticketing',
                 clients: 'Clients & Receivables',
@@ -4366,7 +4449,84 @@
                 new_voucher: 'Financial Voucher',
                 fx_rates: 'Exchange Rates:',
                 manage_currencies: 'Currencies +',
-                search_placeholder: 'Global Search (PNR, Client Name, Ticket, Airline)...'
+                search_placeholder: 'Global Search (PNR, Client Name, Ticket, Airline)...',
+                eta_status: 'Tax Link: Active',
+                master_badge: 'All',
+                welcome_tag: 'Al-Haramain Travel & Tourism',
+                welcome_title_prefix: 'Welcome to Central ERP System,',
+                welcome_desc: 'Al-Haramain Cloud ERP for Hajj & Umrah, GDS Flights, Hotels, and Direct Egyptian Tax ETA Integration.',
+                stat_active_files: 'Active Accounts',
+                stat_active_count: '42 Active Bookings',
+                stat_eta_match: 'ETA Invoicing',
+                stat_eta_val: '100% Certified',
+                kpi_sales: 'Total Gross Sales',
+                kpi_sales_growth: '+18.4% Monthly Growth',
+                kpi_profit: 'Net Operating Profit',
+                kpi_profit_desc: 'After flight and hotel operating costs',
+                kpi_debts: 'Outstanding Receivables',
+                kpi_debts_details: 'View Details',
+                kpi_debts_count: '3 clients with pending installments',
+                kpi_debts_open: 'Open Ledger ↗',
+                kpi_vaults: 'Multi-Currency Vaults',
+                kpi_sar: '🇸🇦 Saudi Riyal (SAR):',
+                kpi_usd: '🇺🇸 US Dollar (USD):',
+                bank_banner_title: 'Corporate Bank Accounts & Real-Time Ledger',
+                bank_banner_live: 'Live Ledger',
+                bank_banner_desc: 'Live tracking of bank balances, collections (EGP, SAR, USD), and statement reconciliation',
+                btn_add_bank: '+ New Bank',
+                btn_bank_tx: '+ Bank Tx',
+                btn_reconcile: 'Reconcile Statement',
+                recent_bookings_title: 'Recent Certified Bookings & Tickets',
+                recent_bookings_desc: 'Real-time ledger for flights, Umrah packages, hotels, and ETA e-invoices',
+                btn_view_all_bookings: 'View All Bookings (32)',
+                th_pnr: 'File / PNR',
+                th_client: 'Client / Company',
+                th_service: 'Service / Package',
+                th_sales: 'Sales',
+                th_profit: 'Net Profit',
+                th_eta: 'ETA Status',
+                bookings_view_title: 'Bookings & Tourism Management',
+                bookings_view_desc: 'Manage GDS flight reservations, Umrah & Hajj programs, and hotel bookings',
+                btn_new_booking_lg: '+ New Booking',
+                th_supplier: 'Supplier / Airline',
+                th_cost: 'Cost',
+                clients_view_title: 'Client Accounts & Due Receivables',
+                clients_view_desc: 'Track corporate & retail client receivables and installment schedules',
+                btn_new_client: '+ New Client',
+                btn_receipt_voucher: '+ Receipt Voucher',
+                th_phone: 'Phone',
+                th_paid: 'Paid',
+                th_due: 'Due Balance',
+                th_action: 'Action',
+                suppliers_view_title: 'Airlines & Hospitality Suppliers',
+                suppliers_view_desc: 'Track accounts payable to airlines, hotel contractors, and Umrah vendors',
+                btn_new_supplier: '+ New Supplier',
+                btn_pay_supplier: '+ Supplier Payment',
+                th_category: 'Category',
+                th_total_vol: 'Total Volume',
+                th_payable_due: 'Payable Due',
+                treasury_view_title: 'Treasury, Vaults & Multi-Currency FX',
+                treasury_view_desc: 'Track physical cash drawers, digital wallets, and foreign exchange gains/losses',
+                reports_view_title: 'Profit & Loss (P&L) Statement',
+                reports_view_desc: 'Revenue breakdown, operating travel expenses, and net profit analysis',
+                staff_view_title: 'Staff Management & Access Permissions',
+                staff_view_desc: 'Role-based access control (RBAC), ticketing visibility, and financial controls',
+                btn_new_staff: '+ Add Staff Member',
+                th_staff_member: 'Employee',
+                th_role_perm: 'Role & Access',
+                th_booking_perm: 'Booking Access',
+                th_profit_perm: 'Profit Access',
+                th_voucher_perm: 'Vouchers',
+                th_eta_perm: 'ETA Access',
+                th_status: 'Status',
+                th_actions: 'Actions',
+                def_view_title: 'Master Data & System Settings',
+                def_tab_currencies: 'Currencies & Exchange Rates',
+                def_tab_services: 'Tourism Packages & Services',
+                def_tab_accounts: 'Chart of Accounts',
+                def_tab_drawers: 'Cash Drawers & Payment Methods',
+                def_tab_company: 'Company Profile & Identity',
+                def_tab_eta: 'Tax Settings & ETA Invoicing'
             }
         };
 
@@ -4395,6 +4555,21 @@
                 searchInput.placeholder = translations[lang].search_placeholder;
             }
 
+            const dateBadge = document.getElementById('currentDateBadge');
+            if (dateBadge) {
+                dateBadge.innerText = lang === 'en' ? 'Sunday, Nov 22, 2026' : 'الأحد، 22 نوفمبر 2026';
+            }
+
+            const userRoleEl = document.getElementById('userPillRole');
+            if (userRoleEl) {
+                userRoleEl.innerText = lang === 'en' ? 'Super Admin' : 'مدير النظام (Admin)';
+            }
+
+            const sideBadge = document.getElementById('sidebarBankCount');
+            if (sideBadge && state.bankAccounts) {
+                sideBadge.innerText = lang === 'en' ? `${state.bankAccounts.length} Bank Accounts` : `${state.bankAccounts.length} بنوك وحسابات`;
+            }
+
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -4403,6 +4578,15 @@
             });
 
             localStorage.setItem('alharamain_lang', lang);
+
+            // Re-render dynamic components with translated labels
+            if (typeof renderBankAccounts === 'function') renderBankAccounts();
+            if (typeof renderBookingsTables === 'function') renderBookingsTables();
+            if (typeof renderClientsTable === 'function') renderClientsTable();
+            if (typeof renderSuppliersTable === 'function') renderSuppliersTable();
+            if (typeof renderStaffTable === 'function') renderStaffTable();
+            if (typeof renderCurrencyTicker === 'function') renderCurrencyTicker();
+            if (typeof renderDefinitionsTables === 'function') renderDefinitionsTables();
         }
 
         // 📋 CLIENT DEBTS DRILL-DOWN HANDLERS
@@ -4517,6 +4701,7 @@
 
         // Render Definitions Tables & Dropdowns
         function renderDefinitionsTables() {
+            const isEn = document.documentElement.lang === 'en';
             // 0. Currencies Master Data Table
             const curBody = document.getElementById('defCurrenciesTbody');
             if (curBody && state.currencies) {
@@ -4526,32 +4711,32 @@
                             <div class="flex items-center gap-2">
                                 <span class="text-xl shrink-0">${c.flag || '💱'}</span>
                                 <div>
-                                    <div class="font-extrabold text-slate-900">${c.name}</div>
+                                    <div class="font-extrabold text-slate-900">${isEn && c.nameEn ? c.nameEn : c.name}</div>
                                     <div class="text-[10px] text-slate-400 font-mono">${c.nameEn || c.code} [${c.code}]</div>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3.5 font-bold text-slate-800">${c.symbol}</td>
                         <td class="p-3.5 font-black text-emerald-600 text-sm">
-                            ${c.isBase ? '1.00 ج.م' : `${c.rate.toFixed(2)} ج.م`}
+                            ${c.isBase ? (isEn ? '1.00 EGP' : '1.00 ج.م') : `${c.rate.toFixed(2)} ${isEn ? 'EGP' : 'ج.م'}`}
                         </td>
-                        <td class="p-3.5 font-bold text-slate-700">${c.buyRate ? c.buyRate.toFixed(2) + ' ج.م' : '—'}</td>
-                        <td class="p-3.5 font-bold text-slate-700">${c.sellRate ? c.sellRate.toFixed(2) + ' ج.م' : '—'}</td>
+                        <td class="p-3.5 font-bold text-slate-700">${c.buyRate ? c.buyRate.toFixed(2) + (isEn ? ' EGP' : ' ج.م') : '—'}</td>
+                        <td class="p-3.5 font-bold text-slate-700">${c.sellRate ? c.sellRate.toFixed(2) + (isEn ? ' EGP' : ' ج.م') : '—'}</td>
                         <td class="p-3.5 text-slate-600 font-medium">${c.subunit || '—'}</td>
-                        <td class="p-3.5 text-slate-600 max-w-xs truncate" title="${c.usage || ''}">${c.usage || 'معاملات عامة'}</td>
+                        <td class="p-3.5 text-slate-600 max-w-xs truncate" title="${c.usage || ''}">${c.usage || (isEn ? 'General Transactions' : 'معاملات عامة')}</td>
                         <td class="p-3.5 text-slate-500 font-mono text-[10px]">${c.fxAccount || 'REV-203'}</td>
                         <td class="p-3.5 text-center">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${c.isBase ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-blue-100 text-blue-800'}">
-                                ${c.isBase ? 'الأساسية' : (c.status || 'نشط')}
+                                ${c.isBase ? (isEn ? 'Base' : 'الأساسية') : (isEn ? 'Active' : (c.status || 'نشط'))}
                             </span>
                         </td>
                         <td class="p-3.5 text-center">
                             <div class="flex items-center justify-center gap-1.5">
-                                <button onclick="openManageCurrencyDefModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="تعديل تفاصيل العملة">
+                                <button onclick="openManageCurrencyDefModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="${isEn ? 'Edit Currency' : 'تعديل تفاصيل العملة'}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 ${!c.isBase ? `
-                                    <button onclick="deleteCurrency('${c.code}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="حذف العملة">
+                                    <button onclick="deleteCurrency('${c.code}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="${isEn ? 'Delete Currency' : 'حذف العملة'}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 ` : ''}
@@ -5006,6 +5191,7 @@
         // 👥 STAFF & PERMISSIONS (CRUD & RBAC)
         function renderStaffTable() {
             const tbody = document.getElementById('staffTbody');
+            const isEn = document.documentElement.lang === 'en';
             if (tbody && state.staff) {
                 tbody.innerHTML = state.staff.map((s, idx) => {
                     const isProfitVisible = s.profitPerm && s.profitPerm.includes('متاح');
@@ -5020,6 +5206,15 @@
                     else if (s.role === 'accountant') roleBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
                     else if (s.role === 'sales') roleBadgeColor = 'bg-teal-100 text-teal-800 border-teal-300';
 
+                    let displayRole = s.roleLabel;
+                    if (isEn) {
+                        if (s.role === 'admin') displayRole = 'Super Admin';
+                        else if (s.role === 'ticketing') displayRole = 'Ticketing Agent';
+                        else if (s.role === 'umrah') displayRole = 'Umrah Supervisor';
+                        else if (s.role === 'accountant') displayRole = 'Chief Accountant';
+                        else if (s.role === 'sales') displayRole = 'Tourism Sales';
+                    }
+
                     return `
                         <tr class="hover:bg-slate-50/80 transition">
                             <td class="p-3.5">
@@ -5033,40 +5228,40 @@
                             </td>
                             <td class="p-3.5">
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${roleBadgeColor}">
-                                    ${s.roleLabel}
+                                    ${displayRole}
                                 </span>
                             </td>
-                            <td class="p-3.5 font-bold text-slate-700">${s.bookingPerm}</td>
+                            <td class="p-3.5 font-bold text-slate-700">${isEn ? (s.bookingPerm.includes('كامل') ? 'Full Access' : (s.bookingPerm.includes('إصدار') ? 'Issue Only' : s.bookingPerm)) : s.bookingPerm}</td>
                             <td class="p-3.5">
                                 <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isProfitVisible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-600 border border-red-200'}">
-                                    ${s.profitPerm}
+                                    ${isEn ? (isProfitVisible ? '✓ Visible' : '🔒 Hidden') : s.profitPerm}
                                 </span>
                             </td>
                             <td class="p-3.5">
                                 <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isVoucherAllowed ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-slate-100 text-slate-500'}">
-                                    ${s.voucherPerm}
+                                    ${isEn ? (isVoucherAllowed ? '✓ Allowed' : '🔒 Restricted') : s.voucherPerm}
                                 </span>
                             </td>
                             <td class="p-3.5">
                                 <span class="px-2 py-0.5 rounded text-[11px] font-bold ${isEtaAllowed ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500'}">
-                                    ${s.etaPerm}
+                                    ${isEn ? (isEtaAllowed ? '✓ Certify' : '🔒 View Only') : s.etaPerm}
                                 </span>
                             </td>
                             <td class="p-3.5 text-center">
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
-                                    ${isActive ? '● نشط' : '○ موقوف'}
+                                    ${isActive ? (isEn ? '● Active' : '● نشط') : (isEn ? '○ Inactive' : '○ موقوف')}
                                 </span>
                             </td>
                             <td class="p-3.5 text-center">
                                 <div class="flex items-center justify-center gap-1.5">
-                                    <button onclick="loginAsRole('${s.name}', '${s.roleLabel}', '${s.role}', '${s.avatar}'); alert('✓ تم التبديل إلى حساب: ${s.name}');" class="px-2 py-1 rounded-lg bg-gold-50 text-gold-700 hover:bg-gold-100 border border-gold-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1" title="دخول سريع بحساب هذا الموظف">
+                                    <button onclick="loginAsRole('${s.name}', '${s.roleLabel}', '${s.role}', '${s.avatar}'); alert('${isEn ? '✓ Switched to account: ' : '✓ تم التبديل إلى حساب: '}${s.name}');" class="px-2 py-1 rounded-lg bg-gold-50 text-gold-700 hover:bg-gold-100 border border-gold-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1" title="${isEn ? 'Quick Login' : 'دخول سريع بحساب هذا الموظف'}">
                                         <i class="fa-solid fa-arrow-right-to-bracket text-[9px]"></i>
-                                        <span>دخول</span>
+                                        <span>${isEn ? 'Login' : 'دخول'}</span>
                                     </button>
-                                    <button onclick="openManageStaffModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="تعديل الموظف والصلاحيات">
+                                    <button onclick="openManageStaffModal(${idx})" class="p-1.5 text-slate-500 hover:text-gold-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="${isEn ? 'Edit Staff' : 'تعديل الموظف والصلاحيات'}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    <button onclick="deleteStaff(${idx})" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="حذف الموظف">
+                                    <button onclick="deleteStaff(${idx})" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 cursor-pointer transition" title="${isEn ? 'Delete Staff' : 'حذف الموظف'}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </div>
