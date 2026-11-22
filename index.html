@@ -140,9 +140,55 @@
         html[dir="ltr"] th, html[dir="ltr"] td {
             text-align: left !important;
         }
+
+        /* 🔍 GLOBAL SEARCH INPUT BULLETPROOF STYLING */
+        #searchContainer {
+            min-width: 260px !important;
+        }
+        #globalSearchInput {
+            min-width: 250px !important;
+            width: 100% !important;
+            color: #0f172a !important;
+            background-color: #f8fafc !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            caret-color: #d97706 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            padding-right: 2.25rem !important; /* 36px for icon */
+            padding-left: 3.5rem !important;   /* 56px for clear btn & badge */
+        }
+        #globalSearchInput:focus {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #d97706 !important;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2) !important;
+        }
+        html.dark #globalSearchInput {
+            color: #f8fafc !important;
+            background-color: #0b1120 !important;
+            border-color: #334155 !important;
+            caret-color: #fbbf24 !important;
+        }
+        html.dark #globalSearchInput:focus {
+            background-color: #030712 !important;
+            color: #ffffff !important;
+            border-color: #fbbf24 !important;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2) !important;
+        }
+        #globalSearchInput::placeholder {
+            color: #94a3b8 !important;
+            opacity: 1 !important;
+        }
+        html.dark #globalSearchInput::placeholder {
+            color: #64748b !important;
+            opacity: 1 !important;
+        }
+
         html[dir="ltr"] #globalSearchInput {
-            padding-right: 1rem !important;
-            padding-left: 4.5rem !important;
+            padding-right: 3.5rem !important;
+            padding-left: 2.25rem !important;
+            text-align: left !important;
+            direction: ltr !important;
         }
         html[dir="ltr"] .search-icon-pos {
             right: auto !important;
@@ -373,21 +419,21 @@
         <!-- Top Executive Navbar -->
         <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
             <!-- Left: Ticker & Status -->
-            <div class="flex items-center gap-3 text-xs font-semibold shrink-0">
-                <div class="hidden xl:flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-[11px]" id="topbarCurrencyTicker">
+            <div class="flex items-center gap-2.5 text-xs font-semibold shrink min-w-0">
+                <div class="hidden 2xl:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
                     <!-- Populated dynamically by renderCurrencyTicker() -->
                 </div>
-                <div class="hidden md:flex items-center gap-1.5 text-slate-500 text-xs">
+                <div class="hidden lg:flex items-center gap-1.5 text-slate-500 text-xs shrink-0">
                     <i class="fa-regular fa-clock"></i>
                     <span id="currentDateBadge">الأحد، 22 نوفمبر 2026</span>
                 </div>
             </div>
 
             <!-- Center: Global Live Search Bar & Floating Instant Results -->
-            <div class="flex-1 max-w-lg mx-2 relative" id="searchContainer">
-                <div class="relative">
-                    <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" onfocus="handleSearchFocus()" placeholder="بحث شامل وذكي (PNR، عميل، مورد، طيران، بنك، موظف)..." autocomplete="off" class="w-full bg-slate-50/90 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pr-10 pl-20 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-600 focus:bg-white dark:focus:bg-slate-950 transition shadow-inner">
-                    <span class="absolute right-3.5 top-3 text-slate-400 text-xs pointer-events-none search-icon-pos">
+            <div class="flex-1 min-w-[280px] max-w-xl mx-2 relative" id="searchContainer">
+                <div class="relative w-full">
+                    <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" onfocus="handleSearchFocus()" placeholder="بحث شامل وذكي (PNR، عميل، مورد، طيران، بنك، موظف)..." autocomplete="off" class="w-full bg-slate-50/90 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pr-9 pl-14 py-2.5 text-xs font-bold text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-600 focus:bg-white dark:focus:bg-slate-950 transition shadow-inner">
+                    <span class="absolute right-3 top-2.5 text-slate-400 text-xs pointer-events-none search-icon-pos">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
                     <div class="absolute left-2.5 top-2.5 flex items-center gap-1.5 search-clear-pos">
@@ -3372,7 +3418,7 @@
             const foreign = state.currencies.filter(c => !c.isBase);
             ticker.innerHTML = `
                 <span class="text-slate-500 font-bold" data-i18n="fx_rates">أسعار الصرف:</span>
-                <div class="flex items-center gap-2 overflow-x-auto max-w-sm">
+                <div class="flex items-center gap-2 overflow-x-auto max-w-[200px] 2xl:max-w-xs scrollbar-none">
                     ${foreign.map(c => `
                         <span class="text-slate-700 dark:text-slate-200 text-[11px] whitespace-nowrap">
                             ${c.flag} 1 ${c.code} = <strong>${c.rate.toFixed(2)}</strong> ج.م
