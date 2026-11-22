@@ -479,6 +479,22 @@
             margin-right: 0 !important;
             margin-left: 16rem !important;
         }
+        html[dir="rtl"] .main-content {
+            margin-left: 0 !important;
+            margin-right: 16rem !important;
+        }
+        html[dir="ltr"] .search-icon-pos {
+            right: auto !important;
+            left: 0.75rem !important;
+        }
+        html[dir="ltr"] .search-clear-pos {
+            left: auto !important;
+            right: 0.625rem !important;
+        }
+        html[dir="ltr"] #globalSearchInput {
+            padding-left: 2.25rem !important;
+            padding-right: 3.5rem !important;
+        }
         html[dir="ltr"] .sidebar-link.active {
             border-right: none !important;
             border-left: 4px solid #d97706 !important;
@@ -763,12 +779,12 @@
     </aside>
 
     <!-- Main Content Wrapper (Offset by sidebar width: 256px) -->
-    <div class="main-content flex-1 mr-64 flex flex-col min-h-screen">
+    <div class="main-content flex-1 ms-64 flex flex-col min-h-screen">
         
         <!-- Top Executive Navbar -->
         <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
             <!-- Left: Ticker & Status -->
-            <div class="flex items-center gap-2.5 text-xs font-semibold shrink min-w-0">
+            <div class="flex items-center gap-2.5 text-xs font-semibold shrink-0">
                 <div class="hidden lg:flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl font-mono text-[11px] max-w-xs shrink" id="topbarCurrencyTicker">
                     <!-- Populated dynamically by renderCurrencyTicker() -->
                 </div>
