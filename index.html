@@ -15,6 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -38,7 +39,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; color: #1e293b; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; color: #1e293b; transition: background-color 0.25s ease, color 0.25s ease; }
         
         /* Custom luxury scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -59,9 +60,102 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 🌓 LUXURY DARK THEME STYLES */
+        html.dark body {
+            background-color: #0b1120 !important;
+            color: #f1f5f9 !important;
+        }
+        html.dark .topbar {
+            background-color: rgba(15, 23, 42, 0.96) !important;
+            border-color: #1e293b !important;
+        }
+        html.dark .bg-white {
+            background-color: #131d31 !important;
+            border-color: #24324f !important;
+            color: #f1f5f9 !important;
+        }
+        html.dark .bg-slate-50, 
+        html.dark .bg-slate-50\/80, 
+        html.dark .bg-slate-50\/50, 
+        html.dark .bg-slate-50\/90 {
+            background-color: #0d1527 !important;
+            border-color: #1e293b !important;
+            color: #e2e8f0 !important;
+        }
+        html.dark .bg-slate-100 {
+            background-color: #182338 !important;
+            color: #f1f5f9 !important;
+        }
+        html.dark .text-slate-900, html.dark .text-slate-800 {
+            color: #f8fafc !important;
+        }
+        html.dark .text-slate-700, html.dark .text-slate-600 {
+            color: #cbd5e1 !important;
+        }
+        html.dark .text-slate-500, html.dark .text-slate-400 {
+            color: #94a3b8 !important;
+        }
+        html.dark .border-slate-200, 
+        html.dark .border-slate-300, 
+        html.dark .border-slate-100 {
+            border-color: #24324f !important;
+        }
+        html.dark .divide-slate-100 > * + * {
+            border-color: #1e293b !important;
+        }
+        html.dark table thead {
+            background-color: #0c1427 !important;
+            color: #cbd5e1 !important;
+        }
+        html.dark table tbody tr:hover {
+            background-color: #1a2742 !important;
+        }
+        html.dark input, html.dark select, html.dark textarea {
+            background-color: #0b1120 !important;
+            border-color: #334155 !important;
+            color: #f8fafc !important;
+        }
+        html.dark .bg-slate-50 input, html.dark .bg-slate-50 select {
+            background-color: #0b1120 !important;
+        }
+
+        /* 🌐 BILINGUAL LTR / RTL LAYOUT ADAPTATION */
+        html[dir="ltr"] .sidebar {
+            right: auto !important;
+            left: 0 !important;
+            border-left: none !important;
+            border-right: 1px solid rgba(51, 65, 85, 0.4) !important;
+        }
+        html[dir="ltr"] .main-content {
+            margin-right: 0 !important;
+            margin-left: 16rem !important;
+        }
+        html[dir="ltr"] .sidebar-link.active {
+            border-right: none !important;
+            border-left: 4px solid #d97706 !important;
+        }
+        html[dir="ltr"] .text-right {
+            text-align: left !important;
+        }
+        html[dir="ltr"] th, html[dir="ltr"] td {
+            text-align: left !important;
+        }
+        html[dir="ltr"] #globalSearchInput {
+            padding-right: 1rem !important;
+            padding-left: 4.5rem !important;
+        }
+        html[dir="ltr"] .search-icon-pos {
+            right: auto !important;
+            left: 0.75rem !important;
+        }
+        html[dir="ltr"] .search-clear-pos {
+            left: auto !important;
+            right: 0.75rem !important;
+        }
+
         @media print {
             .no-print, .sidebar, .topbar { display: none !important; }
-            .main-content { margin-right: 0 !important; width: 100% !important; padding: 0 !important; }
+            .main-content { margin-right: 0 !important; margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
             body { background: white !important; }
         }
     </style>
@@ -211,48 +305,48 @@
             <nav class="p-3 space-y-1 text-xs font-semibold">
                 <button onclick="navTo('dashboard')" id="nav-dashboard" class="sidebar-link active w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-chart-pie w-5 text-center text-sm"></i>
-                    <span>لوحة المؤشرات والعمليات</span>
+                    <span data-i18n="dashboard">لوحة المؤشرات والعمليات</span>
                 </button>
                 <button onclick="navTo('bookings')" id="nav-bookings" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-ticket-simple w-5 text-center text-sm"></i>
-                        <span>إدارة الحجوزات والتذاكر</span>
+                        <span data-i18n="bookings">إدارة الحجوزات والتذاكر</span>
                     </div>
                     <span class="bg-gold-500/20 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full">32</span>
                 </button>
                 <button onclick="navTo('clients')" id="nav-clients" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-users w-5 text-center text-sm"></i>
-                    <span>حسابات العملاء والأقساط</span>
+                    <span data-i18n="clients">حسابات العملاء والأقساط</span>
                 </button>
                 <button onclick="navTo('suppliers')" id="nav-suppliers" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-plane-departure w-5 text-center text-sm"></i>
-                    <span>شركات الطيران والموردين</span>
+                    <span data-i18n="suppliers">شركات الطيران والموردين</span>
                 </button>
                 <button onclick="navTo('treasury')" id="nav-banks" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-building-columns w-5 text-center text-sm"></i>
-                        <span>أرصدة البنوك والمطابقة</span>
+                        <span data-i18n="banks">أرصدة البنوك والمطابقة</span>
                     </div>
                     <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full" id="sidebarBankCount">7 بنوك وحسابات</span>
                 </button>
                 <button onclick="navTo('treasury')" id="nav-treasury" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-vault w-5 text-center text-sm"></i>
-                    <span>الخزائن وفروق العملات</span>
+                    <span data-i18n="treasury">الخزائن وفروق العملات</span>
                 </button>
                 <button onclick="navTo('reports')" id="nav-reports" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-file-invoice-dollar w-5 text-center text-sm"></i>
-                    <span>الأرباح وقائمة الدخل P&L</span>
+                    <span data-i18n="reports">الأرباح وقائمة الدخل P&L</span>
                 </button>
                 <button onclick="navTo('definitions')" id="nav-definitions" class="sidebar-link w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-sliders w-5 text-center text-sm"></i>
-                        <span>التعريفات العامة والإعدادات</span>
+                        <span data-i18n="definitions">التعريفات العامة والإعدادات</span>
                     </div>
                     <span class="bg-gold-500/20 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full">شامل</span>
                 </button>
                 <button onclick="navTo('permissions')" id="nav-permissions" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-right cursor-pointer">
                     <i class="fa-solid fa-user-shield w-5 text-center text-sm"></i>
-                    <span>صلاحيات فريق العمل</span>
+                    <span data-i18n="permissions">صلاحيات فريق العمل</span>
                 </button>
             </nav>
         </div>
@@ -268,7 +362,7 @@
             </div>
             <button onclick="triggerLogout()" class="w-full bg-slate-800 hover:bg-red-950/80 hover:text-red-300 text-slate-300 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer border border-slate-700">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>تسجيل الخروج</span>
+                <span data-i18n="logout">تسجيل الخروج</span>
             </button>
         </div>
     </aside>
@@ -277,43 +371,62 @@
     <div class="main-content flex-1 mr-64 flex flex-col min-h-screen">
         
         <!-- Top Executive Navbar -->
-        <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-6 py-3 flex items-center justify-between gap-4">
+        <header class="topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
             <!-- Left: Ticker & Status -->
-            <div class="flex items-center gap-4 text-xs font-semibold">
-                <div class="hidden lg:flex items-center gap-3 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-[11px]">
-                    <span class="text-slate-500 font-bold">أسعار الصرف:</span>
-                    <span class="text-slate-700">🇺🇸 1 USD = <strong id="topbarUsd">49.50</strong> ج.م</span>
-                    <span class="text-slate-300">|</span>
-                    <span class="text-slate-700">🇸🇦 1 SAR = <strong id="topbarSar">13.20</strong> ج.م</span>
-                    <button onclick="openFxModal()" class="text-gold-600 hover:text-gold-700 font-bold text-[10px] bg-gold-50 px-2 py-0.5 rounded cursor-pointer border border-gold-200 ml-1" title="تعديل أسعار الصرف">
-                        <i class="fa-solid fa-pen"></i> تعديل
-                    </button>
+            <div class="flex items-center gap-3 text-xs font-semibold shrink-0">
+                <div class="hidden xl:flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-mono text-[11px]" id="topbarCurrencyTicker">
+                    <!-- Populated dynamically by renderCurrencyTicker() -->
                 </div>
-                <div class="flex items-center gap-1.5 text-slate-500 text-xs">
+                <div class="hidden md:flex items-center gap-1.5 text-slate-500 text-xs">
                     <i class="fa-regular fa-clock"></i>
                     <span id="currentDateBadge">الأحد، 22 نوفمبر 2026</span>
                 </div>
             </div>
 
-            <!-- Right: Quick Actions & User Profile -->
-            <div class="flex items-center gap-3">
-                <button onclick="openBookingModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>حجز ملف جديد</span>
+            <!-- Center: Global Live Search Bar -->
+            <div class="flex-1 max-w-md mx-2 relative">
+                <div class="relative">
+                    <input type="search" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="بحث شامل (رقم PNR، اسم العميل، التذكرة، شركة الطيران)..." class="w-full bg-slate-50/90 border border-slate-300 rounded-xl pr-9 pl-14 py-2 text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-600 focus:bg-white transition shadow-inner">
+                    <span class="absolute right-3 top-2.5 text-slate-400 text-xs pointer-events-none search-icon-pos">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <button type="button" id="searchClearBtn" onclick="clearGlobalSearch()" class="hidden absolute left-2.5 top-2 text-slate-400 hover:text-slate-700 text-xs p-0.5 rounded cursor-pointer search-clear-pos" title="مسح البحث">
+                        ✕
+                    </button>
+                    <span id="searchCountBadge" class="hidden absolute left-7 top-2 bg-gold-100 text-gold-800 text-[10px] font-black px-1.5 py-0.5 rounded">0</span>
+                </div>
+            </div>
+
+            <!-- Right: Theme, Lang, Quick Actions & User Profile -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Theme Toggle Button (Dark / Light) -->
+                <button type="button" onclick="toggleTheme()" id="themeToggleBtn" class="w-9 h-9 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-xs" title="تبديل الوضع الليلي / النهاري (Dark/Light Mode)">
+                    <i class="fa-solid fa-moon text-indigo-500" id="themeToggleIcon"></i>
                 </button>
-                <button onclick="openVoucherModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-receipt"></i>
-                    <span>سند مالي</span>
+
+                <!-- Language Toggle Button (AR / EN) -->
+                <button type="button" onclick="toggleLanguage()" id="langToggleBtn" class="h-9 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 flex items-center gap-1.5 text-xs font-extrabold transition cursor-pointer shadow-xs" title="تبديل اللغة (Arabic / English)">
+                    <i class="fa-solid fa-globe text-gold-600"></i>
+                    <span id="langToggleText">EN</span>
+                </button>
+
+                <button onclick="openBookingModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span class="hidden sm:inline" data-i18n="new_booking">حجز ملف جديد</span>
+                </button>
+                <button onclick="openVoucherModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-receipt text-xs"></i>
+                    <span class="hidden sm:inline" data-i18n="new_voucher">سند مالي</span>
                 </button>
 
                 <!-- User Profile Pill -->
-                <div class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 py-1 px-3 rounded-2xl">
-                    <div class="w-8 h-8 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center font-bold text-sm shadow-sm" id="userPillAvatar">
+                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 py-1 px-2.5 rounded-2xl">
+                    <div class="w-7 h-7 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center font-bold text-xs shadow-sm" id="userPillAvatar">
                         👑
                     </div>
-                    <div class="text-right leading-tight">
+                    <div class="text-right leading-tight hidden lg:block">
                         <div class="font-extrabold text-xs text-slate-800" id="userPillName">أحمد شريف</div>
-                        <div class="text-[10px] text-gold-600 font-bold" id="userPillRole">مدير النظام (Admin)</div>
+                        <div class="text-[9px] text-gold-600 font-bold" id="userPillRole">مدير النظام (Admin)</div>
                     </div>
                 </div>
             </div>
@@ -1551,31 +1664,83 @@
         </div>
     </div>
 
-    <!-- ⚙️ FX Rates Modal -->
+    <!-- 💱 Currencies & FX Rates Management Modal -->
     <div id="fxModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
                 <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-coins text-gold-600"></i>
-                    <span>تعديل أسعار الصرف المعتمدة</span>
+                    <span>إدارة العملات وأسعار الصرف المعتمدة (Currencies & FX Rates)</span>
                 </h3>
                 <button onclick="closeFxModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
             </div>
-            <form onsubmit="handleSaveFxRates(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">سعر الدولار الأمريكي (USD) مقابل الجنيه</label>
-                    <input type="number" id="inpFxUsd" step="0.01" value="49.50" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-900">
+
+            <!-- Existing Currencies List with live editable rate -->
+            <div class="space-y-3 mb-5">
+                <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                    <span>العملات المعتمدة وأسعار الصرف مقابل الجنيه:</span>
+                    <span class="text-[10px] text-slate-400">تحدث لحظياً في الفواتير والحجوزات</span>
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">سعر الريال السعودي (SAR) مقابل الجنيه</label>
-                    <input type="number" id="inpFxSar" step="0.01" value="13.20" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-900">
+                <div id="currenciesListContainer" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                    <!-- Populated dynamically by renderCurrenciesModal() -->
                 </div>
-                <div class="pt-2">
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-2.5 rounded-xl transition cursor-pointer">
-                        تحديث الأسعار في كل شاشات السيستم
-                    </button>
+            </div>
+
+            <!-- Add New Currency Form -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 mb-4">
+                <h4 class="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus-circle text-gold-600"></i>
+                    <span>إضافة عملة جديدة للسيستم (دينار، درهم، يورو، إلخ):</span>
+                </h4>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">اسم العملة</label>
+                        <input type="text" id="newCurName" placeholder="دينار أردني" class="w-full bg-white border rounded-xl p-2 font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">كود العملة (ISO)</label>
+                        <input type="text" id="newCurCode" placeholder="JOD" class="w-full bg-white border rounded-xl p-2 font-mono font-bold uppercase">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">رمز / اسم العرض</label>
+                        <input type="text" id="newCurSymbol" placeholder="دينار" class="w-full bg-white border rounded-xl p-2 font-bold">
+                    </div>
                 </div>
-            </form>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر الصرف مقابل الجنيه (ج.م)</label>
+                        <input type="number" id="newCurRate" step="0.01" placeholder="70.00" class="w-full bg-white border rounded-xl p-2 font-bold text-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">العلم / الأيقونة</label>
+                        <select id="newCurFlag" class="w-full bg-white border rounded-xl p-2 font-bold">
+                            <option value="🇰🇼">🇰🇼 دينار كويتي</option>
+                            <option value="🇯🇴">🇯🇴 دينار أردني</option>
+                            <option value="🇧🇭">🇧🇭 دينار بحريني</option>
+                            <option value="🇦🇪">🇦🇪 درهم إماراتي</option>
+                            <option value="🇸🇦">🇸🇦 ريال سعودي</option>
+                            <option value="🇶🇦">🇶🇦 ريال قطري</option>
+                            <option value="🇴🇲">🇴🇲 ريال عماني</option>
+                            <option value="🇺🇸">🇺🇸 دولار أمريكي</option>
+                            <option value="🇪🇺">🇪🇺 يورو</option>
+                            <option value="🇬🇧">🇬🇧 جنيه إسترليني</option>
+                            <option value="💱">💱 أخرى</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="handleAddNewCurrency()" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-2 rounded-xl transition text-xs cursor-pointer shadow-sm flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>إضافة هذه العملة للسيستم والكتالوج</span>
+                </button>
+            </div>
+
+            <!-- Save All Rates Button -->
+            <div class="pt-2">
+                <button type="button" onclick="handleSaveAllCurrencyRates()" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition cursor-pointer flex items-center justify-center gap-2 shadow-md text-xs">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>اعتماد وتحديث أسعار العملات في جميع شاشات السيستم</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -2124,6 +2289,12 @@
                     etaPerm: '✓ اعتماد وربط',
                     status: 'نشط'
                 }
+            ]),
+            currencies: safeJsonParse('alharamain_currencies', [
+                { code: 'EGP', name: 'جنيه مصري', nameEn: 'Egyptian Pound', symbol: 'ج.م', rate: 1.0, isBase: true, flag: '🇪🇬' },
+                { code: 'SAR', name: 'ريال سعودي', nameEn: 'Saudi Riyal', symbol: 'ريال', rate: 13.20, isBase: false, flag: '🇸🇦' },
+                { code: 'USD', name: 'دولار أمريكي', nameEn: 'US Dollar', symbol: 'دولار', rate: 49.50, isBase: false, flag: '🇺🇸' },
+                { code: 'KWD', name: 'دينار كويتي', nameEn: 'Kuwaiti Dinar', symbol: 'دينار', rate: 161.50, isBase: false, flag: '🇰🇼' }
             ])
         };
 
@@ -2154,15 +2325,29 @@
             return false;
         }
 
-        // Render Tables
-        function renderTables() {
-            recalculateTotals();
-
+        // Render Bookings Tables (supporting live global search filtering)
+        function renderBookingsTables(customList = null) {
+            const list = customList !== null ? customList : state.bookings;
             const isProfitHidden = isCurrentUserProfitHidden();
 
-            // Dashboard Table
             const dBody = document.getElementById('dashBookingsTbody');
-            dBody.innerHTML = state.bookings.map(b => `
+            const fBody = document.getElementById('fullBookingsTbody');
+
+            if (list.length === 0) {
+                const emptyRow = `
+                    <tr>
+                        <td colspan="7" class="p-8 text-center text-slate-400 font-bold bg-slate-50/50">
+                            <i class="fa-solid fa-magnifying-glass text-gold-600 text-lg mb-2 block"></i>
+                            <span>لم يتم العثور على أي حجوزات أو ملفات مطابقة للبحث</span>
+                        </td>
+                    </tr>
+                `;
+                if (dBody) dBody.innerHTML = emptyRow;
+                if (fBody) fBody.innerHTML = emptyRow;
+                return;
+            }
+
+            const rowsHtml = list.map(b => `
                 <tr class="hover:bg-slate-50/80 transition">
                     <td class="p-3.5 font-mono font-bold text-slate-800">${b.pnr}</td>
                     <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
@@ -2186,33 +2371,41 @@
                 </tr>
             `).join('');
 
-            // Full Bookings Table
-            const fBody = document.getElementById('fullBookingsTbody');
-            fBody.innerHTML = state.bookings.map(b => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3.5 font-mono font-bold text-slate-900">${b.pnr}</td>
-                    <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
-                    <td class="p-3.5 text-slate-700">${b.service}</td>
-                    <td class="p-3.5 text-slate-600">${b.supplier}</td>
-                    <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
-                    <td class="p-3.5 text-slate-600">${b.cost.toLocaleString()} ${b.currency}</td>
-                    <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                        ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
-                    </td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        ${b.eta.includes('معتمدة') 
-                            ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
-                            : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${b.eta}</button>`
-                        }
-                        <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            if (dBody) dBody.innerHTML = rowsHtml;
+
+            if (fBody) {
+                fBody.innerHTML = list.map(b => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3.5 font-mono font-bold text-slate-900">${b.pnr}</td>
+                        <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
+                        <td class="p-3.5 text-slate-700">${b.service}</td>
+                        <td class="p-3.5 text-slate-600">${b.supplier}</td>
+                        <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
+                        <td class="p-3.5 text-slate-600">${b.cost.toLocaleString()} ${b.currency}</td>
+                        <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
+                            ${isProfitHidden ? '🔒 محجوب' : `+${b.profit.toLocaleString()} ${b.currency}`}
+                        </td>
+                        <td class="p-3.5 text-center flex items-center justify-center gap-2">
+                            ${b.eta.includes('معتمدة') 
+                                ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${b.eta}</span>`
+                                : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${b.eta}</button>`
+                            }
+                            <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="تعديل الحجز">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-700 p-1 text-sm cursor-pointer" title="حذف الحجز">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Render Tables
+        function renderTables() {
+            recalculateTotals();
+            renderBookingsTables();
 
             // Clients Table
             const cBody = document.getElementById('clientsTbody');
@@ -2263,6 +2456,8 @@
             renderBankAccounts();
             renderDefinitionsTables();
             renderStaffTable();
+            renderCurrencyTicker();
+            populateCurrencyDropdowns();
         }
 
         // Render Live Bank Accounts with Edit & Delete Controls
@@ -2660,19 +2855,22 @@
         function recalculateTotals() {
             let s = 0, p = 0;
             state.bookings.forEach(b => {
-                if (b.currency === 'ج.م') {
-                    s += b.sell;
-                    p += b.profit;
+                let rate = 1.0;
+                if (state.currencies) {
+                    const c = state.currencies.find(cur => cur.symbol === b.currency || cur.code === b.currency);
+                    if (c && c.rate) rate = c.rate;
                 }
+                s += (b.sell * rate);
+                p += (b.profit * rate);
             });
-            state.totalSales = s;
-            state.totalProfit = p;
+            state.totalSales = Math.round(s);
+            state.totalProfit = Math.round(p);
 
             const salesEl = document.getElementById('dashTotalSales');
             const profitEl = document.getElementById('dashTotalProfit');
-            if (salesEl) salesEl.innerText = s.toLocaleString() + ' ج.م';
-            if (profitEl && (!state.user || state.user.role !== 'ticketing')) {
-                profitEl.innerText = p.toLocaleString() + ' ج.م';
+            if (salesEl) salesEl.innerText = state.totalSales.toLocaleString() + ' ج.م';
+            if (profitEl && !isCurrentUserProfitHidden()) {
+                profitEl.innerText = state.totalProfit.toLocaleString() + ' ج.م';
             }
 
             // Recalculate debts
@@ -2927,22 +3125,310 @@
             }
         }
 
-        // ⚙️ FX RATES MODAL HANDLER
+        // ==========================================
+        // 💱 CURRENCIES & EXCHANGE RATES LOGIC
+        // ==========================================
+        function renderCurrencyTicker() {
+            const ticker = document.getElementById('topbarCurrencyTicker');
+            if (!ticker || !state.currencies) return;
+
+            const foreign = state.currencies.filter(c => !c.isBase);
+            ticker.innerHTML = `
+                <span class="text-slate-500 font-bold" data-i18n="fx_rates">أسعار الصرف:</span>
+                <div class="flex items-center gap-2 overflow-x-auto max-w-sm">
+                    ${foreign.map(c => `
+                        <span class="text-slate-700 dark:text-slate-200 text-[11px] whitespace-nowrap">
+                            ${c.flag} 1 ${c.code} = <strong>${c.rate.toFixed(2)}</strong> ج.م
+                        </span>
+                    `).join('<span class="text-slate-300 dark:text-slate-600">|</span>')}
+                </div>
+                <button type="button" onclick="openFxModal()" class="text-gold-600 hover:text-gold-700 dark:text-gold-400 font-bold text-[10px] bg-gold-50 dark:bg-gold-950/50 px-2 py-0.5 rounded cursor-pointer border border-gold-200 dark:border-gold-800 shrink-0 flex items-center gap-1" title="إدارة وإضافة العملات وأسعار الصرف">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span data-i18n="manage_currencies">إدارة العملات +</span>
+                </button>
+            `;
+        }
+
+        function populateCurrencyDropdowns() {
+            if (!state.currencies) return;
+            const dropdownIds = ['mCurrency', 'ebCur', 'srvCur', 'mbCur', 'drwCur'];
+            dropdownIds.forEach(id => {
+                const sel = document.getElementById(id);
+                if (!sel) return;
+                const curVal = sel.value;
+                sel.innerHTML = state.currencies.map(c => `
+                    <option value="${c.symbol}">${c.flag} ${c.name} (${c.symbol} - ${c.code}) [${c.rate} ج.م]</option>
+                `).join('');
+                if (curVal && state.currencies.some(c => c.symbol === curVal || c.code === curVal)) {
+                    sel.value = curVal;
+                }
+            });
+        }
+
         function openFxModal() {
+            renderCurrenciesModal();
             document.getElementById('fxModal').classList.remove('hidden');
         }
+
         function closeFxModal() {
             document.getElementById('fxModal').classList.add('hidden');
         }
-        function handleSaveFxRates(e) {
-            e.preventDefault();
-            const usd = parseFloat(document.getElementById('inpFxUsd').value) || 49.50;
-            const sar = parseFloat(document.getElementById('inpFxSar').value) || 13.20;
 
-            document.getElementById('topbarUsd').innerText = usd.toFixed(2);
-            document.getElementById('topbarSar').innerText = sar.toFixed(2);
+        function renderCurrenciesModal() {
+            const container = document.getElementById('currenciesListContainer');
+            if (!container || !state.currencies) return;
+
+            container.innerHTML = state.currencies.map(c => `
+                <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">${c.flag || '💱'}</span>
+                        <div>
+                            <div class="font-extrabold text-xs text-slate-900 dark:text-slate-100">${c.name} (${c.symbol})</div>
+                            <div class="text-[10px] text-slate-400 font-mono">${c.code}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${c.isBase ? `
+                            <span class="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 text-[10px] font-black px-2.5 py-1 rounded-lg border border-emerald-300 dark:border-emerald-800">
+                                العملة الأساسية (1.00 ج.م)
+                            </span>
+                        ` : `
+                            <div class="flex items-center gap-1.5">
+                                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300">السعر:</label>
+                                <input type="number" step="0.01" class="currency-rate-input w-24 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 text-center" data-code="${c.code}" value="${c.rate}">
+                                <span class="text-[11px] font-bold text-slate-400">ج.م</span>
+                                <button type="button" onclick="deleteCurrency('${c.code}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer" title="حذف العملة">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleSaveAllCurrencyRates() {
+            const inputs = document.querySelectorAll('.currency-rate-input');
+            inputs.forEach(inp => {
+                const code = inp.getAttribute('data-code');
+                const rate = parseFloat(inp.value);
+                const cur = state.currencies.find(c => c.code === code);
+                if (cur && !isNaN(rate) && rate > 0) {
+                    cur.rate = rate;
+                }
+            });
+
+            localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+            renderCurrencyTicker();
+            populateCurrencyDropdowns();
+            recalculateTotals();
             closeFxModal();
-            alert(`✓ تم تحديث أسعار الصرف بنجاح:\n- 1 USD = ${usd.toFixed(2)} ج.م\n- 1 SAR = ${sar.toFixed(2)} ج.م`);
+            alert('✓ تم اعتماد وتحديث أسعار صرف العملات في جميع شاشات ودفاتر النظام بنجاح.');
+        }
+
+        function handleAddNewCurrency() {
+            const name = document.getElementById('newCurName').value.trim();
+            const code = document.getElementById('newCurCode').value.trim().toUpperCase();
+            const symbol = document.getElementById('newCurSymbol').value.trim();
+            const rate = parseFloat(document.getElementById('newCurRate').value);
+            const flag = document.getElementById('newCurFlag').value;
+
+            if (!name || !code || !symbol || isNaN(rate) || rate <= 0) {
+                alert('يرجى ملء كافة حقول العملة بشكل صحيح وكتابة سعر صرف صالح.');
+                return;
+            }
+
+            if (state.currencies.some(c => c.code === code)) {
+                alert(`كود العملة (${code}) موجود بالفعل في النظام! يمكنك تعديل سعره مباشرة.`);
+                return;
+            }
+
+            state.currencies.push({
+                code,
+                name,
+                nameEn: name,
+                symbol,
+                rate,
+                isBase: false,
+                flag
+            });
+
+            localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+
+            // Reset inputs
+            document.getElementById('newCurName').value = '';
+            document.getElementById('newCurCode').value = '';
+            document.getElementById('newCurSymbol').value = '';
+            document.getElementById('newCurRate').value = '';
+
+            renderCurrenciesModal();
+            renderCurrencyTicker();
+            populateCurrencyDropdowns();
+            recalculateTotals();
+            alert(`✓ تم بنجاح إضافة عملة (${name} - ${symbol}) واعتمادها في النظام.`);
+        }
+
+        function deleteCurrency(code) {
+            const cur = state.currencies.find(c => c.code === code);
+            if (!cur) return;
+            if (cur.isBase) {
+                alert('لا يمكن حذف العملة الأساسية للنظام.');
+                return;
+            }
+            if (confirm(`هل أنت متأكد من حذف عملة (${cur.name} - ${cur.code}) من قائمة العملات المعتمدة؟`)) {
+                state.currencies = state.currencies.filter(c => c.code !== code);
+                localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+                renderCurrenciesModal();
+                renderCurrencyTicker();
+                populateCurrencyDropdowns();
+                recalculateTotals();
+            }
+        }
+
+        // ==========================================
+        // 🔍 GLOBAL LIVE SEARCH LOGIC
+        // ==========================================
+        function handleGlobalSearch(query) {
+            const q = (query || '').trim().toLowerCase();
+            const clearBtn = document.getElementById('searchClearBtn');
+            const badge = document.getElementById('searchCountBadge');
+            
+            if (clearBtn) clearBtn.classList.toggle('hidden', !q);
+
+            const filtered = state.bookings.filter(b => {
+                if (!q) return true;
+                return (
+                    (b.pnr && b.pnr.toLowerCase().includes(q)) ||
+                    (b.client && b.client.toLowerCase().includes(q)) ||
+                    (b.service && b.service.toLowerCase().includes(q)) ||
+                    (b.supplier && b.supplier.toLowerCase().includes(q)) ||
+                    ((b.sell + '').includes(q)) ||
+                    (b.currency && b.currency.toLowerCase().includes(q))
+                );
+            });
+
+            if (badge) {
+                if (q) {
+                    badge.innerText = `${filtered.length}`;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
+            renderBookingsTables(filtered);
+        }
+
+        function clearGlobalSearch() {
+            const input = document.getElementById('globalSearchInput');
+            if (input) {
+                input.value = '';
+                handleGlobalSearch('');
+                input.focus();
+            }
+        }
+
+        // ==========================================
+        // 🌓 LUXURY THEME SWITCHER (DARK / LIGHT)
+        // ==========================================
+        function initTheme() {
+            const savedTheme = localStorage.getItem('alharamain_theme') || 'light';
+            applyTheme(savedTheme);
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
+        }
+
+        function applyTheme(theme) {
+            const icon = document.getElementById('themeToggleIcon');
+            const btn = document.getElementById('themeToggleBtn');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                if (icon) icon.className = 'fa-solid fa-sun text-amber-400';
+                if (btn) btn.title = 'تفعيل الوضع النهاري (Light Mode)';
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (icon) icon.className = 'fa-solid fa-moon text-indigo-500';
+                if (btn) btn.title = 'تفعيل الوضع الليلي (Dark Mode)';
+            }
+            localStorage.setItem('alharamain_theme', theme);
+        }
+
+        // ==========================================
+        // 🌐 BILINGUAL LOGIC (ARABIC / ENGLISH)
+        // ==========================================
+        const translations = {
+            ar: {
+                dashboard: 'لوحة المؤشرات والعمليات',
+                bookings: 'إدارة الحجوزات والتذاكر',
+                clients: 'حسابات العملاء والأقساط',
+                suppliers: 'شركات الطيران والموردين',
+                banks: 'أرصدة البنوك والمطابقة',
+                treasury: 'الخزائن وفروق العملات',
+                reports: 'الأرباح وقائمة الدخل P&L',
+                definitions: 'التعريفات العامة والإعدادات',
+                permissions: 'صلاحيات فريق العمل',
+                logout: 'تسجيل الخروج',
+                new_booking: 'حجز ملف جديد',
+                new_voucher: 'سند مالي',
+                fx_rates: 'أسعار الصرف:',
+                manage_currencies: 'إدارة العملات +',
+                search_placeholder: 'بحث شامل (رقم PNR، اسم العميل، التذكرة، شركة الطيران)...'
+            },
+            en: {
+                dashboard: 'Dashboard & Operations',
+                bookings: 'Bookings & Ticketing',
+                clients: 'Clients & Receivables',
+                suppliers: 'Airlines & Suppliers',
+                banks: 'Bank Accounts & Reconcile',
+                treasury: 'Treasury & FX Vault',
+                reports: 'Profit & Income Statement',
+                definitions: 'System Master Data',
+                permissions: 'Staff & Permissions',
+                logout: 'Log Out',
+                new_booking: '+ New Booking',
+                new_voucher: 'Financial Voucher',
+                fx_rates: 'Exchange Rates:',
+                manage_currencies: 'Currencies +',
+                search_placeholder: 'Global Search (PNR, Client Name, Ticket, Airline)...'
+            }
+        };
+
+        function initLanguage() {
+            const savedLang = localStorage.getItem('alharamain_lang') || 'ar';
+            applyLanguage(savedLang);
+        }
+
+        function toggleLanguage() {
+            const currentLang = document.documentElement.lang === 'en' ? 'en' : 'ar';
+            const nextLang = currentLang === 'ar' ? 'en' : 'ar';
+            applyLanguage(nextLang);
+        }
+
+        function applyLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+            
+            const langBtnText = document.getElementById('langToggleText');
+            if (langBtnText) {
+                langBtnText.innerText = lang === 'en' ? 'العربية' : 'EN';
+            }
+
+            const searchInput = document.getElementById('globalSearchInput');
+            if (searchInput && translations[lang]) {
+                searchInput.placeholder = translations[lang].search_placeholder;
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            localStorage.setItem('alharamain_lang', lang);
         }
 
         // 📋 CLIENT DEBTS DRILL-DOWN HANDLERS
@@ -3585,6 +4071,9 @@
 
         // Initialize on DOM Ready
         window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initLanguage();
+
             try {
                 renderTables();
             } catch (err) {
