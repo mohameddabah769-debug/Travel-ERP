@@ -935,6 +935,12 @@
                     <span class="hidden xl:inline" data-i18n="new_voucher">سند مالي</span>
                 </button>
 
+                <!-- Reset & Maintenance Quick Action -->
+                <button type="button" onclick="openSystemResetModal()" class="h-9 px-3 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 flex items-center gap-1.5 text-xs font-black transition cursor-pointer shadow-xs" title="النسخ الاحتياطي وتصفير النظام">
+                    <i class="fa-solid fa-rotate-left text-rose-600 dark:text-rose-400"></i>
+                    <span class="hidden md:inline" data-i18n="topbar_backup_reset">النسخ والتصفير</span>
+                </button>
+
                 <!-- User Profile Pill (Interactive & Synced with Manager Profile) -->
                 <div onclick="openProfileEditModal()" class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-1 px-2.5 rounded-2xl shrink-0 cursor-pointer hover:border-gold-500 hover:bg-gold-50/20 dark:hover:bg-slate-800/80 transition group" title="انقر لتعديل بيانات واسم المدير أو تبديل الحساب">
                     <div class="w-7 h-7 rounded-xl bg-gold-50 dark:bg-navy-900 text-gold-700 dark:text-gold-400 border border-gold-200 dark:border-gold-800/40 flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition-transform" id="userPillAvatar">
@@ -2407,6 +2413,11 @@
                             <i class="fa-solid fa-receipt"></i>
                             <span data-i18n="def_tab_eta">إعدادات الضرائب والفوترة ETA</span>
                         </button>
+                        <button onclick="switchDefTab('backup-reset')" id="deftab-btn-backup-reset" class="deftab-btn px-4 py-2 rounded-xl cursor-pointer flex items-center gap-2 transition">
+                            <i class="fa-solid fa-database text-rose-500"></i>
+                            <span data-i18n="def_tab_backup_reset">النسخ الاحتياطي وتصفير النظام</span>
+                            <span class="bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 text-[10px] px-1.5 py-0.5 rounded-full font-bold">صيانة</span>
+                        </button>
                     </div>
                 </div>
 
@@ -2690,6 +2701,123 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- SUB-TAB 6: SYSTEM BACKUP & FACTORY RESET (النسخ الاحتياطي وتصفير النظام) -->
+                <div id="defpane-backup-reset" class="defpane hidden space-y-6">
+                    <!-- Live Overview Counters -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_bookings">ملفات الحجوزات</div>
+                            <div class="text-xl font-black text-slate-900 dark:text-slate-100" id="backupCountBookings">0</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_tickets">تذاكر العهدة</div>
+                            <div class="text-xl font-black text-sky-600" id="backupCountTickets">0</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_companies">شركات B2B</div>
+                            <div class="text-xl font-black text-slate-900 dark:text-slate-100" id="backupCountCompanies">0</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_retail">عملاء القطاعي</div>
+                            <div class="text-xl font-black text-teal-600" id="backupCountRetail">0</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_ledger">حركات كشف الحساب</div>
+                            <div class="text-xl font-black text-amber-600" id="backupCountLedger">0</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs text-center">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1" data-i18n="counter_drawers">الخزائن والبنوك</div>
+                            <div class="text-xl font-black text-emerald-600" id="backupCountDrawers">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Master Excel Backup Card -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 dark:border-slate-800 space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl font-black shrink-0">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                        <span data-i18n="master_backup_title">النسخ الاحتياطي الشامل للنظام (إكسل منظم بكافة الجداول والحسابات)</span>
+                                        <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">UTF-8 BOM معتمد</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-i18n="master_backup_desc">
+                                        توليد ملف إكسل CSV شامل ومُنسق هندسياً، يحتوي على بيانات شركة الحرمين، ملخص السيولة النقدية، سجل الحجوزات، مبيعات المكتب، حسابات الشركات والديون، أقساط الأفراد، مستحقات الموردين، ودفتر الأستاذ العام مع المجاميع الصافية.
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="exportComprehensiveSystemBackup()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs px-5 py-3 rounded-xl transition shadow-md flex items-center gap-2 cursor-pointer shrink-0">
+                                <i class="fa-solid fa-download"></i>
+                                <span data-i18n="btn_download_full_excel">تحميل النسخة الاحتياطية المجمعة (إكسل)</span>
+                            </button>
+                        </div>
+
+                        <!-- Technical JSON Backup & Restore -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex flex-col justify-between gap-3">
+                                <div>
+                                    <div class="font-black text-xs text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                        <i class="fa-solid fa-cloud-arrow-down text-sky-600"></i>
+                                        <span data-i18n="json_backup_title">نسخة احتياطية سحابية كاملة (JSON Database File)</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1" data-i18n="json_backup_desc">
+                                        حفظ لقطة كاملة لقاعدة البيانات في ملف رقمي خفيف يمكن نقله أو استرجاعه في أي وقت بدون فقدان أي تفصيلة.
+                                    </p>
+                                </div>
+                                <button onclick="exportJsonBackup()" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-gold-400 font-extrabold text-xs py-2.5 px-4 rounded-xl transition cursor-pointer flex items-center justify-center gap-2 shadow-xs">
+                                    <i class="fa-solid fa-code"></i>
+                                    <span data-i18n="btn_export_json">تصدير ملف قاعدة البيانات (JSON)</span>
+                                </button>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex flex-col justify-between gap-3">
+                                <div>
+                                    <div class="font-black text-xs text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                        <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
+                                        <span data-i18n="json_restore_title">استعادة النظام من نسخة احتياطية (Restore from Backup)</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1" data-i18n="json_restore_desc">
+                                        رفع واستيراد ملف JSON احتياطي سابق لاسترجاع كافة السجلات والحسابات بضغطة زر واحدة.
+                                    </p>
+                                </div>
+                                <div>
+                                    <input type="file" id="jsonBackupFileInput" accept=".json" class="hidden" onchange="handleImportJsonBackup(event)">
+                                    <button onclick="document.getElementById('jsonBackupFileInput').click()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl transition cursor-pointer flex items-center justify-center gap-2 shadow-xs">
+                                        <i class="fa-solid fa-upload"></i>
+                                        <span data-i18n="btn_import_json">استيراد واستعادة نسخة سابقة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Reset Danger Zone Card -->
+                    <div class="bg-rose-50/60 dark:bg-rose-950/20 rounded-3xl p-6 sm:p-8 shadow-xs border border-rose-200 dark:border-rose-900/60 space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl font-black shrink-0">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-base text-rose-900 dark:text-rose-300 flex items-center gap-2">
+                                        <span data-i18n="reset_zone_title">إدارة تصفير النظام وإعادة ضبط البيانات (System Reset Center)</span>
+                                        <span class="bg-rose-200 dark:bg-rose-900 text-rose-800 dark:text-rose-200 text-[10px] px-2 py-0.5 rounded-full font-black">إجراء إداري حساس</span>
+                                    </h4>
+                                    <p class="text-xs text-rose-700/80 dark:text-rose-400 mt-0.5" data-i18n="reset_zone_desc">
+                                        يتيح للمدير العام تصفير الحركات والعمليات المالية لبدء موسم سياحي جديد، أو استعادة البيانات التجريبية الافتراضية، أو مسح قاعدة البيانات بالكامل مع حماية تأكيدية لمنع الخطأ.
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="openSystemResetModal()" class="bg-rose-600 hover:bg-rose-700 text-white font-black text-xs px-5 py-3 rounded-xl transition shadow-md flex items-center gap-2 cursor-pointer shrink-0">
+                                <i class="fa-solid fa-power-off"></i>
+                                <span data-i18n="btn_open_reset_modal">فتح معالج تصفير النظام وإعادة الضبط</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -2698,6 +2826,123 @@
     <!-- ============================================== -->
     <!-- MODALS: NEW BOOKING & FINANCIAL VOUCHER       -->
     <!-- ============================================== -->
+
+    <!-- ============================================== -->
+    <!-- SYSTEM RESET & BACKUP MODAL                    -->
+    <!-- ============================================== -->
+    <div id="systemResetModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-rose-200 dark:border-rose-900/60 animate-[fadeIn_0.2s_ease-in-out] max-h-[92vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg font-black border border-rose-500/20">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                            <span data-i18n="reset_modal_title">معالج تصفير النظام وإعادة تهيئة البيانات</span>
+                            <span class="bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] font-black px-2 py-0.5 rounded-full">إدارة مركزية</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-i18n="reset_modal_subtitle">
+                            تصفير العمليات المالية لبدء موسم جديد أو إعادة ضبط المصنع مع تأكيد أمني
+                        </p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeSystemResetModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:text-rose-400 text-slate-500 flex items-center justify-center text-sm transition cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Recommendation & Pre-Reset Download Strip -->
+            <div class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/60 rounded-2xl p-4 mb-5 space-y-2.5">
+                <div class="flex items-start gap-2.5 text-xs text-amber-900 dark:text-amber-200">
+                    <i class="fa-solid fa-shield-halved text-amber-600 text-base mt-0.5 shrink-0"></i>
+                    <div>
+                        <div class="font-black" data-i18n="reset_backup_recommend_title">توصية أمان هامة قبل تنفيذ أي تصفير:</div>
+                        <div class="text-[11px] text-amber-800/90 dark:text-amber-300 mt-0.5" data-i18n="reset_backup_recommend_desc">
+                            حفاظاً على حقوقك المالية وسجلات العملاء، يرجى دائماً استخراج نسخة احتياطية مجمعة ومنظمة بنقرة واحدة قبل التصفير.
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="exportComprehensiveSystemBackup()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-file-excel text-sm"></i>
+                    <span data-i18n="btn_download_backup_first">تحميل نسخة احتياطية إكسل شاملة للبيانات الحالية أولاً (موصى به جداً)</span>
+                </button>
+            </div>
+
+            <!-- Reset Options Selector -->
+            <div class="space-y-3 mb-5">
+                <label class="block text-xs font-black text-slate-800 dark:text-slate-200" data-i18n="lbl_select_reset_mode">
+                    اختر نوع التصفير المطلوب:
+                </label>
+
+                <!-- Option A: Clear Transactions Only (Recommended for New Season) -->
+                <label onclick="selectResetOption('transactions')" id="resetOptLabel-transactions" class="block p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-50/20 dark:bg-gold-950/20 cursor-pointer transition hover:border-gold-600">
+                    <div class="flex items-start gap-3">
+                        <input type="radio" name="resetMode" id="resetRadio-transactions" value="transactions" checked class="mt-1 accent-gold-600 cursor-pointer">
+                        <div class="text-xs">
+                            <div class="font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                <span>تصفير الحركات والعمليات المالية فقط (بدء موسم تشغيلي جديد)</span>
+                                <span class="bg-gold-500/20 text-gold-700 dark:text-gold-300 text-[10px] px-2 py-0.2 rounded-md font-extrabold">موصى به</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                                يقوم بتصفير الحجوزات، مبيعات تذاكر المكتب، السندات المالية، وأرصدة الديون والخزائن إلى صفر، مع <strong>الاحتفاظ الكامل</strong> ببيانات الشركات، العملاء، الموردين، باقات الخدمات، ترخيص الشركة، العملات، والموظفين.
+                            </p>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- Option B: Factory Reset to Demo Sample Data -->
+                <label onclick="selectResetOption('demo')" id="resetOptLabel-demo" class="block p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 cursor-pointer transition hover:border-slate-300 dark:hover:border-slate-700">
+                    <div class="flex items-start gap-3">
+                        <input type="radio" name="resetMode" id="resetRadio-demo" value="demo" class="mt-1 accent-gold-600 cursor-pointer">
+                        <div class="text-xs">
+                            <div class="font-black text-slate-900 dark:text-slate-100">
+                                استعادة البيانات التجريبية الافتراضية (إعادة ضبط المصنع - Demo Mode)
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                                استرجاع قاعدة البيانات النموذجية الأولية بكافة عينات الحجوزات، التذاكر، كشوف الحسابات، والشركات والموردين التجريبيين.
+                            </p>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- Option C: Complete White Slate -->
+                <label onclick="selectResetOption('wipe')" id="resetOptLabel-wipe" class="block p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 cursor-pointer transition hover:border-rose-300 dark:hover:border-rose-900">
+                    <div class="flex items-start gap-3">
+                        <input type="radio" name="resetMode" id="resetRadio-wipe" value="wipe" class="mt-1 accent-rose-600 cursor-pointer">
+                        <div class="text-xs">
+                            <div class="font-black text-rose-700 dark:text-rose-400">
+                                مسح وتصفير شامل لكافة السجلات (قاعدة بيانات بيضاء فارغة تماماً)
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                                مسح وتصفير جميع الحجوزات، التذاكر، الشركات، العملاء، الموردين، والقيود المحاسبية، وبدء النظام كصفحة بيضاء بالكامل.
+                            </p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Confirmation Keyword Safeguard -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 mb-5">
+                <label class="block text-xs font-black text-slate-800 dark:text-slate-200 mb-1.5" data-i18n="lbl_confirm_keyword">
+                    لتأكيد التنفيذ ومنع أي خطأ، يرجى كتابة كلمة <span class="text-rose-600 font-extrabold text-sm font-mono">(تصفير)</span> في المربع أدناه:
+                </label>
+                <input type="text" id="systemResetKeywordInput" oninput="validateResetKeyword(this.value)" placeholder="اكتب (تصفير) أو (RESET) هنا..." autocomplete="off" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-center font-black text-rose-600 dark:text-rose-400 text-sm tracking-wider focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="flex justify-between items-center gap-3 pt-2">
+                <button type="button" onclick="closeSystemResetModal()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs px-5 py-3 rounded-xl transition cursor-pointer">
+                    <span data-i18n="btn_cancel">إلغاء وتراجع</span>
+                </button>
+                <button type="button" id="btnConfirmSystemReset" disabled onclick="handleExecuteSystemReset()" class="bg-rose-600 hover:bg-rose-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black text-xs px-6 py-3 rounded-xl transition flex items-center gap-2 cursor-pointer shadow-md">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span data-i18n="btn_execute_reset">تأكيد وتنفيذ عملية التصفير الآن</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- New Booking Modal -->
     <div id="bookingModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
@@ -7267,6 +7512,39 @@
                 reports_view_title: 'التقارير الدورية وتحليلات ساعات وأشهر الذروة (Analytics & Peak Times)',
                 reports_view_desc: 'تقارير يومية، أسبوعية، شهرية، وسنوية مع كشف ساعات الذروة اليومية والشهر الأكثر إشغالاً في السنة',
                 btn_export_excel: 'تصدير إكسيل',
+                topbar_backup_reset: 'النسخ والتصفير',
+                btn_export_bookings_excel: 'تصدير إكسل',
+                btn_export_tickets_excel: 'تصدير العهدة إكسل',
+                btn_export_companies_excel: 'تصدير الشركات إكسل',
+                btn_export_retail_excel: 'تصدير العملاء إكسل',
+                btn_export_suppliers_excel: 'تصدير الموردين إكسل',
+                def_tab_backup_reset: 'النسخ الاحتياطي وتصفير النظام',
+                counter_bookings: 'ملفات الحجوزات',
+                counter_tickets: 'تذاكر العهدة',
+                counter_companies: 'شركات B2B',
+                counter_retail: 'عملاء القطاعي',
+                counter_ledger: 'حركات كشف الحساب',
+                counter_drawers: 'الخزائن والبنوك',
+                master_backup_title: 'النسخ الاحتياطي الشامل للنظام (إكسل منظم بكافة الجداول والحسابات)',
+                master_backup_desc: 'توليد ملف إكسل CSV شامل ومُنسق هندسياً، يحتوي على بيانات شركة الحرمين، ملخص السيولة النقدية، سجل الحجوزات، مبيعات المكتب، حسابات الشركات والديون، أقساط الأفراد، مستحقات الموردين، ودفتر الأستاذ العام مع المجاميع الصافية.',
+                btn_download_full_excel: 'تحميل النسخة الاحتياطية المجمعة (إكسل)',
+                json_backup_title: 'نسخة احتياطية سحابية كاملة (JSON Database File)',
+                json_backup_desc: 'حفظ لقطة كاملة لقاعدة البيانات في ملف رقمي خفيف يمكن نقله أو استرجاعه في أي وقت بدون فقدان أي تفصيلة.',
+                btn_export_json: 'تصدير ملف قاعدة البيانات (JSON)',
+                json_restore_title: 'استعادة النظام من نسخة احتياطية (Restore from Backup)',
+                json_restore_desc: 'رفع واستيراد ملف JSON احتياطي سابق لاسترجاع كافة السجلات والحسابات بضغطة زر واحدة.',
+                btn_import_json: 'استيراد واستعادة نسخة سابقة',
+                reset_zone_title: 'إدارة تصفير النظام وإعادة ضبط البيانات (System Reset Center)',
+                reset_zone_desc: 'يتيح للمدير العام تصفير الحركات والعمليات المالية لبدء موسم سياحي جديد، أو استعادة البيانات التجريبية الافتراضية، أو مسح قاعدة البيانات بالكامل مع حماية تأكيدية لمنع الخطأ.',
+                btn_open_reset_modal: 'فتح معالج تصفير النظام وإعادة الضبط',
+                reset_modal_title: 'معالج تصفير النظام وإعادة تهيئة البيانات',
+                reset_modal_subtitle: 'تصفير العمليات المالية لبدء موسم جديد أو إعادة ضبط المصنع مع تأكيد أمني',
+                reset_backup_recommend_title: 'توصية أمان هامة قبل تنفيذ أي تصفير:',
+                reset_backup_recommend_desc: 'حفاظاً على حقوقك المالية وسجلات العملاء، يرجى دائماً استخراج نسخة احتياطية مجمعة ومنظمة بنقرة واحدة قبل التصفير.',
+                btn_download_backup_first: 'تحميل نسخة احتياطية إكسل شاملة للبيانات الحالية أولاً (موصى به جداً)',
+                lbl_select_reset_mode: 'اختر نوع التصفير المطلوب:',
+                lbl_confirm_keyword: 'لتأكيد التنفيذ ومنع أي خطأ، يرجى كتابة كلمة (تصفير) في المربع أدناه:',
+                btn_execute_reset: 'تأكيد وتنفيذ عملية التصفير الآن',
                 btn_print_report: 'طباعة التقرير',
                 report_tab_daily: 'التقرير اليومي وساعة الذروة',
                 report_tab_weekly: 'التقرير الأسبوعي',
