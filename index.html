@@ -4938,6 +4938,9 @@
             ])
         };
 
+        // Deep clone initial demo state for factory reset capability
+        const INITIAL_DEMO_STATE = JSON.parse(JSON.stringify(state));
+
         // Navigation Tab Switching
         function navTo(viewId) {
             document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
@@ -5046,6 +5049,7 @@
         // Render Tables
         function renderTables() {
             recalculateTotals();
+            updateBackupOverviewCounters();
             renderBookingsTables();
             renderClientsTable();
             renderCompaniesTable();
@@ -8993,7 +8997,578 @@
             }).join('');
         }
 
-        // Initialize on DOM Ready
+        
+        // ==========================================
+        // 📊 EXCEL & BACKUP FORMATTING ENGINE (UTF-8 BOM)
+        // ==========================================
+
+        function escapeCsv(val) {
+            if (val === null || val === undefined) return '""';
+            let str = String(val).replace(/\r\n|\r|\n/g, ' ').trim();
+            if (str.includes('"') || str.includes(',') || str.includes(';') || str.includes('\n')) {
+                return '"' + str.replace(/"/g, '""') + '"';
+            }
+            return '"' + str + '"';
+        }
+
+        // 1. Master System Backup (Comprehensive Multi-Section Clean Excel)
+        function exportComprehensiveSystemBackup() {
+            const isEn = document.documentElement.lang === 'en';
+            const profile = state.companyProfile || {};
+            const companyName = isEn ? (profile.nameEn || profile.name || 'Al-Haramain Travel & Tourism') : (profile.name || 'شركة الحرمين للسياحة والسفر وخدمات الحج والعمرة');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString(isEn ? 'en-US' : 'ar-EG');
+            const timeStr = now.toLocaleTimeString(isEn ? 'en-US' : 'ar-EG');
+            const currentUser = (state.user && state.user.name) ? state.user.name : 'حسن يوسف الناضر';
+            
+            let csv = '\uFEFF'; // UTF-8 Byte Order Mark for Microsoft Excel Arabic support
+            
+            // Header Banner
+            csv += `"${companyName}"\n`;
+            csv += isEn 
+                ? `"Al-Haramain Central ERP - Comprehensive System Backup & Multi-Currency Ledger Database"\n`
+                : `"نظام الحرمين المركزي لإدارة السياحة والطيران - النسخة الاحتياطية الشاملة لكافة السجلات والحسابات"\n`;
+            csv += isEn
+                ? `"Export Date:","${dateStr} ${timeStr}","Exported By:","${currentUser}","License / CR:","${profile.license || ''} | ${profile.cr || ''}"\n\n`
+                : `"تاريخ التصدير:","${dateStr} ${timeStr}","المسؤول المستخرج:","${currentUser}","بيانات الترخيص والسجل:","${profile.license || ''} | ${profile.cr || ''}"\n\n`;
+
+            // SECTION 1: FINANCIAL OVERVIEW & LIQUIDITY
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[1] EXECUTIVE FINANCIAL SUMMARY & TREASURY BALANCES"\n` : `"[1] ملخص المؤشرات المالية والسيولة النقدية بالخزائن والبنوك"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"Indicator","Value","Currency","Notes"\n` : `"المؤشر المالي","القيمة","العملة","ملاحظات وبيان"\n`;
+            csv += `"${isEn ? 'Total Sales (Gross Volume)' : 'إجمالي المبيعات (كافة العمليات)'}","${state.totalSales || 0}","${isEn ? 'EGP' : 'ج.م'}","${isEn ? 'Cumulative volume' : 'حجم الأعمال الإجمالي المسجل بالنظام'}"\n`;
+            csv += `"${isEn ? 'Net Operating Profit' : 'صافي الأرباح التشغيلية'}","${state.totalProfit || 0}","${isEn ? 'EGP' : 'ج.م'}","${isEn ? 'Bookings and ticketing margins' : 'محسوب وفق هوامش الحجوزات ومبيعات تذاكر المكتب'}"\n`;
+            
+            let totalCashBase = 0;
+            (state.cashDrawers || []).forEach(d => {
+                let rate = 1.0;
+                if (state.currencies) {
+                    const c = state.currencies.find(cur => cur.symbol === d.cur || cur.code === d.cur);
+                    if (c && c.rate) rate = c.rate;
+                }
+                totalCashBase += (d.bal || 0) * rate;
+            });
+            csv += `"${isEn ? 'Total Treasury Cash In Drawers' : 'إجمالي النقدية بالخزائن والمحافظ'}","${Math.round(totalCashBase)}","${isEn ? 'EGP Equivalent' : 'معادل ج.م'}","${isEn ? 'Sum of cash drawers and e-wallets' : 'مجموع أرصدة الخزائن النقدية والمحافظ الإلكترونية'}"\n`;
+            
+            let totalBankBase = 0;
+            (state.bankAccounts || []).forEach(b => {
+                let rate = 1.0;
+                if (state.currencies) {
+                    const c = state.currencies.find(cur => cur.symbol === b.cur || cur.code === b.cur);
+                    if (c && c.rate) rate = c.rate;
+                }
+                totalBankBase += (b.balance || 0) * rate;
+            });
+            csv += `"${isEn ? 'Total Commercial Bank Balances' : 'إجمالي أرصدة الحسابات البنكية'}","${Math.round(totalBankBase)}","${isEn ? 'EGP Equivalent' : 'معادل ج.م'}","${isEn ? 'Sum of bank accounts' : 'مجموع الأرصدة بالحسابات البنكية'}"\n\n`;
+
+            // SECTION 2: BOOKINGS
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[2] BOOKINGS & TOURISM PACKAGES REGISTER"\n` : `"[2] سجل حجوزات الطيران والبرامج السياحية والعمرة"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","PNR / File No.","Client / Account","Service / Package","Supplier / Airline","Sell Price","Cost Price","Net Profit","Currency","Tax Invoice (ETA)"\n`
+                        : `"م","رقم الملف / PNR","اسم العميل / الشركة","الخدمة / البرنامج السياحي","المورد / خطوط الطيران","سعر البيع","التكلفة","صافي الربح","العملة","الفاتورة الإلكترونية ETA"\n`;
+            
+            let sumBookSell = 0, sumBookCost = 0, sumBookProfit = 0;
+            (state.bookings || []).forEach((b, idx) => {
+                sumBookSell += Number(b.sell || 0);
+                sumBookCost += Number(b.cost || 0);
+                sumBookProfit += Number(b.profit || 0);
+                csv += `"${idx + 1}",${escapeCsv(b.pnr)},${escapeCsv(b.client)},${escapeCsv(b.service)},${escapeCsv(b.supplier)},"${b.sell}","${b.cost}","${b.profit}",${escapeCsv(b.currency)},${escapeCsv(b.eta)}\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.bookings||[]).length} Bookings)","","","","","${sumBookSell}","${sumBookCost}","${sumBookProfit}","",""\n\n`
+                        : `"المجموع والإجمالي (${(state.bookings||[]).length} حجز)","","","","","${sumBookSell}","${sumBookCost}","${sumBookProfit}","",""\n\n`;
+
+            // SECTION 3: DESK TICKET INVENTORY & SALES
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[3] DESK TICKETING INVENTORY & POS SALES"\n` : `"[3] حركة مبيعات مكتب الطيران وتذاكر المخزون والعهدة"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Ticket E-Number","PNR","Routing","Airline / Provider","Passenger Name","Sell Price","Net Cost","Profit","Currency","Status","Issue Date"\n`
+                        : `"م","رقم التذكرة الإلكترونية","PNR","خط السير","شركة الطيران / المورد","اسم الراكب","سعر البيع","سعر الشراء","الربح","العملة","حالة التذكرة بالعهدة","تاريخ الإصدار"\n`;
+            
+            let sumDeskSell = 0, sumDeskCost = 0;
+            (state.ticketInventory || []).forEach((t, idx) => {
+                sumDeskSell += Number(t.sellPrice || 0);
+                sumDeskCost += Number(t.netCost || 0);
+                csv += `"${idx + 1}",${escapeCsv(t.ticketNumber)},${escapeCsv(t.pnr)},${escapeCsv(t.routing)},${escapeCsv(t.airline)},${escapeCsv(t.passenger)},"${t.sellPrice}","${t.netCost}","${(t.sellPrice || 0) - (t.netCost || 0)}",${escapeCsv(t.cur)},${escapeCsv(t.statusLabel || t.status)},${escapeCsv(t.date)}\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.ticketInventory||[]).length} Tickets)","","","","","${sumDeskSell}","${sumDeskCost}","${sumDeskSell - sumDeskCost}","","","",""\n\n`
+                        : `"المجموع والإجمالي (${(state.ticketInventory||[]).length} تذكرة)","","","","","${sumDeskSell}","${sumDeskCost}","${sumDeskSell - sumDeskCost}","","","",""\n\n`;
+
+            // SECTION 4: CORPORATE CLIENTS & DEBTORS B2B
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[4] CORPORATE CLIENTS & B2B DEBTORS ACCOUNT STATEMENT"\n` : `"[4] حسابات ومديونيات الشركات والوكلاء السياحيين B2B"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Company Code","Company Name","Account Type","Phone","Credit Limit","Total Sales","Paid Amount","Current Due Balance","Currency"\n`
+                        : `"م","كود الشركة","اسم الشركة / الوكيل","نوع الحساب","رقم الهاتف","سقف الائتمان","إجمالي المبيعات","المسدد","الرصيد المستحق (المديونية)","العملة"\n`;
+
+            let sumCompSales = 0, sumCompPaid = 0, sumCompDue = 0;
+            (state.companies || []).forEach((c, idx) => {
+                const dueVal = (c.currentDue !== undefined) ? c.currentDue : (c.due !== undefined ? c.due : ((c.sales || 0) - (c.paid || 0)));
+                sumCompSales += Number(c.sales || 0);
+                sumCompPaid += Number(c.paid || 0);
+                sumCompDue += Number(dueVal || 0);
+                csv += `"${idx + 1}",${escapeCsv(c.code)},${escapeCsv(c.name)},${escapeCsv(c.type)},${escapeCsv(c.phone)},"${c.creditLimit || 0}","${c.sales || 0}","${c.paid || 0}","${dueVal}",${escapeCsv(c.currency || 'ج.م')}\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.companies||[]).length} Companies)","","","","","","${sumCompSales}","${sumCompPaid}","${sumCompDue}",""\n\n`
+                        : `"المجموع والإجمالي (${(state.companies||[]).length} شركة)","","","","","","${sumCompSales}","${sumCompPaid}","${sumCompDue}",""\n\n`;
+
+            // SECTION 5: RETAIL CUSTOMERS & INSTALLMENTS B2C
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[5] RETAIL CLIENTS & TRAVEL INSTALLMENTS (B2C)"\n` : `"[5] عملاء الأفراد والرحلات والأقساط ومواعيد الاستحقاق B2C"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Client Code","Client Name","Phone Number","Passport / National ID","Trip / Package Details","Total Contract","Paid Amount","Due Remaining (Installment)","Due Date"\n`
+                        : `"م","كود العميل","اسم العميل","رقم الهاتف","رقم الجواز / القومي","تفاصيل الرحلة / الباقة","إجمالي العقد","المسدد نقداً","المتبقي (القسط المستحق)","تاريخ الاستحقاق"\n`;
+
+            let sumRetTotal = 0, sumRetPaid = 0, sumRetDue = 0;
+            (state.retailCustomers || []).forEach((rc, idx) => {
+                sumRetTotal += Number(rc.total || 0);
+                sumRetPaid += Number(rc.paid || 0);
+                sumRetDue += Number(rc.due || 0);
+                csv += `"${idx + 1}",${escapeCsv(rc.code)},${escapeCsv(rc.name)},${escapeCsv(rc.phone)},${escapeCsv(rc.passport)},${escapeCsv(rc.tripType)},"${rc.total || 0}","${rc.paid || 0}","${rc.due || 0}",${escapeCsv(rc.dueDate || '-')}\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.retailCustomers||[]).length} Clients)","","","","","","${sumRetTotal}","${sumRetPaid}","${sumRetDue}",""\n\n`
+                        : `"المجموع والإجمالي (${(state.retailCustomers||[]).length} عميل)","","","","","","${sumRetTotal}","${sumRetPaid}","${sumRetDue}",""\n\n`;
+
+            // SECTION 6: SUPPLIERS & CREDITORS
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[6] SUPPLIERS & AIRLINES CREDITORS ACCOUNTS"\n` : `"[6] أرصدة ومستحقات الموردين وشركات الطيران (دائنون)"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Supplier Code","Supplier Name","Category / Service","Phone","Payable Balance Due","Currency"\n`
+                        : `"م","كود المورد","اسم المورد / الخطوط","التصنيف والخدمة","الهاتف","المستحق للمورد (الرصيد الدائن)","العملة"\n`;
+
+            let sumSupDue = 0;
+            (state.suppliers || []).forEach((s, idx) => {
+                const sDue = Number(s.due !== undefined ? s.due : (s.balance || 0));
+                sumSupDue += sDue;
+                csv += `"${idx + 1}",${escapeCsv(s.code || ('SUP-' + (idx+1)))},${escapeCsv(s.name)},${escapeCsv(s.service || s.category || '')},${escapeCsv(s.phone)},"${sDue}",${escapeCsv(s.currency || 'ج.م')}\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.suppliers||[]).length} Suppliers)","","","","","${sumSupDue}",""\n\n`
+                        : `"المجموع والإجمالي (${(state.suppliers||[]).length} مورد)","","","","","${sumSupDue}",""\n\n`;
+
+            // SECTION 7: CASH DRAWERS & TREASURY
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[7] CASH DRAWERS & TREASURY BALANCES"\n` : `"[7] الخزائن النقدية والمحافظ الإلكترونية وأمناء العهدة"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Drawer / Account Name","Account Type","Currency","Custodian / Responsible","Max Limit","Current Cash Balance"\n`
+                        : `"م","اسم الخزينة / الحساب","نوع الخزينة","العملة","أمين العهدة المسؤول","سقف الخزينة","الرصيد النقدي الفعلي"\n`;
+
+            (state.cashDrawers || []).forEach((d, idx) => {
+                csv += `"${idx + 1}",${escapeCsv(d.name)},${escapeCsv(d.type)},${escapeCsv(d.cur)},${escapeCsv(d.custodian)},"${d.limit || 0}","${d.bal || 0}"\n`;
+            });
+            csv += `\n`;
+
+            // SECTION 8: MULTI-CURRENCY GENERAL LEDGER
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"[8] MULTI-CURRENCY GENERAL LEDGER & CURRENT ACCOUNT TRANSACTIONS"\n` : `"[8] دفتر أستاذ الحساب الجاري والمعاملات المالية متعددة العملات"\n`;
+            csv += `====================================================================================================\n`;
+            csv += isEn ? `"#","Date & Time","Party Type","Party Name","Doc Type","Ref No.","Description / Notes","Currency","FX Rate","Debit (Original)","Credit (Original)","Debit (EGP)","Credit (EGP)","Balance (EGP)"\n`
+                        : `"م","التاريخ والوقت","نوع الطرف","اسم الطرف","نوع المستند","رقم السند / الفاتورة","البيان والملاحظات","العملة","سعر الصرف","مدين (أصل العملة)","دائن (أصل العملة)","مدين (معادل ج.م)","دائن (معادل ج.م)","الرصيد بعد الحركة (ج.م)"\n`;
+
+            let sumLedDebitEgp = 0, sumLedCreditEgp = 0;
+            (state.currentAccountLedger || []).forEach((e, idx) => {
+                sumLedDebitEgp += Number(e.debitBase || 0);
+                sumLedCreditEgp += Number(e.creditBase || 0);
+                csv += `"${idx + 1}",${escapeCsv(e.date)},${escapeCsv(e.partyType)},${escapeCsv(e.partyName)},${escapeCsv(e.docType)},${escapeCsv(e.docRef)},${escapeCsv(e.notes || '')},${escapeCsv(e.cur)},"${e.fxRate || 1}","${e.debitOriginal || 0}","${e.creditOriginal || 0}","${e.debitBase || 0}","${e.creditBase || 0}","${e.balanceAfterBase || 0}"\n`;
+            });
+            csv += isEn ? `"TOTALS (${(state.currentAccountLedger||[]).length} Ledger Entries)","","","","","","","","","","","${sumLedDebitEgp}","${sumLedCreditEgp}",""\n\n`
+                        : `"المجموع والإجمالي (${(state.currentAccountLedger||[]).length} حركة قيود)","","","","","","","","","","","${sumLedDebitEgp}","${sumLedCreditEgp}",""\n\n`;
+
+            // Download file
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const filename = `النسخة_الاحتياطية_الشاملة_الحرمين_ERP_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showNotification(isEn ? 'Comprehensive Excel Backup downloaded successfully!' : 'تم تحميل النسخة الاحتياطية الشاملة بصيغة إكسل منظمة بنجاح!', 'success');
+        }
+
+        // 2. Export Bookings Table to Clean Excel
+        function exportBookingsToExcel() {
+            const isEn = document.documentElement.lang === 'en';
+            let csv = '\uFEFF';
+            csv += `"شركة الحرمين للسياحة والسفر - سجل حجوزات الطيران والبرامج السياحية"\n`;
+            csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
+            csv += isEn ? `"#","PNR","Client","Service","Supplier / Airline","Sell Price","Cost Price","Profit","Currency","ETA Invoice"\n`
+                        : `"م","رقم الملف / PNR","اسم العميل / الشركة","الخدمة / البرنامج","المورد / خطوط الطيران","سعر البيع","التكلفة","صافي الربح","العملة","الفاتورة الضريبية ETA"\n`;
+            
+            let sumSell = 0, sumCost = 0, sumProfit = 0;
+            (state.bookings || []).forEach((b, idx) => {
+                sumSell += Number(b.sell || 0);
+                sumCost += Number(b.cost || 0);
+                sumProfit += Number(b.profit || 0);
+                csv += `"${idx + 1}",${escapeCsv(b.pnr)},${escapeCsv(b.client)},${escapeCsv(b.service)},${escapeCsv(b.supplier)},"${b.sell}","${b.cost}","${b.profit}",${escapeCsv(b.currency)},${escapeCsv(b.eta)}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","${sumSell}","${sumCost}","${sumProfit}","",""\n`
+                        : `"المجموع والإجمالي","","","","","${sumSell}","${sumCost}","${sumProfit}","",""\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `حجوزات_الحرمين_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 3. Export Desk Ticket Inventory to Clean Excel
+        function exportTicketInventoryToExcel() {
+            const isEn = document.documentElement.lang === 'en';
+            let csv = '\uFEFF';
+            csv += `"شركة الحرمين للسياحة - حركة مبيعات مكتب الطيران وتذاكر المخزون والعهدة"\n`;
+            csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
+            csv += isEn ? `"#","Ticket Number","PNR","Routing","Airline","Passenger","Sell Price","Net Cost","Profit","Currency","Status","Date"\n`
+                        : `"م","رقم التذكرة الإلكترونية","PNR","خط السير","شركة الطيران","اسم الراكب","سعر البيع","سعر الشراء","الربح","العملة","حالة التذكرة","التاريخ"\n`;
+
+            let sumSell = 0, sumCost = 0;
+            (state.ticketInventory || []).forEach((t, idx) => {
+                sumSell += Number(t.sellPrice || 0);
+                sumCost += Number(t.netCost || 0);
+                csv += `"${idx + 1}",${escapeCsv(t.ticketNumber)},${escapeCsv(t.pnr)},${escapeCsv(t.routing)},${escapeCsv(t.airline)},${escapeCsv(t.passenger)},"${t.sellPrice}","${t.netCost}","${(t.sellPrice || 0) - (t.netCost || 0)}",${escapeCsv(t.cur)},${escapeCsv(t.statusLabel || t.status)},${escapeCsv(t.date)}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","${sumSell}","${sumCost}","${sumSell - sumCost}","","","",""\n`
+                        : `"المجموع والإجمالي","","","","","${sumSell}","${sumCost}","${sumSell - sumCost}","","","",""\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `مبيعات_تذاكر_المكتب_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 4. Export B2B Companies to Clean Excel
+        function exportCompaniesToExcel() {
+            const isEn = document.documentElement.lang === 'en';
+            let csv = '\uFEFF';
+            csv += `"شركة الحرمين للسياحة - كشف حساب وأرصدة ومديونيات الشركات السياحية B2B"\n`;
+            csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
+            csv += isEn ? `"#","Company Code","Company Name","Type","Phone","Credit Limit","Total Sales","Paid","Current Due","Currency"\n`
+                        : `"م","كود الشركة","اسم الشركة / الوكيل","نوع الحساب","رقم الهاتف","سقف الائتمان","إجمالي المبيعات","المسدد","الرصيد المستحق (المديونية)","العملة"\n`;
+
+            let sumSales = 0, sumPaid = 0, sumDue = 0;
+            (state.companies || []).forEach((c, idx) => {
+                const dueVal = (c.currentDue !== undefined) ? c.currentDue : (c.due !== undefined ? c.due : ((c.sales || 0) - (c.paid || 0)));
+                sumSales += Number(c.sales || 0);
+                sumPaid += Number(c.paid || 0);
+                sumDue += Number(dueVal || 0);
+                csv += `"${idx + 1}",${escapeCsv(c.code)},${escapeCsv(c.name)},${escapeCsv(c.type)},${escapeCsv(c.phone)},"${c.creditLimit || 0}","${c.sales || 0}","${c.paid || 0}","${dueVal}",${escapeCsv(c.currency || 'ج.م')}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","","${sumSales}","${sumPaid}","${sumDue}",""\n`
+                        : `"المجموع والإجمالي","","","","","","${sumSales}","${sumPaid}","${sumDue}",""\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `ارصدة_ومديونيات_الشركات_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 5. Export Retail Customers & Installments to Clean Excel
+        function exportRetailCustomersToExcel() {
+            const isEn = document.documentElement.lang === 'en';
+            let csv = '\uFEFF';
+            csv += `"شركة الحرمين للسياحة - كشف حساب عملاء الأفراد والأقساط المستحقة B2C"\n`;
+            csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
+            csv += isEn ? `"#","Customer Code","Name","Phone","Passport / ID","Package / Trip","Contract Total","Paid","Installment Due","Due Date"\n`
+                        : `"م","كود العميل","اسم العميل","رقم الهاتف","رقم الجواز / القومي","تفاصيل الرحلة / الباقة","إجمالي العقد","المسدد نقداً","القسط المتبقي","تاريخ الاستحقاق"\n`;
+
+            let sumTotal = 0, sumPaid = 0, sumDue = 0;
+            (state.retailCustomers || []).forEach((rc, idx) => {
+                sumTotal += Number(rc.total || 0);
+                sumPaid += Number(rc.paid || 0);
+                sumDue += Number(rc.due || 0);
+                csv += `"${idx + 1}",${escapeCsv(rc.code)},${escapeCsv(rc.name)},${escapeCsv(rc.phone)},${escapeCsv(rc.passport)},${escapeCsv(rc.tripType)},"${rc.total || 0}","${rc.paid || 0}","${rc.due || 0}",${escapeCsv(rc.dueDate || '-')}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","","${sumTotal}","${sumPaid}","${sumDue}",""\n`
+                        : `"المجموع والإجمالي","","","","","","${sumTotal}","${sumPaid}","${sumDue}",""\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `عملاء_القطاعي_والاقساط_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 6. Export Suppliers to Clean Excel
+        function exportSuppliersToExcel() {
+            const isEn = document.documentElement.lang === 'en';
+            let csv = '\uFEFF';
+            csv += `"شركة الحرمين للسياحة - كشف أرصدة ومستحقات الموردين وخطوط الطيران"\n`;
+            csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
+            csv += isEn ? `"#","Supplier Code","Supplier Name","Category / Service","Phone","Payable Balance","Currency"\n`
+                        : `"م","كود المورد","اسم المورد / الخطوط","التصنيف والخدمة","الهاتف","الرصيد المستحق (دائن)","العملة"\n`;
+
+            let sumDue = 0;
+            (state.suppliers || []).forEach((s, idx) => {
+                const sDue = Number(s.due !== undefined ? s.due : (s.balance || 0));
+                sumDue += sDue;
+                csv += `"${idx + 1}",${escapeCsv(s.code || ('SUP-' + (idx+1)))},${escapeCsv(s.name)},${escapeCsv(s.service || s.category || '')},${escapeCsv(s.phone)},"${sDue}",${escapeCsv(s.currency || 'ج.م')}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","${sumDue}",""\n`
+                        : `"المجموع والإجمالي","","","","","${sumDue}",""\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `ارصدة_ومستحقات_الموردين_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 7. Full Technical JSON Database Backup
+        function exportJsonBackup() {
+            const backupData = {
+                version: '2.0-PRO',
+                exportedAt: new Date().toISOString(),
+                exportedBy: state.user ? state.user.name : 'حسن يوسف الناضر',
+                companyProfile: state.companyProfile,
+                taxSettings: state.taxSettings,
+                currencies: state.currencies,
+                bookings: state.bookings,
+                ticketInventory: state.ticketInventory,
+                companies: state.companies,
+                retailCustomers: state.retailCustomers,
+                suppliers: state.suppliers,
+                currentAccountLedger: state.currentAccountLedger,
+                cashDrawers: state.cashDrawers,
+                bankAccounts: state.bankAccounts,
+                services: state.services,
+                chartOfAccounts: state.chartOfAccounts,
+                staff: state.staff
+            };
+
+            const jsonStr = JSON.stringify(backupData, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `AlHaramain_ERP_Database_Backup_${new Date().toISOString().slice(0, 10)}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showNotification('تم استخراج وحفظ نسخة قاعدة البيانات (JSON) بنجاح!', 'success');
+        }
+
+        // 8. Restore from JSON Database Backup
+        function handleImportJsonBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.bookings || !data.companies) {
+                        alert('الملف المختار غير متوافق مع نظام الحرمين ERP.');
+                        return;
+                    }
+
+                    if (confirm('هل أنت متأكد من استعادة قاعدة البيانات من هذا الملف؟ سيتم تحديث كافة السجلات الحالية.')) {
+                        if (data.bookings) state.bookings = data.bookings;
+                        if (data.ticketInventory) state.ticketInventory = data.ticketInventory;
+                        if (data.companies) state.companies = data.companies;
+                        if (data.retailCustomers) state.retailCustomers = data.retailCustomers;
+                        if (data.suppliers) state.suppliers = data.suppliers;
+                        if (data.currentAccountLedger) state.currentAccountLedger = data.currentAccountLedger;
+                        if (data.cashDrawers) state.cashDrawers = data.cashDrawers;
+                        if (data.bankAccounts) state.bankAccounts = data.bankAccounts;
+                        if (data.companyProfile) state.companyProfile = data.companyProfile;
+                        if (data.taxSettings) state.taxSettings = data.taxSettings;
+                        if (data.currencies) state.currencies = data.currencies;
+                        if (data.staff) state.staff = data.staff;
+
+                        saveStateToLocalStorage();
+                        renderTables();
+                        showNotification('تمت استعادة قاعدة البيانات وتحديث النظام بالكامل بنجاح!', 'success');
+                    }
+                } catch (err) {
+                    alert('خطأ أثناء قراءة ملف النسخة الاحتياطية: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // Helper to persist modified state
+        function saveStateToLocalStorage() {
+            try {
+                if (state.companies) localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
+                if (state.retailCustomers) localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
+                if (state.ticketInventory) localStorage.setItem('alharamain_ticket_inventory', JSON.stringify(state.ticketInventory));
+                if (state.currentAccountLedger) localStorage.setItem('alharamain_account_ledger', JSON.stringify(state.currentAccountLedger));
+                if (state.currencies) localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+                if (state.companyProfile) localStorage.setItem('alharamain_company_profile', JSON.stringify(state.companyProfile));
+                if (state.taxSettings) localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
+                if (state.staff) localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+            } catch(e) {
+                console.warn('LocalStorage save warning:', e);
+            }
+        }
+
+        // Live Overview Counters in Backup & Reset tab
+        function updateBackupOverviewCounters() {
+            const bEl = document.getElementById('backupCountBookings');
+            if (bEl) bEl.innerText = (state.bookings || []).length;
+            const tEl = document.getElementById('backupCountTickets');
+            if (tEl) tEl.innerText = (state.ticketInventory || []).length;
+            const cEl = document.getElementById('backupCountCompanies');
+            if (cEl) cEl.innerText = (state.companies || []).length;
+            const rEl = document.getElementById('backupCountRetail');
+            if (rEl) rEl.innerText = (state.retailCustomers || []).length;
+            const lEl = document.getElementById('backupCountLedger');
+            if (lEl) lEl.innerText = (state.currentAccountLedger || []).length;
+            const dEl = document.getElementById('backupCountDrawers');
+            if (dEl) dEl.innerText = (state.cashDrawers || []).length + (state.bankAccounts || []).length;
+        }
+
+        // ==========================================
+        // 🔄 SYSTEM RESET & FACTORY MAINTENANCE LOGIC
+        // ==========================================
+
+        let activeResetMode = 'transactions';
+
+        function openSystemResetModal() {
+            const modal = document.getElementById('systemResetModal');
+            if (modal) modal.classList.remove('hidden');
+            const input = document.getElementById('systemResetKeywordInput');
+            if (input) input.value = '';
+            validateResetKeyword('');
+            selectResetOption('transactions');
+        }
+
+        function closeSystemResetModal() {
+            const modal = document.getElementById('systemResetModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function selectResetOption(mode) {
+            activeResetMode = mode;
+            ['transactions', 'demo', 'wipe'].forEach(m => {
+                const label = document.getElementById('resetOptLabel-' + m);
+                const radio = document.getElementById('resetRadio-' + m);
+                if (label && radio) {
+                    if (m === mode) {
+                        radio.checked = true;
+                        label.classList.remove('border-slate-200', 'dark:border-slate-800');
+                        label.classList.add(m === 'wipe' ? 'border-rose-500' : 'border-gold-500', 'bg-gold-50/20');
+                    } else {
+                        radio.checked = false;
+                        label.classList.remove('border-rose-500', 'border-gold-500', 'bg-gold-50/20');
+                        label.classList.add('border-slate-200', 'dark:border-slate-800');
+                    }
+                }
+            });
+        }
+
+        function validateResetKeyword(val) {
+            const trimmed = (val || '').trim().toLowerCase();
+            const btn = document.getElementById('btnConfirmSystemReset');
+            const isValid = trimmed === 'تصفير' || trimmed === 'reset';
+            if (btn) {
+                btn.disabled = !isValid;
+            }
+        }
+
+        function handleExecuteSystemReset() {
+            const isEn = document.documentElement.lang === 'en';
+            
+            if (activeResetMode === 'transactions') {
+                // 1. Clear all transactions, bookings, ticket sales, ledger entries, zero debts & balances
+                state.bookings = [];
+                state.ticketInventory = [];
+                state.currentAccountLedger = [];
+                state.totalSales = 0;
+                state.totalProfit = 0;
+
+                // Reset company sales, paid, due
+                (state.companies || []).forEach(c => {
+                    c.sales = 0;
+                    c.paid = 0;
+                    c.due = 0;
+                    c.currentDue = 0;
+                });
+
+                // Reset retail customer total, paid, due
+                (state.retailCustomers || []).forEach(rc => {
+                    rc.total = 0;
+                    rc.paid = 0;
+                    rc.due = 0;
+                });
+
+                // Reset supplier due balance
+                (state.suppliers || []).forEach(s => {
+                    s.due = 0;
+                    s.balance = 0;
+                });
+
+                // Reset cash drawers and bank balances
+                (state.cashDrawers || []).forEach(d => {
+                    d.bal = 0;
+                });
+                (state.bankAccounts || []).forEach(b => {
+                    b.balance = 0;
+                });
+
+                saveStateToLocalStorage();
+                renderTables();
+                closeSystemResetModal();
+                showNotification(isEn ? 'Transactions & financials zeroed successfully! Ready for new season.' : 'تم تصفير العمليات والحسابات المالية بنجاح! النظام جاهز لبدء الموسم الجديد.', 'success');
+            } else if (activeResetMode === 'demo') {
+                // 2. Factory Reset to Default Initial State
+                try {
+                    localStorage.removeItem('alharamain_companies');
+                    localStorage.removeItem('alharamain_retail_customers');
+                    localStorage.removeItem('alharamain_ticket_inventory');
+                    localStorage.removeItem('alharamain_account_ledger');
+                } catch(e){}
+
+                const cloned = JSON.parse(JSON.stringify(INITIAL_DEMO_STATE));
+                state.bookings = cloned.bookings;
+                state.ticketInventory = cloned.ticketInventory;
+                state.companies = cloned.companies;
+                state.retailCustomers = cloned.retailCustomers;
+                state.suppliers = cloned.suppliers;
+                state.currentAccountLedger = cloned.currentAccountLedger;
+                state.cashDrawers = cloned.cashDrawers;
+                state.bankAccounts = cloned.bankAccounts;
+                state.totalSales = cloned.totalSales;
+                state.totalProfit = cloned.totalProfit;
+
+                saveStateToLocalStorage();
+                renderTables();
+                closeSystemResetModal();
+                showNotification(isEn ? 'Factory demo data restored successfully!' : 'تمت استعادة البيانات التجريبية الافتراضية بنجاح (إعادة ضبط المصنع).', 'success');
+            } else if (activeResetMode === 'wipe') {
+                // 3. Complete White Slate Wipeout
+                state.bookings = [];
+                state.ticketInventory = [];
+                state.currentAccountLedger = [];
+                state.companies = [];
+                state.retailCustomers = [];
+                state.suppliers = [];
+                state.totalSales = 0;
+                state.totalProfit = 0;
+                (state.cashDrawers || []).forEach(d => d.bal = 0);
+                (state.bankAccounts || []).forEach(b => b.balance = 0);
+
+                saveStateToLocalStorage();
+                renderTables();
+                closeSystemResetModal();
+                showNotification(isEn ? 'System completely wiped to clean white slate.' : 'تم تصفير ومسح قاعدة البيانات بالكامل بنجاح.', 'success');
+            }
+        }
+
+
+// Initialize on DOM Ready
         window.addEventListener('DOMContentLoaded', () => {
             initTheme();
             initLanguage();
