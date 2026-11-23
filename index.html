@@ -2701,49 +2701,49 @@
 
     <!-- New Booking Modal -->
     <div id="bookingModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-plus-circle text-gold-600"></i>
                     <span>تسجيل حجز ملف جديد (طيران / عمرة / فنادق)</span>
                 </h3>
-                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="newBookingForm" onsubmit="handleNewBooking(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم العميل / الشركة</label>
-                    <input type="text" id="mClientName" required placeholder="مثال: أ. محمود عبد الرحمن" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold focus:bg-white focus:outline-none focus:border-gold-600">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل / الشركة</label>
+                    <input type="text" id="mClientName" required placeholder="مثال: أ. محمود عبد الرحمن" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold focus:bg-white focus:outline-none focus:border-gold-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">رقم PNR / الملف</label>
-                        <input type="text" id="mPnr" placeholder="MS-8899" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold uppercase font-mono">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم PNR / الملف</label>
+                        <input type="text" id="mPnr" placeholder="MS-8899" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold uppercase font-mono dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المورد / شركة الطيران</label>
-                        <select id="mSupplier" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المورد / شركة الطيران</label>
+                        <select id="mSupplier" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <!-- Populated dynamically from state.suppliers -->
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">الخدمة السياحية (تحديد تلقائي للسعر والتكلفة)</label>
-                    <select id="mService" onchange="onBookingServiceChange(this.value)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخدمة السياحية (تحديد تلقائي للسعر والتكلفة)</label>
+                    <select id="mService" onchange="onBookingServiceChange(this.value)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <!-- Populated dynamically from state.services -->
                     </select>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سعر البيع</label>
-                        <input type="number" id="mSell" required placeholder="18500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع</label>
+                        <input type="number" id="mSell" required placeholder="18500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">التكلفة</label>
-                        <input type="number" id="mCost" required placeholder="16000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التكلفة</label>
+                        <input type="number" id="mCost" required placeholder="16000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
-                        <select id="mCurrency" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <select id="mCurrency" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">ج.م (EGP)</option>
                             <option value="ريال">ريال (SAR)</option>
                             <option value="دولار">دولار (USD)</option>
@@ -2762,34 +2762,34 @@
 
     <!-- Financial Voucher Modal -->
     <div id="voucherModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="voucherModalTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-receipt text-gold-600"></i>
                     <span>إصدار سند مالي معتمد</span>
                 </h3>
-                <button onclick="closeVoucherModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeVoucherModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="voucherForm" onsubmit="handleVoucherSubmit(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">نوع السند</label>
-                    <select id="vType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع السند</label>
+                    <select id="vType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <option value="receipt">سند قبض (تحصيل من عميل)</option>
                         <option value="payment">سند صرف (سداد لمورد أو شركة طيران)</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم الطرف (العميل / المورد)</label>
-                    <input type="text" id="vParty" required placeholder="مثال: مجموعة الأهرام تورز" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الطرف (العميل / المورد)</label>
+                    <input type="text" id="vParty" required placeholder="مثال: مجموعة الأهرام تورز" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المبلغ</label>
-                        <input type="number" id="vAmount" required placeholder="15000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المبلغ</label>
+                        <input type="number" id="vAmount" required placeholder="15000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الخزينة / الحساب البنكي</label>
-                        <select id="vAccount" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخزينة / الحساب البنكي</label>
+                        <select id="vAccount" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="الخزينة الرئيسية كاش">الخزينة الرئيسية كاش</option>
                             <option value="البنك الأهلي المصري">البنك الأهلي المصري</option>
                             <option value="بنك مصر">بنك مصر</option>
@@ -2798,8 +2798,8 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">البيان / الوصف</label>
-                    <input type="text" id="vDesc" placeholder="سداد دفعة حجز برنامج عمرة" class="w-full bg-slate-50 border rounded-xl p-2.5">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البيان / الوصف</label>
+                    <input type="text" id="vDesc" placeholder="سداد دفعة حجز برنامج عمرة" class="w-full bg-slate-50 border rounded-xl p-2.5 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-gold-400 font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
@@ -2813,18 +2813,18 @@
 
     <!-- New Bank Transaction Modal -->
     <div id="bankTxModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-building-columns text-gold-600"></i>
                     <span>تسجيل حركة بنكية جديدة</span>
                 </h3>
-                <button onclick="closeBankTxModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeBankTxModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="bankTxForm" onsubmit="handleBankTxSubmit(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">الحساب البنكي</label>
-                    <select id="btBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الحساب البنكي</label>
+                    <select id="btBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <option value="nbe">البنك الأهلي المصري (حساب رئيسي - EGP)</option>
                         <option value="bm">بنك مصر (حساب الشركات وتذاكر الطيران - EGP)</option>
                         <option value="rajhi">مصرف الراجحي (حساب العمرة والحج - SAR)</option>
@@ -2832,8 +2832,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">نوع الحركة البنكية</label>
-                    <select id="btType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الحركة البنكية</label>
+                    <select id="btType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <option value="deposit">📥 إيداع / تحويل بنكي وارد (زيادة الرصيد)</option>
                         <option value="withdrawal">📤 سحب / تحويل صادر لسداد موردين (خصم من الرصيد)</option>
                         <option value="transfer">🔄 تحويل داخلي بين بنكين</option>
@@ -2841,17 +2841,17 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المبلغ</label>
-                        <input type="number" id="btAmount" required placeholder="50000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المبلغ</label>
+                        <input type="number" id="btAmount" required placeholder="50000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">رقم المرجع / التحويل</label>
-                        <input type="text" id="btRef" placeholder="TRF-88421" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold font-mono">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم المرجع / التحويل</label>
+                        <input type="text" id="btRef" placeholder="TRF-88421" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold font-mono dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">البيان / تفاصيل التحويل</label>
-                    <input type="text" id="btDesc" required placeholder="مثال: تحويل بنكي لحساب شركة مصر للطيران" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">البيان / تفاصيل التحويل</label>
+                    <input type="text" id="btDesc" required placeholder="مثال: تحويل بنكي لحساب شركة مصر للطيران" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
@@ -2865,28 +2865,28 @@
 
     <!-- Bank Reconciliation Modal -->
     <div id="reconcileModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-file-excel text-emerald-600"></i>
                     <span>مطابقة كشف حساب البنك الذكي (Bank Reconciliation)</span>
                 </h3>
-                <button onclick="closeReconcileModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeReconcileModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <div class="space-y-4 text-xs">
                 <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900 leading-relaxed font-semibold">
                     💡 <strong>المطابقة الذكية:</strong> ارفع ملف كشف الحساب البنكي (Excel أو CSV) المحمّل من الأونلاين بانكنج وسيقوم السيستم بمقارنته مع سندات القبض والصرف واعتماده في ثوانٍ.
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اختر البنك المراد مطابقته:</label>
-                    <select id="rcBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اختر البنك المراد مطابقته:</label>
+                    <select id="rcBank" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <option value="nbe">البنك الأهلي المصري (حساب رئيسي - EGP)</option>
                         <option value="bm">بنك مصر (حساب الشركات - EGP)</option>
                         <option value="rajhi">مصرف الراجحي (حساب الريال - SAR)</option>
                         <option value="cib">البنك التجاري الدولي CIB (حساب الدولار - USD)</option>
                     </select>
                 </div>
-                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
+                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gold-600 mb-2"></i>
                     <p class="font-bold text-slate-800">اسحب ملف كشف الحساب هنا أو انقر للاختيار</p>
                     <span class="text-[10px] text-slate-400 mt-1 block">يدعم ملفات: .xlsx, .xls, .csv من بنوك مصر والسعودية</span>
@@ -2912,32 +2912,32 @@
 
     <!-- 🏦 Manage Bank Account Modal (Add / Edit Bank) -->
     <div id="manageBankModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageBankTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-building-columns text-gold-600"></i>
                     <span>إضافة / تعديل حساب بنكي</span>
                 </h3>
-                <button onclick="closeManageBankModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageBankModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageBankForm" onsubmit="handleSaveBank(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="mbId">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم البنك</label>
-                    <input type="text" id="mbName" required placeholder="مثال: البنك الأهلي المصري، بنك CIB، مصرف الإنماء" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم البنك</label>
+                    <input type="text" id="mbName" required placeholder="مثال: البنك الأهلي المصري، بنك CIB، مصرف الإنماء" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">نوع الحساب والغرض</label>
-                    <input type="text" id="mbType" required placeholder="مثال: حساب جاري رئيسي، حساب سداد طيران، حساب حج وعمرة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الحساب والغرض</label>
+                    <input type="text" id="mbType" required placeholder="مثال: حساب جاري رئيسي، حساب سداد طيران، حساب حج وعمرة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الرصيد الفعلي</label>
-                        <input type="number" id="mbBal" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الرصيد الفعلي</label>
+                        <input type="number" id="mbBal" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
-                        <select id="mbCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <select id="mbCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">جنيه مصري (EGP)</option>
                             <option value="ريال">ريال سعودي (SAR)</option>
                             <option value="دولار">دولار أمريكي (USD)</option>
@@ -2947,12 +2947,12 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">رقم الحساب أو الـ IBAN</label>
-                    <input type="text" id="mbNum" placeholder="EG21000300000000012345678" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الحساب أو الـ IBAN</label>
+                    <input type="text" id="mbNum" placeholder="EG21000300000000012345678" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">ملاحظات / آخر نشاط</label>
-                    <input type="text" id="mbAct" placeholder="مثال: تحصيلات حجوزات الطيران" class="w-full bg-slate-50 border rounded-xl p-2.5">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">ملاحظات / آخر نشاط</label>
+                    <input type="text" id="mbAct" placeholder="مثال: تحصيلات حجوزات الطيران" class="w-full bg-slate-50 border rounded-xl p-2.5 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
@@ -2966,36 +2966,36 @@
 
     <!-- 👥 Manage Client Modal (Add / Edit Client) -->
     <div id="manageClientModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageClientTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-user-plus text-gold-600"></i>
                     <span>إضافة / تعديل عميل</span>
                 </h3>
-                <button onclick="closeManageClientModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageClientModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageClientForm" onsubmit="handleSaveClient(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="mcIndex">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم العميل أو الشركة</label>
-                    <input type="text" id="mcName" required placeholder="مثال: شركة النصر، أ. محمد الشريف" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل أو الشركة</label>
+                    <input type="text" id="mcName" required placeholder="مثال: شركة النصر، أ. محمد الشريف" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">رقم الهاتف / الواتساب</label>
-                    <input type="text" id="mcPhone" required placeholder="010XXXXXXXX" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف / الواتساب</label>
+                    <input type="text" id="mcPhone" required placeholder="010XXXXXXXX" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">إجمالي المبيعات</label>
-                        <input type="number" id="mcSales" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">إجمالي المبيعات</label>
+                        <input type="number" id="mcSales" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المسدد</label>
-                        <input type="number" id="mcPaid" required placeholder="15000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المسدد</label>
+                        <input type="number" id="mcPaid" required placeholder="15000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المتبقي (الآجل)</label>
-                        <input type="number" id="mcDue" required placeholder="10000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-amber-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المتبقي (الآجل)</label>
+                        <input type="number" id="mcDue" required placeholder="10000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-amber-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div class="pt-2">
@@ -3010,40 +3010,40 @@
 
     <!-- 🏢 Manage Supplier Modal (Add / Edit Supplier) -->
     <div id="manageSupplierModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageSupplierTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-plane-departure text-gold-600"></i>
                     <span>إضافة / تعديل مورد أو شركة طيران</span>
                 </h3>
-                <button onclick="closeManageSupplierModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageSupplierModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageSupplierForm" onsubmit="handleSaveSupplier(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="msIndex">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم المورد / شركة الطيران</label>
-                    <input type="text" id="msName" required placeholder="مثال: الخطوط السعودية، طيران أديل، فندق دار التوحيد" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المورد / شركة الطيران</label>
+                    <input type="text" id="msName" required placeholder="مثال: الخطوط السعودية، طيران أديل، فندق دار التوحيد" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">نوع الخدمة السياحية</label>
-                    <input type="text" id="msType" required placeholder="مثال: خطوط طيران GDS، فنادق مكة والمدينة، تأشيرات ونقل" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الخدمة السياحية</label>
+                    <input type="text" id="msType" required placeholder="مثال: خطوط طيران GDS، فنادق مكة والمدينة، تأشيرات ونقل" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
-                        <select id="msCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <select id="msCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">ج.م</option>
                             <option value="ريال">ريال</option>
                             <option value="دولار">دولار</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">إجمالي المعاملات</label>
-                        <input type="number" id="msTotal" required placeholder="80000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">إجمالي المعاملات</label>
+                        <input type="number" id="msTotal" required placeholder="80000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المستحق له</label>
-                        <input type="number" id="msDue" required placeholder="12000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-red-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المستحق له</label>
+                        <input type="number" id="msDue" required placeholder="12000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-red-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div class="pt-2">
@@ -3064,7 +3064,7 @@
                     <i class="fa-solid fa-pen-to-square text-gold-600 dark:text-gold-400"></i>
                     <span>تفاصيل وتعديل بيانات الحجز / التذكرة</span>
                 </h3>
-                <button onclick="closeEditBookingModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer p-1">✕</button>
+                <button onclick="closeEditBookingModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 dark:hover:text-slate-200 cursor-pointer p-1">✕</button>
             </div>
             <form id="editBookingForm" onsubmit="handleSaveEditBooking(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="ebId">
@@ -3124,18 +3124,18 @@
 
     <!-- 💱 Currencies & FX Rates Management Modal -->
     <div id="fxModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-coins text-gold-600"></i>
                     <span>إدارة العملات وأسعار الصرف المعتمدة (Currencies & FX Rates)</span>
                 </h3>
-                <button onclick="closeFxModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeFxModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
 
             <!-- Existing Currencies List with live editable rate -->
             <div class="space-y-3 mb-5">
-                <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                <div class="flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                     <span>العملات المعتمدة وأسعار الصرف مقابل الجنيه:</span>
                     <span class="text-[10px] text-slate-400">تحدث لحظياً في الفواتير والحجوزات</span>
                 </div>
@@ -3145,33 +3145,33 @@
             </div>
 
             <!-- Add New Currency Form -->
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 mb-4">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 mb-4 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 <h4 class="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
                     <i class="fa-solid fa-plus-circle text-gold-600"></i>
                     <span>إضافة عملة جديدة للسيستم (دينار، درهم، يورو، إلخ):</span>
                 </h4>
                 <div class="grid grid-cols-3 gap-2 text-xs">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">اسم العملة</label>
-                        <input type="text" id="newCurName" placeholder="دينار أردني" class="w-full bg-white border rounded-xl p-2 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العملة</label>
+                        <input type="text" id="newCurName" placeholder="دينار أردني" class="w-full bg-white border rounded-xl p-2 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">كود العملة (ISO)</label>
-                        <input type="text" id="newCurCode" placeholder="JOD" class="w-full bg-white border rounded-xl p-2 font-mono font-bold uppercase">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود العملة (ISO)</label>
+                        <input type="text" id="newCurCode" placeholder="JOD" class="w-full bg-white border rounded-xl p-2 font-mono font-bold uppercase dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">رمز / اسم العرض</label>
-                        <input type="text" id="newCurSymbol" placeholder="دينار" class="w-full bg-white border rounded-xl p-2 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رمز / اسم العرض</label>
+                        <input type="text" id="newCurSymbol" placeholder="دينار" class="w-full bg-white border rounded-xl p-2 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سعر الصرف مقابل الجنيه (ج.م)</label>
-                        <input type="number" id="newCurRate" step="0.01" placeholder="70.00" class="w-full bg-white border rounded-xl p-2 font-bold text-emerald-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر الصرف مقابل الجنيه (ج.م)</label>
+                        <input type="number" id="newCurRate" step="0.01" placeholder="70.00" class="w-full bg-white border rounded-xl p-2 font-bold text-emerald-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العلم / الأيقونة</label>
-                        <select id="newCurFlag" class="w-full bg-white border rounded-xl p-2 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العلم / الأيقونة</label>
+                        <select id="newCurFlag" class="w-full bg-white border rounded-xl p-2 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="🇰🇼">🇰🇼 دينار كويتي</option>
                             <option value="🇯🇴">🇯🇴 دينار أردني</option>
                             <option value="🇧🇭">🇧🇭 دينار بحريني</option>
@@ -3206,9 +3206,9 @@
     <!-- 📋 MODAL: CLIENT DEBTS DRILL-DOWN (كشف المديونيات والمستحقات) -->
     <!-- ============================================== -->
     <div id="debtsModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-amber-200/50 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-amber-200/50 max-h-[90vh] overflow-y-auto">
             <!-- Header -->
-            <div class="flex justify-between items-start pb-4 border-b border-slate-100">
+            <div class="flex justify-between items-start pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-inner border border-amber-200">
                         <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -3221,7 +3221,7 @@
                         <p class="text-xs text-slate-500 mt-0.5">تفاصيل المبالغ المتبقية في ذمة العملاء مع إمكانية التحصيل الفوري أو المتابعة المباشرة عبر واتساب</p>
                     </div>
                 </div>
-                <button onclick="closeDebtsModal()" class="text-slate-400 hover:text-slate-700 text-xl cursor-pointer w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
+                <button onclick="closeDebtsModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 text-xl cursor-pointer w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -3238,7 +3238,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="window.print()" class="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 shadow-xs flex items-center gap-2 transition cursor-pointer">
+                    <button onclick="window.print()" class="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl border border-slate-200 shadow-xs flex items-center gap-2 transition cursor-pointer dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                         <i class="fa-solid fa-print text-amber-600"></i>
                         <span>طباعة الكشف</span>
                     </button>
@@ -3251,7 +3251,7 @@
 
             <!-- Table of Debts -->
             <div class="mt-5 overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
-                <table class="w-full text-right text-xs">
+                <table class="w-full text-right text-xs whitespace-nowrap min-w-[650px]">
                     <thead class="bg-slate-900 text-slate-200 text-[11px] font-bold uppercase tracking-wider">
                         <tr>
                             <th class="p-3.5">العميل / الشركة</th>
@@ -3262,14 +3262,14 @@
                             <th class="p-3.5 text-center">إجراءات المتابعة والتحصيل</th>
                         </tr>
                     </thead>
-                    <tbody id="debtsModalTbody" class="divide-y divide-slate-100 bg-white">
+                    <tbody id="debtsModalTbody" class="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
                         <!-- Populated dynamically by openDebtsModal() -->
                     </tbody>
                 </table>
             </div>
 
             <!-- Footer Notes & Actions -->
-            <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100 text-xs text-slate-500">
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-circle-info text-amber-500"></i>
                     <span>الضغط على "تحصيل الآن" يفتح سند قبض مجهز تلقائياً باسم العميل والمبلغ المطلوب لسرعة التوريد للحسابات.</span>
@@ -3283,24 +3283,24 @@
 
     <!-- 💱 Manage Full Currency Definition Modal (Add / Edit Currency) -->
     <div id="manageCurrencyDefModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageCurrencyDefTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-coins text-gold-600"></i>
                     <span>تعريف عملة جديدة في النظام</span>
                 </h3>
-                <button onclick="closeManageCurrencyDefModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageCurrencyDefModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageCurrencyDefForm" onsubmit="handleSaveCurrencyDef(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="curDefIndex">
                 <div class="grid grid-cols-3 gap-2">
                     <div class="col-span-2">
-                        <label class="block font-bold text-slate-700 mb-1">اسم العملة بالعربية</label>
-                        <input type="text" id="curDefName" required placeholder="مثال: دينار كويتي، دينار أردني" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العملة بالعربية</label>
+                        <input type="text" id="curDefName" required placeholder="مثال: دينار كويتي، دينار أردني" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العلم / الأيقونة</label>
-                        <select id="curDefFlag" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العلم / الأيقونة</label>
+                        <select id="curDefFlag" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="🇰🇼">🇰🇼 الكويت</option>
                             <option value="🇸🇦">🇸🇦 السعودية</option>
                             <option value="🇺🇸">🇺🇸 أمريكا</option>
@@ -3319,57 +3319,57 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الاسم بالإنجليزية (Name in English)</label>
-                        <input type="text" id="curDefNameEn" placeholder="Kuwaiti Dinar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الاسم بالإنجليزية (Name in English)</label>
+                        <input type="text" id="curDefNameEn" placeholder="Kuwaiti Dinar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">كود العملة العالمي (ISO Code)</label>
-                        <input type="text" id="curDefCode" required placeholder="KWD" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود العملة العالمي (ISO Code)</label>
+                        <input type="text" id="curDefCode" required placeholder="KWD" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الرمز المختصر (Symbol)</label>
-                        <input type="text" id="curDefSymbol" required placeholder="دينار أو د.ك" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الرمز المختصر (Symbol)</label>
+                        <input type="text" id="curDefSymbol" required placeholder="دينار أو د.ك" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الوحدة الصغرى / الفكة (Subunit)</label>
-                        <input type="text" id="curDefSubunit" placeholder="1000 فلس، 100 هللة، 100 سنت" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الوحدة الصغرى / الفكة (Subunit)</label>
+                        <input type="text" id="curDefSubunit" placeholder="1000 فلس، 100 هللة، 100 سنت" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">السعر المحاسبي الرسمي</label>
-                        <input type="number" step="0.01" id="curDefRate" required placeholder="161.50" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">السعر المحاسبي الرسمي</label>
+                        <input type="number" step="0.01" id="curDefRate" required placeholder="161.50" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سعر الشراء (Buy Rate)</label>
-                        <input type="number" step="0.01" id="curDefBuyRate" placeholder="160.80" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر الشراء (Buy Rate)</label>
+                        <input type="number" step="0.01" id="curDefBuyRate" placeholder="160.80" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سعر البيع (Sell Rate)</label>
-                        <input type="number" step="0.01" id="curDefSellRate" placeholder="162.00" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع (Sell Rate)</label>
+                        <input type="number" step="0.01" id="curDefSellRate" placeholder="162.00" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-800 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">طبيعة ونطاق الاستخدام بالشركة</label>
-                    <input type="text" id="curDefUsage" placeholder="سداد فنادق مكة والمدينة، طيران دولي GDS، تحويلات بنكية" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">طبيعة ونطاق الاستخدام بالشركة</label>
+                    <input type="text" id="curDefUsage" placeholder="سداد فنادق مكة والمدينة، طيران دولي GDS، تحويلات بنكية" class="w-full bg-slate-50 border rounded-xl p-2.5 font-medium dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">حساب فروق العملة المرتبط</label>
-                        <select id="curDefFxAccount" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">حساب فروق العملة المرتبط</label>
+                        <select id="curDefFxAccount" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="REV-203 أرباح فروق العملات">REV-203 أرباح فروق العملات</option>
                             <option value="حساب النقدية الرئيسي">حساب النقدية الرئيسي</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الحالة</label>
-                        <select id="curDefStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الحالة</label>
+                        <select id="curDefStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="نشط">● نشط ومفعل</option>
                             <option value="معلق">○ معلق مؤقتاً</option>
                         </select>
@@ -3388,28 +3388,28 @@
 
     <!-- ✈️ Manage Service Modal (Add / Edit Tourism Service) -->
     <div id="manageServiceModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageServiceTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-ticket text-gold-600"></i>
                     <span>إضافة / تعديل باقة سياحية</span>
                 </h3>
-                <button onclick="closeManageServiceModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageServiceModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageServiceForm" onsubmit="handleSaveService(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="srvIndex">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم الخدمة / الباقة السياحية</label>
-                    <input type="text" id="srvName" required placeholder="مثال: برنامج عمرة رجب VIP - 14 يوم" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الخدمة / الباقة السياحية</label>
+                    <input type="text" id="srvName" required placeholder="مثال: برنامج عمرة رجب VIP - 14 يوم" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">كود الخدمة</label>
-                        <input type="text" id="srvCode" required placeholder="TRV-UM-02" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود الخدمة</label>
+                        <input type="text" id="srvCode" required placeholder="TRV-UM-02" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">التصنيف</label>
-                        <select id="srvCategory" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التصنيف</label>
+                        <select id="srvCategory" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="طيران GDS">طيران GDS</option>
                             <option value="حج وعمرة">حج وعمرة</option>
                             <option value="فنادق وإعاشة">فنادق وإعاشة</option>
@@ -3422,20 +3422,20 @@
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
-                        <select id="srvCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <select id="srvCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">ج.م</option>
                             <option value="ريال">ريال</option>
                             <option value="دولار">دولار</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سعر البيع المقترح</label>
-                        <input type="number" id="srvSell" required placeholder="4500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع المقترح</label>
+                        <input type="number" id="srvSell" required placeholder="4500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">التكلفة التقديرية</label>
-                        <input type="number" id="srvCost" required placeholder="3800" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-700">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التكلفة التقديرية</label>
+                        <input type="number" id="srvCost" required placeholder="3800" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-slate-700 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div class="pt-2">
@@ -3450,28 +3450,28 @@
 
     <!-- 📊 Manage Account Item Modal (Add / Edit Chart of Accounts) -->
     <div id="manageAccountItemModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageAccountTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-sitemap text-gold-600"></i>
                     <span>إضافة / تعديل بند في دليل الحسابات</span>
                 </h3>
-                <button onclick="closeManageAccountItemModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageAccountItemModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageAccountForm" onsubmit="handleSaveAccountItem(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="accIndex">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم البند المحاسبي</label>
-                    <input type="text" id="accName" required placeholder="مثال: عمولات حجز فنادق، صيانة أجهزة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم البند المحاسبي</label>
+                    <input type="text" id="accName" required placeholder="مثال: عمولات حجز فنادق، صيانة أجهزة" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">كود الحساب</label>
-                        <input type="text" id="accCode" required placeholder="EXP-106" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">كود الحساب</label>
+                        <input type="text" id="accCode" required placeholder="EXP-106" class="w-full bg-slate-50 border rounded-xl p-2.5 font-mono font-bold uppercase dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">نوع البند</label>
-                        <select id="accType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع البند</label>
+                        <select id="accType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="مصروفات تشغيلية">مصروفات تشغيلية</option>
                             <option value="مصروفات إدارية">مصروفات إدارية</option>
                             <option value="مصروفات سياحية">مصروفات سياحية</option>
@@ -3482,15 +3482,15 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">طبيعة الحساب</label>
-                        <select id="accNature" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">طبيعة الحساب</label>
+                        <select id="accNature" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="مدين">مدين (Debit)</option>
                             <option value="دائن">دائن (Credit)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المعاملة الضريبية</label>
-                        <select id="accTax" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المعاملة الضريبية</label>
+                        <select id="accTax" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="معفى ضريبياً">معفى ضريبياً</option>
                             <option value="خاضع للضريبة">خاضع للضريبة</option>
                             <option value="قيمة مضافة 14%">قيمة مضافة 14%</option>
@@ -3510,24 +3510,24 @@
 
     <!-- 💵 Manage Cash Drawer Modal (Add / Edit Cash Drawer / Method) -->
     <div id="manageCashDrawerModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageDrawerTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-cash-register text-gold-600"></i>
                     <span>إضافة / تعديل خزينة أو طريقة تحصيل</span>
                 </h3>
-                <button onclick="closeManageCashDrawerModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageCashDrawerModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageDrawerForm" onsubmit="handleSaveCashDrawer(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="drwIndex">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم الخزينة أو طريقة الدفع</label>
-                    <input type="text" id="drwName" required placeholder="مثال: خزينة رحلات العمرة، محفظة أورانج كاش" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الخزينة أو طريقة الدفع</label>
+                    <input type="text" id="drwName" required placeholder="مثال: خزينة رحلات العمرة، محفظة أورانج كاش" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">النوع</label>
-                        <select id="drwType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">النوع</label>
+                        <select id="drwType" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="خزينة نقدية">خزينة نقدية</option>
                             <option value="خزينة عملة">خزينة عملة</option>
                             <option value="دفع رقمي">دفع رقمي (InstaPay)</option>
@@ -3536,8 +3536,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">العملة</label>
-                        <select id="drwCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <select id="drwCur" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">ج.م</option>
                             <option value="ريال">ريال</option>
                             <option value="دولار">دولار</option>
@@ -3545,17 +3545,17 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">أمين العهدة / المسؤول</label>
-                    <input type="text" id="drwCustodian" required placeholder="مثال: أ. محمود الجوهري" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">أمين العهدة / المسؤول</label>
+                    <input type="text" id="drwCustodian" required placeholder="مثال: أ. محمود الجوهري" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سقف الرصيد المسموح</label>
-                        <input type="number" id="drwLimit" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سقف الرصيد المسموح</label>
+                        <input type="number" id="drwLimit" required placeholder="100000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الرصيد الدفتري الحالي</label>
-                        <input type="number" id="drwBal" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الرصيد الدفتري الحالي</label>
+                        <input type="number" id="drwBal" required placeholder="25000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
                 <div class="pt-2">
@@ -3570,24 +3570,24 @@
 
     <!-- 👥 Manage Staff & Permissions Modal (Add / Edit Staff Member) -->
     <div id="manageStaffModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <h3 id="manageStaffTitle" class="font-black text-base text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-user-shield text-gold-600"></i>
                     <span>إضافة / تعديل موظف وصلاحيات</span>
                 </h3>
-                <button onclick="closeManageStaffModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeManageStaffModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="manageStaffForm" onsubmit="handleSaveStaff(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="stfIndex">
                 <div class="grid grid-cols-3 gap-2">
                     <div class="col-span-2">
-                        <label class="block font-bold text-slate-700 mb-1">اسم الموظف / المستخدم</label>
-                        <input type="text" id="stfName" required placeholder="مثال: سارة المنشاوي" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الموظف / المستخدم</label>
+                        <input type="text" id="stfName" required placeholder="مثال: سارة المنشاوي" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الأيقونة / الرمز</label>
-                        <select id="stfAvatar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الأيقونة / الرمز</label>
+                        <select id="stfAvatar" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-center dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="👑">👑 مدير عام</option>
                             <option value="✈️">✈️ طيران</option>
                             <option value="🕋">🕋 عمرة وحج</option>
@@ -3601,12 +3601,12 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">المسمى الوظيفي (العنوان)</label>
-                        <input type="text" id="stfRoleLabel" required placeholder="مثال: مسؤول مبيعات وتأشيرات" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المسمى الوظيفي (العنوان)</label>
+                        <input type="text" id="stfRoleLabel" required placeholder="مثال: مسؤول مبيعات وتأشيرات" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">نوع الدور التقني (Role Key)</label>
-                        <select id="stfRoleKey" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الدور التقني (Role Key)</label>
+                        <select id="stfRoleKey" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="admin">مدير نظام كامل (Admin)</option>
                             <option value="ticketing">موظف تذاكر طيران (Ticketing)</option>
                             <option value="umrah">مسؤول برامج عمرة وحج (Umrah)</option>
@@ -3618,8 +3618,8 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">صلاحية الحجز والملفات</label>
-                        <select id="stfBookingPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">صلاحية الحجز والملفات</label>
+                        <select id="stfBookingPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="✓ كامل (جميع الخدمات)">✓ كامل (جميع الخدمات)</option>
                             <option value="✓ طيران فقط">✓ طيران فقط</option>
                             <option value="✓ فنادق وعمرة فقط">✓ فنادق وعمرة فقط</option>
@@ -3628,8 +3628,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الاطلاع على الأرباح</label>
-                        <select id="stfProfitPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الاطلاع على الأرباح</label>
+                        <select id="stfProfitPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="✓ متاح كامل">✓ متاح كامل</option>
                             <option value="🔒 محجوب للموظف">🔒 محجوب للموظف</option>
                         </select>
@@ -3638,24 +3638,24 @@
 
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">سندات الصرف والقبض</label>
-                        <select id="stfVoucherPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سندات الصرف والقبض</label>
+                        <select id="stfVoucherPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="✓ متاح كامل">✓ متاح كامل</option>
                             <option value="✓ استلام عربون فقط">✓ استلام عربون فقط</option>
                             <option value="🔒 محجوب">🔒 محجوب</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الفاتورة الإلكترونية ETA</label>
-                        <select id="stfEtaPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الفاتورة الإلكترونية ETA</label>
+                        <select id="stfEtaPerm" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="✓ اعتماد وربط">✓ اعتماد وربط</option>
                             <option value="✓ إصدار فقط">✓ إصدار فقط</option>
                             <option value="🔒 محجوب">🔒 محجوب</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">حالة الحساب</label>
-                        <select id="stfStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">حالة الحساب</label>
+                        <select id="stfStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="نشط">● نشط</option>
                             <option value="موقوف مؤقتاً">○ موقوف مؤقتاً</option>
                         </select>
@@ -3674,8 +3674,8 @@
 
     <!-- 👑 Manage Current Profile / Manager Name Modal -->
     <div id="manageProfileModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-in-out]">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
                 <div class="flex items-center gap-2.5">
                     <span class="w-9 h-9 rounded-xl bg-gold-50 text-gold-700 border border-gold-200 flex items-center justify-center text-lg shadow-xs" id="profileModalAvatarIcon">👑</span>
                     <div>
@@ -3683,21 +3683,21 @@
                         <p class="text-[10px] text-slate-500" data-i18n="edit_manager_desc">تحديث اسم المدير وحسابه في المنظومة فورياً</p>
                     </div>
                 </div>
-                <button onclick="closeProfileEditModal()" class="text-slate-400 hover:text-slate-700 cursor-pointer p-1">✕</button>
+                <button onclick="closeProfileEditModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form onsubmit="handleSaveProfile(event)" class="space-y-3.5 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_name_label">اسم المدير / الموظف الحالي:</label>
-                    <input type="text" id="profNameInput" required placeholder="أدخل اسم المدير الكامل" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden">
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="manager_name_label">اسم المدير / الموظف الحالي:</label>
+                    <input type="text" id="profNameInput" required placeholder="أدخل اسم المدير الكامل" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_role_label">المسمى الوظيفي:</label>
-                        <input type="text" id="profRoleLabelInput" required placeholder="مدير عام وشريك إداري" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="manager_role_label">المسمى الوظيفي:</label>
+                        <input type="text" id="profRoleLabelInput" required placeholder="مدير عام وشريك إداري" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1" data-i18n="manager_avatar_label">الرمز / الأيقونة:</label>
-                        <select id="profAvatarSelect" onchange="document.getElementById('profileModalAvatarIcon').innerText = this.value;" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 text-center">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="manager_avatar_label">الرمز / الأيقونة:</label>
+                        <select id="profAvatarSelect" onchange="document.getElementById('profileModalAvatarIcon').innerText = this.value;" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-900 text-center dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="👑">👑 مدير عام (Admin)</option>
                             <option value="💼">💼 رئيس حسابات (Accountant)</option>
                             <option value="✈️">✈️ حجز طيران (Ticketing)</option>
@@ -3707,13 +3707,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="pt-2 flex items-center justify-between gap-2 border-t border-slate-100">
+                <div class="pt-2 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-slate-800">
                     <button type="button" onclick="triggerLogout(); closeProfileEditModal();" class="text-xs text-red-500 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span data-i18n="logout_switch">تبديل / خروج</span>
                     </button>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="closeProfileEditModal()" class="px-3 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 cursor-pointer">
+                        <button type="button" onclick="closeProfileEditModal()" class="px-3 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 cursor-pointer dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             إلغاء
                         </button>
                         <button type="submit" class="px-4 py-2 rounded-xl bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white font-extrabold shadow-sm transition flex items-center gap-1.5 cursor-pointer">
@@ -5248,20 +5248,40 @@
                 profitEl.innerText = state.totalProfit.toLocaleString() + curSuffix;
             }
 
-            // Recalculate debts
+            // Recalculate debts accurately across B2B Companies, B2C Retail Customers, and legacy clients
             let debts = 0;
             let debtsCount = 0;
-            state.clients.forEach(c => {
-                const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
-                if (dueVal > 0) {
-                    debts += dueVal;
-                    debtsCount++;
-                }
-            });
+            if (state.companies && state.companies.length > 0) {
+                state.companies.forEach(comp => {
+                    const d = parseFloat(comp.currentDue) || 0;
+                    if (d > 0) {
+                        debts += d;
+                        debtsCount++;
+                    }
+                });
+            }
+            if (state.retailCustomers && state.retailCustomers.length > 0) {
+                state.retailCustomers.forEach(rc => {
+                    const d = parseFloat(rc.due) || 0;
+                    if (d > 0) {
+                        debts += d;
+                        debtsCount++;
+                    }
+                });
+            }
+            if (debts === 0 && state.clients && state.clients.length > 0) {
+                state.clients.forEach(c => {
+                    const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
+                    if (dueVal > 0) {
+                        debts += dueVal;
+                        debtsCount++;
+                    }
+                });
+            }
             const debtsEl = document.getElementById('dashTotalDebts');
             if (debtsEl) debtsEl.innerText = debts.toLocaleString() + curSuffix;
             const countEl = document.getElementById('dashDebtsCountText');
-            if (countEl) countEl.innerText = isEn ? `${debtsCount} clients with active dues` : `${debtsCount} عملاء بأقساط ومستحقات قيد السداد`;
+            if (countEl) countEl.innerText = isEn ? `${debtsCount} corporate & retail accounts with dues` : `${debtsCount} جهات وعملاء بأرصدة مدينة وأقساط`;
         }
 
         // 🏦 BANK CRUD HANDLERS
@@ -7068,6 +7088,7 @@
 
             localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
             renderCompaniesTable();
+            recalculateTotals();
             closeManageCompanyModal();
             alert(`✓ تم اعتماد وحفظ بيانات الشركة (${name}) بنجاح.`);
         }
@@ -7078,6 +7099,7 @@
                 state.companies.splice(idx, 1);
                 localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
                 renderCompaniesTable();
+                recalculateTotals();
             }
         }
 
@@ -7144,6 +7166,7 @@
 
             localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
             renderRetailCustomersTable();
+            recalculateTotals();
             closeManageRetailCustomerModal();
             alert(`✓ تم حفظ بيانات العميل (${name}) بنجاح.`);
         }
@@ -7154,6 +7177,7 @@
                 state.retailCustomers.splice(idx, 1);
                 localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
                 renderRetailCustomersTable();
+                recalculateTotals();
             }
         }
 
@@ -7334,7 +7358,42 @@
                 def_tab_accounts: 'دليل بنود المصروفات والإيراد',
                 def_tab_drawers: 'الخزائن وطرق الدفع والتحصيل',
                 def_tab_company: 'بيانات وهوية شركة الحرمين',
-                def_tab_eta: 'إعدادات الضرائب والفوترة ETA'
+                def_tab_eta: 'إعدادات الضرائب والفوترة ETA',
+                stat_stock_tickets: 'تذاكر بالخزينة (العهدة)',
+                stat_sold_tickets: 'تذاكر تم تسليمها للعملاء',
+                stat_desk_cash_credit: 'مبيعات الكاش / الآجل',
+                stat_desk_profit: 'أرباح مبيعات المكتب',
+                desksales_title: 'مبيعات المكتب وجرد عهدة تذاكر الطيران (Desk POS & Inventory)',
+                desksales_desc: 'إدارة جرد التذاكر المستلمة، بيع التذاكر الفوري (كاش وآجل)، ومتابعة العهدة الحية',
+                btn_add_to_stock: 'استلام عهدة تذاكر +',
+                btn_new_desk_sale: '+ بيع تذكرة (كاش / آجل)',
+                th_ticket_number: 'رقم التذكرة الإلكترونية',
+                th_routing: 'خط السير والوجهة',
+                th_carrier: 'الناقل / الطيران',
+                th_net_cost: 'سعر التكلفة',
+                th_sell_price: 'سعر البيع',
+                th_passenger: 'اسم الراكب / المسافر',
+                th_stock_status: 'حالة العهدة',
+                btn_new_company: '+ إضافة شركة متعاقدة',
+                tab_b2b_companies: 'الشركات والجهات المتعاقدة (B2B)',
+                tab_b2c_retail: 'العملاء الأفراد والمسافرين (B2C)',
+                tab_suppliers_link: 'شركات الطيران والموردين ↗',
+                th_company_code: 'كود وتصنيف الشركة',
+                th_company_name: 'اسم الشركة والمسؤول',
+                th_business_type: 'طبيعة النشاط والائتمان',
+                th_credit_limit: 'سقف الائتمان (الحد الأقصى)',
+                th_customer_code: 'كود العميل',
+                th_customer_name: 'اسم العميل والاتصال',
+                th_passport: 'رقم الجواز والرقم القومي',
+                th_trip_type: 'نوع البرنامج / الخدمة',
+                th_currency: 'العملة',
+                edit_manager_title: 'تعديل بيانات واسم المدير العام',
+                edit_manager_desc: 'تثبيت الاسم الرسمي والمنصب والرمز التعبيري في الشريط العلوي وجدول الصلاحيات',
+                manager_name_label: 'الاسم الرسمي للمدير:',
+                manager_role_label: 'المسمى الوظيفي والصفة:',
+                manager_avatar_label: 'رمز وشارة المدير:',
+                logout_switch: 'تبديل الحساب / تسجيل خروج',
+                save_changes: 'حفظ وتثبيت البيانات'
             },
             en: {
                 brand_title: 'Al-Haramain Travel',
@@ -7441,7 +7500,42 @@
                 def_tab_accounts: 'Chart of Accounts',
                 def_tab_drawers: 'Cash Drawers & Payment Methods',
                 def_tab_company: 'Company Profile & Identity',
-                def_tab_eta: 'Tax Settings & ETA Invoicing'
+                def_tab_eta: 'Tax Settings & ETA Invoicing',
+                stat_stock_tickets: 'Tickets in Desk Stock',
+                stat_sold_tickets: 'Tickets Issued & Delivered',
+                stat_desk_cash_credit: 'Cash / Credit Ratio',
+                stat_desk_profit: 'Desk Net Profit',
+                desksales_title: 'Desk POS Sales & Flight Ticket Inventory',
+                desksales_desc: 'Manage physical & electronic ticket stock, instant cash/credit desk sales, and running inventory',
+                btn_add_to_stock: '+ Receive Ticket Stock',
+                btn_new_desk_sale: '+ Desk Sale (Cash / Credit)',
+                th_ticket_number: 'E-Ticket Number',
+                th_routing: 'Flight Routing / Sector',
+                th_carrier: 'Airline / Carrier',
+                th_net_cost: 'Net Cost Price',
+                th_sell_price: 'Selling Price',
+                th_passenger: 'Passenger / Traveler',
+                th_stock_status: 'Inventory Status',
+                btn_new_company: '+ Add Corporate Account',
+                tab_b2b_companies: 'Contracted Companies (B2B)',
+                tab_b2c_retail: 'Individual Travelers (B2C)',
+                tab_suppliers_link: 'Airlines & Suppliers ↗',
+                th_company_code: 'Company Code & Type',
+                th_company_name: 'Company & Contact Person',
+                th_business_type: 'Business Type & Terms',
+                th_credit_limit: 'Credit Limit Ceiling',
+                th_customer_code: 'Customer Code',
+                th_customer_name: 'Customer & Contact',
+                th_passport: 'Passport / National ID',
+                th_trip_type: 'Package / Service Type',
+                th_currency: 'Currency',
+                edit_manager_title: 'Manager Profile & General Manager Settings',
+                edit_manager_desc: 'Set official name, title, and avatar across top navigation bar and staff permissions',
+                manager_name_label: 'Official Manager Name:',
+                manager_role_label: 'Job Title & Role:',
+                manager_avatar_label: 'Avatar / Crown Icon:',
+                logout_switch: 'Switch Account / Logout',
+                save_changes: 'Save & Apply Changes'
             }
         };
 
@@ -7524,52 +7618,156 @@
             let totalDue = 0;
             let count = 0;
 
-            state.clients.forEach((c, idx) => {
-                const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
-                if (dueVal > 0) {
-                    totalDue += dueVal;
-                    count++;
+            // 1. Corporate Companies B2B Dues
+            if (state.companies && state.companies.length > 0) {
+                state.companies.forEach(comp => {
+                    const dueVal = parseFloat(comp.currentDue) || 0;
+                    if (dueVal > 0) {
+                        totalDue += dueVal;
+                        count++;
+                        const cleanPhone = (comp.phone || '').replace(/[^0-9]/g, '');
+                        const waPhone = cleanPhone.startsWith('0') ? '2' + cleanPhone : cleanPhone;
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition font-medium border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-200';
+                        tr.innerHTML = `
+                            <td class="p-3.5">
+                                <div class="font-extrabold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-1.5">
+                                    <span class="bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 text-[10px] font-black px-1.5 py-0.5 rounded">B2B</span>
+                                    <span>${comp.name}</span>
+                                </div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">مسؤول الحساب: ${comp.contactPerson || 'إدارة الحسابات'} • ${comp.code}</div>
+                            </td>
+                            <td class="p-3.5">
+                                <div class="font-mono font-bold text-slate-700 dark:text-slate-300">${comp.phone || '—'}</div>
+                                ${cleanPhone ? `
+                                    <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('السلام عليكم، نود تذكيركم بمستحقات شركة الحرمين للسياحة وقدرها ' + comp.currentDue.toLocaleString() + ' ج.م على حساب شركتكم الموقرة. شاكرين ومقدرين حسن تعاونكم.')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline mt-0.5" title="مراسلة واتساب">
+                                        <i class="fa-brands fa-whatsapp text-emerald-500"></i> تذكير واتساب
+                                    </a>
+                                ` : ''}
+                            </td>
+                            <td class="p-3.5 font-bold text-slate-600 dark:text-slate-400">سقف: ${(comp.creditLimit || 0).toLocaleString()} ج.م</td>
+                            <td class="p-3.5 font-bold text-slate-600 dark:text-slate-400">شروط: ${comp.terms || '30 يوم'}</td>
+                            <td class="p-3.5">
+                                <span class="inline-block bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 font-black px-3 py-1 rounded-xl text-sm border border-amber-300 dark:border-amber-800">
+                                    ${dueVal.toLocaleString()} ج.م
+                                </span>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="collectClientDebt('${comp.name.replace(/'/g, "\\'")}', ${dueVal})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-xs text-xs flex items-center gap-1 transition cursor-pointer" title="تسجيل سند قبض وتحصيل فوري">
+                                        <i class="fa-solid fa-money-bill-transfer"></i>
+                                        <span>تحصيل الآن</span>
+                                    </button>
+                                    <button onclick="closeDebtsModal(); openCurrentAccountLedger('COMPANY', '${comp.id}');" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-2.5 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1" title="فتح كشف الحساب الجاري">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>كشف الحساب</span>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
 
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-amber-50/40 transition font-medium border-b border-slate-100';
-                    const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
-                    const waPhone = cleanPhone.startsWith('0') ? '2' + cleanPhone : cleanPhone;
+            // 2. Retail Customers B2C Dues
+            if (state.retailCustomers && state.retailCustomers.length > 0) {
+                state.retailCustomers.forEach((rc, rIdx) => {
+                    const dueVal = parseFloat(rc.due) || 0;
+                    if (dueVal > 0) {
+                        totalDue += dueVal;
+                        count++;
+                        const cleanPhone = (rc.phone || '').replace(/[^0-9]/g, '');
+                        const waPhone = cleanPhone.startsWith('0') ? '2' + cleanPhone : cleanPhone;
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-teal-50/40 dark:hover:bg-teal-950/20 transition font-medium border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-200';
+                        tr.innerHTML = `
+                            <td class="p-3.5">
+                                <div class="font-extrabold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-1.5">
+                                    <span class="bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-200 text-[10px] font-black px-1.5 py-0.5 rounded">B2C</span>
+                                    <span>${rc.name}</span>
+                                </div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">برنامج: ${rc.tripType} • جواز: ${rc.passport || 'قيد الاستخراج'}</div>
+                            </td>
+                            <td class="p-3.5">
+                                <div class="font-mono font-bold text-slate-700 dark:text-slate-300">${rc.phone || '—'}</div>
+                                ${cleanPhone ? `
+                                    <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('السلام عليكم أ/ ' + rc.name + '، نود تذكيركم بمستحقات برنامج ' + rc.tripType + ' وقدرها ' + dueVal.toLocaleString() + ' ج.م وموعد استحقاقها: ' + (rc.dueDate || 'قريباً') + '. نتمنى لكم رحلة سعيدة وموفقة.')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline mt-0.5" title="مراسلة واتساب">
+                                        <i class="fa-brands fa-whatsapp text-emerald-500"></i> تذكير واتساب
+                                    </a>
+                                ` : ''}
+                            </td>
+                            <td class="p-3.5 font-bold text-slate-600 dark:text-slate-400">${(rc.total || 0).toLocaleString()} ج.م</td>
+                            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${(rc.paid || 0).toLocaleString()} ج.م</td>
+                            <td class="p-3.5">
+                                <span class="inline-block bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 font-black px-3 py-1 rounded-xl text-sm border border-amber-300 dark:border-amber-800">
+                                    ${dueVal.toLocaleString()} ج.م
+                                </span>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="collectClientDebt('${rc.name.replace(/'/g, "\\'")}', ${dueVal})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-xs text-xs flex items-center gap-1 transition cursor-pointer" title="تسجيل سند قبض وتحصيل فوري">
+                                        <i class="fa-solid fa-money-bill-transfer"></i>
+                                        <span>تحصيل الآن</span>
+                                    </button>
+                                    <button onclick="closeDebtsModal(); openManageRetailCustomerModal(${rIdx});" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold p-1.5 rounded-xl text-xs transition cursor-pointer" title="تعديل بيانات العميل الفردي">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
 
-                    tr.innerHTML = `
-                        <td class="p-3.5">
-                            <div class="font-extrabold text-slate-900 text-sm">${c.name}</div>
-                            <div class="text-[10px] text-slate-400 mt-0.5">عميل نشط - حساب آجل</div>
-                        </td>
-                        <td class="p-3.5">
-                            <div class="font-mono font-bold text-slate-700">${c.phone || '—'}</div>
-                            ${cleanPhone ? `
-                                <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('السلام عليكم أ/ ' + c.name + '، نود تذكيركم بمستحقات شركة الحرمين للسياحة وقدرها ' + c.due + '. شاكرين ومقدرين حسن تعاونكم.')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-bold hover:underline mt-0.5" title="مراسلة واتساب">
-                                    <i class="fa-brands fa-whatsapp text-emerald-500"></i> تذكير واتساب
-                                </a>
-                            ` : ''}
-                        </td>
-                        <td class="p-3.5 font-bold text-slate-600">${c.sales}</td>
-                        <td class="p-3.5 font-bold text-emerald-600">${c.paid}</td>
-                        <td class="p-3.5">
-                            <span class="inline-block bg-amber-100 text-amber-900 font-black px-3 py-1 rounded-xl text-sm border border-amber-300">
-                                ${c.due}
-                            </span>
-                        </td>
-                        <td class="p-3.5 text-center">
-                            <div class="flex items-center justify-center gap-1.5">
-                                <button onclick="collectClientDebt('${c.name.replace(/'/g, "\\'")}', ${dueVal})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-xs text-xs flex items-center gap-1 transition cursor-pointer" title="تسجيل سند قبض وتحصيل فوري">
-                                    <i class="fa-solid fa-money-bill-transfer"></i>
-                                    <span>تحصيل الآن</span>
-                                </button>
-                                <button onclick="closeDebtsModal(); openManageClientModal(${idx});" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-1.5 rounded-xl text-xs transition cursor-pointer" title="تعديل حساب وبيانات العميل">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            });
+            // Fallback for legacy clients if no companies/retail have dues
+            if (count === 0 && state.clients && state.clients.length > 0) {
+                state.clients.forEach((c, idx) => {
+                    const dueVal = parseFloat((c.due || '').replace(/[^0-9.-]/g, '')) || 0;
+                    if (dueVal > 0) {
+                        totalDue += dueVal;
+                        count++;
+                        const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
+                        const waPhone = cleanPhone.startsWith('0') ? '2' + cleanPhone : cleanPhone;
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-amber-50/40 dark:hover:bg-amber-950/20 transition font-medium border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-200';
+                        tr.innerHTML = `
+                            <td class="p-3.5">
+                                <div class="font-extrabold text-slate-900 dark:text-slate-100 text-sm">${c.name}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">عميل نشط - حساب آجل</div>
+                            </td>
+                            <td class="p-3.5">
+                                <div class="font-mono font-bold text-slate-700 dark:text-slate-300">${c.phone || '—'}</div>
+                                ${cleanPhone ? `
+                                    <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('السلام عليكم أ/ ' + c.name + '، نود تذكيركم بمستحقات شركة الحرمين للسياحة وقدرها ' + c.due + '. شاكرين ومقدرين حسن تعاونكم.')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline mt-0.5" title="مراسلة واتساب">
+                                        <i class="fa-brands fa-whatsapp text-emerald-500"></i> تذكير واتساب
+                                    </a>
+                                ` : ''}
+                            </td>
+                            <td class="p-3.5 font-bold text-slate-600 dark:text-slate-400">${c.sales}</td>
+                            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${c.paid}</td>
+                            <td class="p-3.5">
+                                <span class="inline-block bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 font-black px-3 py-1 rounded-xl text-sm border border-amber-300 dark:border-amber-800">
+                                    ${c.due}
+                                </span>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="collectClientDebt('${c.name.replace(/'/g, "\\'")}', ${dueVal})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-xs text-xs flex items-center gap-1 transition cursor-pointer" title="تسجيل سند قبض وتحصيل فوري">
+                                        <i class="fa-solid fa-money-bill-transfer"></i>
+                                        <span>تحصيل الآن</span>
+                                    </button>
+                                    <button onclick="closeDebtsModal(); openManageClientModal(${idx});" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold p-1.5 rounded-xl text-xs transition cursor-pointer" title="تعديل حساب وبيانات العميل">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
 
             if (count === 0) {
                 tbody.innerHTML = `
