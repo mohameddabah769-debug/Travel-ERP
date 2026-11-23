@@ -1119,7 +1119,104 @@
                     </div>
 
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[1280px]">
+                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[750px]">
+                            <thead class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[11px] border-b border-slate-200/80 dark:border-slate-700">
+                                <tr>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم الملف / PNR</th>
+                                    <th class="p-3.5" data-i18n="th_client">العميل / الشركة والهاتف</th>
+                                    <th class="p-3.5" data-i18n="th_service">الخدمة وخط السير</th>
+                                    <th class="p-3.5" data-i18n="th_sales">المبيعات</th>
+                                    <th class="p-3.5" data-i18n="th_profit">صافي الربح</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة والإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashBookingsTbody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 2. BOOKINGS & TICKETS MANAGEMENT VIEW          -->
+            <!-- ============================================== -->
+            <div id="view-bookings" class="section-view space-y-6">
+                <!-- Bookings Header Strip -->
+                <div class="welcome-banner rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="welcome-tag text-[10px] font-black px-2.5 py-0.5 rounded-full">سجل الحجوزات والعمليات</span>
+                            <span class="text-xs text-slate-400">|</span>
+                            <span class="text-xs font-bold text-slate-300">نظام الحرمين ERP v2.4</span>
+                        </div>
+                        <h2 class="text-xl font-black text-white mt-2 flex items-center gap-2">
+                            <i class="fa-solid fa-ticket-simple text-gold-400"></i>
+                            <span data-i18n="bookings">إدارة الحجوزات والتذاكر الشاملة</span>
+                        </h2>
+                        <p class="text-xs text-slate-300 mt-1">سجل تفصيلي لكافة التذاكر والرحلات يطابق معايير العمل السياحي (العميل، الهاتف، خط السير، التواريخ، الأسعار، المسدد، والموردين)</p>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <button onclick="openBookingModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span data-i18n="new_booking">تسجيل حجز ملف جديد</span>
+                        </button>
+                        <button onclick="exportBookingsToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-solid fa-file-excel text-xs"></i>
+                            <span data-i18n="btn_export_bookings_excel">تصدير إكسل الشامل</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bookings Metric Strip -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">إجمالي الحجوزات</div>
+                        <div class="text-2xl font-black text-slate-900 dark:text-slate-100 mt-1" id="bkTotalCount">33</div>
+                        <div class="text-[10px] text-emerald-600 font-bold mt-0.5">ملفات نشطة ومكتملة</div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">إجمالي المبيعات</div>
+                        <div class="text-2xl font-black text-gold-600 mt-1" id="bkTotalSales">153,440 ج.م</div>
+                        <div class="text-[10px] text-slate-400 font-bold mt-0.5">قيمة المبيعات الإجمالية</div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">المحصل نقدياً (المسدد)</div>
+                        <div class="text-2xl font-black text-emerald-600 mt-1" id="bkTotalPaid">137,440 ج.م</div>
+                        <div class="text-[10px] text-slate-400 font-bold mt-0.5">سيولة مدفوعة بالخزائن والبنوك</div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+                        <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">صافي الأرباح المحققة</div>
+                        <div class="text-2xl font-black text-emerald-600 mt-1" id="bkTotalProfit">23,380 ج.م</div>
+                        <div class="text-[10px] text-emerald-600 font-bold mt-0.5">هامش ربح تشغيلي حقيقي</div>
+                    </div>
+                </div>
+
+                <!-- Full Bookings Table Card (All 11 Client Fields) -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xs border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 dark:border-slate-800 pb-4 gap-3">
+                        <div>
+                            <h3 class="font-black text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-gold-600"></i>
+                                <span>جدول بيانات الحجوزات التفصيلي (11 حقلاً مطابقاً للمستند)</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">اسم العميل، رقم الهاتف، رقم الحجز، تاريخ السفر، حالة الرحلة، سعر البيع، الشراء، المسدد، خط السير، المورد، والربح</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-slate-400">تصفية سريعة:</span>
+                            <select onchange="filterBookingsByStatus(this.value)" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold rounded-xl px-3 py-1.5 text-slate-700 dark:text-slate-200 focus:outline-hidden">
+                                <option value="ALL">كافة الحالات</option>
+                                <option value="مؤكد">مؤكد (Confirmed)</option>
+                                <option value="قيد الانتظار">قيد الانتظار (Pending)</option>
+                                <option value="مكتمل">مكتمل (Completed)</option>
+                                <option value="ملغي">ملغي (Cancelled)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[1300px]" id="fullBookingsTable">
                             <thead class="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[11px] border-b border-slate-200 dark:border-slate-700">
                                 <tr>
                                     <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم الحجز / PNR</th>
@@ -1136,13 +1233,14 @@
                                     <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة والإجراءات</th>
                                 </tr>
                             </thead>
-                            <tbody id="fullBookingsTbody" class="divide-y divide-slate-100">
-                                <!-- Populated by JS -->
+                            <tbody id="fullBookingsTbody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <!-- Populated dynamically by renderBookingsTables() -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
 
             <!-- ============================================== -->
             <!-- 2.5. DESK SALES & TICKET INVENTORY (POS)       -->
@@ -5277,9 +5375,46 @@
 
             if (dBody) dBody.innerHTML = dashHtml;
             if (fBody) fBody.innerHTML = fullHtml;
+
+            // Update Bookings KPI counters if elements exist
+            const bkCountElem = document.getElementById('bkTotalCount');
+            const bkSalesElem = document.getElementById('bkTotalSales');
+            const bkPaidElem = document.getElementById('bkTotalPaid');
+            const bkProfitElem = document.getElementById('bkTotalProfit');
+
+            if (bkCountElem) bkCountElem.innerText = (state.bookings || []).length;
+            if (bkSalesElem) {
+                let totalS = 0, totalP = 0, totalProf = 0;
+                (state.bookings || []).forEach(b => {
+                    totalS += Number(b.sell || 0);
+                    totalP += Number(b.paid !== undefined ? b.paid : b.sell);
+                    totalProf += Number(b.profit || (b.sell - b.cost));
+                });
+                bkSalesElem.innerText = totalS.toLocaleString() + ' ج.م';
+                if (bkPaidElem) bkPaidElem.innerText = totalP.toLocaleString() + ' ج.م';
+                if (bkProfitElem) {
+                    if (isProfitHidden) {
+                        bkProfitElem.innerText = '🔒 محجوب';
+                        bkProfitElem.className = 'text-lg font-bold text-slate-400 mt-1';
+                    } else {
+                        bkProfitElem.innerText = totalProf.toLocaleString() + ' ج.م';
+                        bkProfitElem.className = 'text-2xl font-black text-emerald-600 mt-1';
+                    }
+                }
+            }
         }
 
         // Render Tables
+        
+        function filterBookingsByStatus(status) {
+            if (!status || status === 'ALL') {
+                renderBookingsTables();
+            } else {
+                const filtered = (state.bookings || []).filter(b => (b.tripStatus || 'مؤكد') === status);
+                renderBookingsTables(filtered);
+            }
+        }
+
         function renderTables() {
             recalculateTotals();
             updateBackupOverviewCounters();
