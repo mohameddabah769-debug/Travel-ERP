@@ -594,11 +594,14 @@
 
         /* 🔍 GLOBAL SEARCH INPUT BULLETPROOF STYLING */
         #searchContainer {
-            min-width: 130px !important;
+            min-width: 140px !important;
+            max-width: 32rem;
+            position: relative;
         }
         #globalSearchInput {
-            min-width: 170px !important;
+            min-width: 0 !important;
             width: 100% !important;
+            box-sizing: border-box !important;
             color: #0f172a !important;
             background-color: #f8fafc !important;
             font-size: 13px !important;
@@ -914,14 +917,14 @@
             </div>
 
             <!-- Right: Theme, Lang, Quick Actions & User Profile -->
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2 shrink-0 z-10">
                 <!-- Theme Toggle Button (Dark / Light) -->
-                <button type="button" onclick="toggleTheme()" id="themeToggleBtn" class="w-9 h-9 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-xs" title="تبديل الوضع الليلي / النهاري (Dark/Light Mode)">
+                <button type="button" onclick="toggleTheme()" id="themeToggleBtn" class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-sm transition cursor-pointer shadow-xs" title="تبديل الوضع الليلي / النهاري (Dark/Light Mode)">
                     <i class="fa-solid fa-moon text-indigo-500" id="themeToggleIcon"></i>
                 </button>
 
                 <!-- Language Toggle Button (AR / EN) -->
-                <button type="button" onclick="toggleLanguage()" id="langToggleBtn" class="h-9 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 flex items-center gap-1.5 text-xs font-extrabold transition cursor-pointer shadow-xs" title="تبديل اللغة (Arabic / English)">
+                <button type="button" onclick="toggleLanguage()" id="langToggleBtn" class="h-9 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 text-xs font-extrabold transition cursor-pointer shadow-xs" title="تبديل اللغة (Arabic / English)">
                     <i class="fa-solid fa-globe text-gold-600"></i>
                     <span id="langToggleText">EN</span>
                 </button>
@@ -4414,7 +4417,7 @@
             user: savedUser,
             totalSales: 245000,
             totalProfit: 42500,
-            bookings: [
+            bookings: safeJsonParse('alharamain_bookings', [
                 {
                     id: 1,
                     pnr: 'MS-9014',
@@ -4463,7 +4466,7 @@
                     profit: 5000,
                     eta: 'إصدار فاتورة ETA'
                 }
-            ],
+            ]),
             clients: [
                 { name: 'مجموعة الأهرام تورز', phone: '01187654321', sales: '50,000 ج.م', paid: '35,000 ج.م', due: '15,000 ج.م' },
                 { name: 'الحاج عبد الله السعيد', phone: '01244556677', sales: '28,000 ج.م', paid: '20,000 ج.م', due: '8,000 ج.م' },
@@ -4713,13 +4716,13 @@
                     date: '2026-11-22'
                 }
             ]),
-            suppliers: [
+            suppliers: safeJsonParse('alharamain_suppliers', [
                 { name: 'مصر للطيران (EgyptAir)', type: 'خطوط طيران GDS', cur: 'ج.م', total: '142,000 ج.م', due: '18,500 ج.م' },
                 { name: 'شركة دار الإيمان للفنادق (مكة)', type: 'فنادق عمرة وحج', cur: 'ريال', total: '38,000 ريال', due: '4,500 ريال' },
                 { name: 'مجموعة ريكسوس للمنتجعات', type: 'فنادق سياحة داخلية', cur: 'ج.م', total: '65,000 ج.م', due: '7,200 ج.م' },
                 { name: 'شركة ترافيل وان (دبي)', type: 'تأشيرات وجولات', cur: 'دولار', total: '6,800 دولار', due: '950 دولار' }
-            ],
-            bankAccounts: [
+            ]),
+            bankAccounts: safeJsonParse('alharamain_bank_accounts', [
                 { id: 'nbe', name: 'البنك الأهلي المصري', type: 'حساب جاري رئيسي للشركة', cur: 'ج.م', num: 'EG21000300000000012345678', bal: 485200, activity: '+38,500 ج.م تحصيلات اليوم', icon: 'fa-building-columns', bg: 'from-emerald-950/80 to-slate-900', border: 'border-emerald-500/40', badge: 'bg-emerald-500/20 text-emerald-400' },
                 { id: 'bm', name: 'بنك مصر', type: 'حساب الشركات وسداد الطيران', cur: 'ج.م', num: 'EG98000200000000098765432', bal: 240000, activity: 'سداد تذاكر مصر للطيران', icon: 'fa-landmark', bg: 'from-amber-950/80 to-slate-900', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400' },
                 { id: 'alex', name: 'بنك الإسكندرية', type: 'حساب الفروع والتحصيلات النقدية', cur: 'ج.م', num: 'EG12000800000000065432198', bal: 185000, activity: 'إيداعات نقدية فرع الإسكندرية', icon: 'fa-landmark-dome', bg: 'from-sky-950/80 to-slate-900', border: 'border-sky-500/40', badge: 'bg-sky-500/20 text-sky-400' },
@@ -4727,8 +4730,8 @@
                 { id: 'ca', name: 'بنك كريدي أجريكول مصر', type: 'حساب الحجوزات وبطاقات الائتمان', cur: 'ج.م', num: 'EG33003400000000043218765', bal: 142000, activity: 'سداد فنادق ومنتجعات سياحية', icon: 'fa-wheat-awn', bg: 'from-teal-950/80 to-slate-900', border: 'border-teal-500/40', badge: 'bg-teal-500/20 text-teal-400' },
                 { id: 'post', name: 'البريد المصري (Egypt Post)', type: 'حساب الحوالات والتحصيل بالمحافظات', cur: 'ج.م', num: 'POS-EG-7788992211', bal: 92400, activity: '+12,500 ج.م حوالات عمرة صعيد مصر', icon: 'fa-envelope-open-text', bg: 'from-emerald-950/80 to-slate-900', border: 'border-emerald-600/40', badge: 'bg-emerald-600/20 text-emerald-300' },
                 { id: 'vfcash', name: 'فودافون كاش (Vodafone Cash)', type: 'محفظة الدفع الإلكتروني والتحصيل الفوري', cur: 'ج.م', num: '01099887766 - تاجر معتمد', bal: 58600, activity: 'تحصيلات حجز تذاكر فورية كاش', icon: 'fa-mobile-screen-button', bg: 'from-red-950/80 to-slate-900', border: 'border-red-500/40', badge: 'bg-red-500/20 text-red-400' }
-            ],
-            services: [
+            ]),
+            services: safeJsonParse('alharamain_services', [
                 { code: 'TRV-FL-01', name: 'تذكرة طيران دولي (EgyptAir/Saudia)', category: 'طيران GDS', cur: 'ج.م', sell: 18500, cost: 16000, margin: '13.5%', status: 'نشط' },
                 { code: 'TRV-UM-01', name: 'برنامج عمرة VIP - 14 يوم (المولد النبوي)', category: 'حج وعمرة', cur: 'ريال', sell: 4200, cost: 3550, margin: '15.5%', status: 'نشط' },
                 { code: 'TRV-HT-01', name: 'حجز فندق ريكسوس شرم الشيخ (4 ليالي All-Inclusive)', category: 'فنادق وإعاشة', cur: 'ج.م', sell: 24000, cost: 20800, margin: '13.3%', status: 'نشط' },
@@ -4736,8 +4739,8 @@
                 { code: 'TRV-DOM-01', name: 'رحلة الأقصر وأسوان نايل كروز 5 نجوم', category: 'سياحة داخلية', cur: 'ج.م', sell: 12500, cost: 10200, margin: '18.4%', status: 'نشط' },
                 { code: 'TRV-VS-01', name: 'إصدار تأشيرة سياحية إلكترونية (eVisa)', category: 'تأشيرات ووثائق', cur: 'ج.م', sell: 3500, cost: 2800, margin: '20.0%', status: 'نشط' },
                 { code: 'TRV-TR-01', name: 'نقل سياحي وليموزين مطار القاهرة/الغردقة', category: 'نقل وباصات', cur: 'ج.م', sell: 1800, cost: 1300, margin: '27.7%', status: 'نشط' }
-            ],
-            chartOfAccounts: [
+            ]),
+            chartOfAccounts: safeJsonParse('alharamain_chart_of_accounts', [
                 { code: 'EXP-101', name: 'إيجارات مقرات وفروع الشركة', type: 'مصروفات تشغيلية', nature: 'مدين', tax: 'معفى ضريبياً' },
                 { code: 'EXP-102', name: 'حملات تسويق ودعاية برامج العمرة', type: 'مصروفات تشغيلية', nature: 'مدين', tax: 'خصم أرباح 1%' },
                 { code: 'EXP-103', name: 'رواتب ومكافآت العاملين والمشرفين', type: 'مصروفات إدارية', nature: 'مدين', tax: 'معفى' },
@@ -4746,14 +4749,14 @@
                 { code: 'REV-201', name: 'عمولات وأرباح تذاكر طيران GDS', type: 'إيرادات نشاط', nature: 'دائن', tax: 'قيمة مضافة 14%' },
                 { code: 'REV-202', name: 'إيرادات برامج الحج والعمرة والزيارة', type: 'إيرادات نشاط', nature: 'دائن', tax: 'خاضع للضريبة' },
                 { code: 'REV-203', name: 'أرباح فروق العملات الأجنبية', type: 'إيرادات مالية', nature: 'دائن', tax: 'معفى' }
-            ],
-            cashDrawers: [
+            ]),
+            cashDrawers: safeJsonParse('alharamain_cash_drawers', [
                 { id: 'c1', name: 'الخزينة النقدية الرئيسية (الكاش)', type: 'خزينة نقدية', cur: 'ج.م', custodian: 'أ. طارق ممدوح (رئيس الحسابات)', limit: 150000, bal: 45000 },
                 { id: 'c2', name: 'خزينة الريال السعودي (مكة والمدينة)', type: 'خزينة عملة', cur: 'ريال', custodian: 'محمود الجوهري', limit: 50000, bal: 18500 },
                 { id: 'c3', name: 'خزينة الدولار الأمريكي (طيران وتأشيرات)', type: 'خزينة عملة', cur: 'دولار', custodian: 'حسن يوسف الناضر (مدير عام)', limit: 20000, bal: 6200 },
                 { id: 'c4', name: 'حساب إنستاباي السريع (InstaPay Business)', type: 'دفع رقمي', cur: 'ج.م', custodian: 'الإدارة المالية', limit: 500000, bal: 72000 },
                 { id: 'c5', name: 'محافظ فودافون كاش التجارية للتحصيل', type: 'محفظة إلكترونية', cur: 'ج.م', custodian: 'قسم المبيعات', limit: 200000, bal: 34000 }
-            ],
+            ]),
             companyProfile: safeJsonParse('alharamain_company_profile', {
                 name: 'شركة الحرمين للسياحة والسفر وخدمات الحج والعمرة',
                 brand: 'الحرمين للسياحة',
@@ -5178,6 +5181,7 @@
                 }
             }
 
+            saveStateToLocalStorage();
             renderBankAccounts();
             closeBankTxModal();
             document.getElementById('bankTxForm').reset();
@@ -5432,6 +5436,7 @@
                 }
             }
 
+            saveStateToLocalStorage();
             renderTables();
             closeBookingModal();
             document.getElementById('newBookingForm').reset();
@@ -5468,6 +5473,7 @@
                 }
             }
 
+            saveStateToLocalStorage();
             closeVoucherModal();
             document.getElementById('voucherForm').reset();
             renderTables();
@@ -5601,6 +5607,7 @@
                 });
             }
 
+            saveStateToLocalStorage();
             renderBankAccounts();
             closeManageBankModal();
             alert(`✓ تم حفظ بيانات البنك (${name}) بنجاح ورصيده المعتمد: ${bal.toLocaleString()} ${cur}`);
@@ -5717,6 +5724,7 @@
                 state.suppliers.unshift(suppObj);
             }
 
+            saveStateToLocalStorage();
             renderTables();
             closeManageSupplierModal();
             alert(`✓ تم حفظ بيانات المورد (${name}) بنجاح.`);
@@ -5726,6 +5734,7 @@
             if (!s) return;
             if (confirm(`هل أنت متأكد من حذف المورد (${s.name})؟`)) {
                 state.suppliers.splice(idx, 1);
+                saveStateToLocalStorage();
                 renderTables();
             }
         }
@@ -5777,6 +5786,7 @@
             b.currency = document.getElementById('ebCur').value;
             b.profit = b.sell - b.cost;
 
+            saveStateToLocalStorage();
             renderTables();
             closeEditBookingModal();
             alert(`✓ تم حفظ تعديلات الحجز ${b.pnr} واحتساب صافي الربح الجديد (+${b.profit.toLocaleString()} ${b.currency})`);
@@ -5786,6 +5796,7 @@
             if (!b) return;
             if (confirm(`هل أنت متأكد من حذف الحجز (${b.pnr} - ${b.client})؟`)) {
                 state.bookings = state.bookings.filter(x => x.id !== bId);
+                saveStateToLocalStorage();
                 renderTables();
             }
         }
@@ -5943,7 +5954,7 @@
             }
             if (confirm(`هل أنت متأكد من حذف عملة (${cur.name} - ${cur.code}) من قائمة العملات المعتمدة؟`)) {
                 state.currencies = state.currencies.filter(c => c.code !== code);
-                localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+                saveStateToLocalStorage();
                 renderCurrenciesModal();
                 renderCurrencyTicker();
                 populateCurrencyDropdowns();
@@ -6204,7 +6215,7 @@
                                                     <span class="font-mono text-indigo-600 bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 rounded text-[11px] border border-indigo-200 dark:border-indigo-800">${t.ticketNumber}</span>
                                                     <span>PNR: ${t.pnr}</span>
                                                 </div>
-                                                <div class="text-[10px] text-slate-400 mt-0.5">${t.route} • ${t.airline} (${t.status === 'In_Stock' ? 'بالخزينة' : 'تم البيع'})</div>
+                                                <div class="text-[10px] text-slate-400 mt-0.5">${t.routing || t.route || 'تذكرة طيران'} • ${t.airline || t.supplier || 'مورد طيران'} (${t.status === 'In_Stock' ? 'بالخزينة' : 'تم البيع'})</div>
                                             </div>
                                             <div class="flex items-center gap-2 shrink-0">
                                                 <div class="text-left font-black text-emerald-600 text-xs">${t.sellPrice.toLocaleString()} ج.م</div>
@@ -7047,17 +7058,21 @@
         // ==========================================
         // 🛒 DESK POS CHECKOUT & INVENTORY HELPERS
         // ==========================================
-        function populateDeskSaleTickets() {
+        function populateDeskSaleTickets(includeId = null) {
             const sel = document.getElementById('dsTicketSelect');
             if (!sel) return;
-            const stockTickets = (state.ticketInventory || []).filter(t => t.status === 'In_Stock');
+            let stockTickets = (state.ticketInventory || []).filter(t => t.status === 'In_Stock');
+            if (includeId && !stockTickets.some(t => t.id === includeId)) {
+                const specific = (state.ticketInventory || []).find(t => t.id === includeId);
+                if (specific) stockTickets.unshift(specific);
+            }
             if (stockTickets.length === 0) {
                 sel.innerHTML = '<option value="">✕ لا توجد تذاكر متاحة بالعهدة حالياً (قم باستلام عهدة أولاً)</option>';
                 return;
             }
             sel.innerHTML = stockTickets.map(t => `
-                <option value="${t.id}" data-pnr="${t.pnr}" data-routing="${t.routing}" data-carrier="${t.airline || t.supplier}" data-cost="${t.netCost}" data-sell="${t.sellPrice}" data-cur="${t.cur}">
-                    ${t.ticketNumber} | PNR: ${t.pnr} | ${t.routing} | تكلفة: ${t.netCost.toLocaleString()} ${t.cur}
+                <option value="${t.id}" data-pnr="${t.pnr}" data-routing="${t.routing || t.route || ''}" data-carrier="${t.airline || t.supplier}" data-cost="${t.netCost}" data-sell="${t.sellPrice}" data-cur="${t.cur}">
+                    ${t.ticketNumber} | PNR: ${t.pnr} | ${t.routing || t.route || ''} ${t.status !== 'In_Stock' ? '⚠️ (تم بيعها)' : ''} | تكلفة: ${t.netCost.toLocaleString()} ${t.cur}
                 </option>
             `).join('');
             onDeskSaleTicketSelect();
@@ -7085,7 +7100,7 @@
         }
 
         function openDeskSaleModal(preselectedId = null) {
-            populateDeskSaleTickets();
+            populateDeskSaleTickets(preselectedId);
             populateDeskSaleCustomers();
             if (preselectedId) {
                 const sel = document.getElementById('dsTicketSelect');
@@ -7122,7 +7137,43 @@
         }
 
         function onDeskSaleCustomerSelect() {
-            // Customer select sync
+            const custType = document.getElementById('dsCustomerType').value;
+            const custSel = document.getElementById('dsCustomerSelect');
+            const creditWrap = document.getElementById('dsCreditWarningWrap');
+            if (!custSel || !custSel.value) return;
+
+            if (custType === 'corporate') {
+                const comp = (state.companies || []).find(c => c.id === custSel.value);
+                if (comp && creditWrap) {
+                    const limit = comp.creditLimit || 50000;
+                    const due = comp.due || comp.currentDue || 0;
+                    const remaining = Math.max(0, limit - due);
+                    creditWrap.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span><i class="fa-solid fa-building text-gold-600 mr-1"></i> شركة: <strong>${comp.name}</strong></span>
+                            <span class="font-bold text-slate-500 font-mono">سقف الائتمان: ${limit.toLocaleString()} ج.م</span>
+                        </div>
+                        <div class="mt-1 flex items-center justify-between font-mono">
+                            <span>المديونية الحالية: <strong class="text-amber-600">${due.toLocaleString()} ج.م</strong></span>
+                            <span>المتاح ائتمانياً: <strong class="text-emerald-600">${remaining.toLocaleString()} ج.م</strong></span>
+                        </div>
+                    `;
+                }
+            } else {
+                const retail = (state.retailCustomers || []).find(r => r.id === custSel.value);
+                if (retail && creditWrap) {
+                    const due = retail.due || 0;
+                    creditWrap.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span><i class="fa-solid fa-user text-teal-600 mr-1"></i> عميل: <strong>${retail.name}</strong></span>
+                            <span class="font-bold text-slate-500 font-mono">${retail.phone || ''}</span>
+                        </div>
+                        <div class="mt-1 text-slate-600 dark:text-slate-400">
+                            المديونية / الأقساط القائمة: <strong class="text-amber-600 font-mono">${due.toLocaleString()} ج.م</strong>
+                        </div>
+                    `;
+                }
+            }
         }
 
         function calculateDeskSaleMargin() {
@@ -7240,6 +7291,7 @@
             state.totalProfit += profit;
 
             // Re-render
+            saveStateToLocalStorage();
             renderTables();
             closeDeskSaleModal();
             alert(`✓ تم إصدار وبيع التذكرة (${ticket.ticketNumber}) بنجاح لـ (${custName}) بمبلغ ${sellPrice.toLocaleString()} ج.م وتحديث الجرد والحساب الجاري.`);
@@ -7277,7 +7329,7 @@
                 date: new Date().toISOString().slice(0, 10)
             });
 
-            localStorage.setItem('alharamain_ticket_inventory', JSON.stringify(state.ticketInventory));
+            saveStateToLocalStorage();
             renderDeskSales();
             closeAddTicketInventoryModal();
             alert(`✓ تم استلام وإضافة التذكرة (${ticketNum}) PNR: ${pnr} إلى عهدة المكتب بنجاح.`);
@@ -7555,6 +7607,7 @@
                 lbl_select_reset_mode: 'اختر نوع التصفير المطلوب:',
                 lbl_confirm_keyword: 'لتأكيد التنفيذ ومنع أي خطأ، يرجى كتابة كلمة (تصفير) في المربع أدناه:',
                 btn_execute_reset: 'تأكيد وتنفيذ عملية التصفير الآن',
+                btn_cancel: 'إلغاء',
                 btn_print_report: 'طباعة التقرير',
                 report_tab_daily: 'التقرير اليومي وساعة الذروة',
                 report_tab_weekly: 'التقرير الأسبوعي',
@@ -7823,7 +7876,41 @@
                 manager_role_label: 'Job Title & Role:',
                 manager_avatar_label: 'Avatar / Crown Icon:',
                 logout_switch: 'Switch Account / Logout',
-                save_changes: 'Save & Apply Changes'
+                save_changes: 'Save & Apply Changes',
+                topbar_backup_reset: 'Backup & Reset',
+                btn_export_bookings_excel: 'Export Excel',
+                btn_export_tickets_excel: 'Export Stock Excel',
+                btn_export_companies_excel: 'Export Companies Excel',
+                btn_export_retail_excel: 'Export Retail Excel',
+                btn_export_suppliers_excel: 'Export Suppliers Excel',
+                def_tab_backup_reset: 'Backup & Reset Center',
+                counter_bookings: 'Booking Files',
+                counter_tickets: 'Ticket Inventory',
+                counter_companies: 'B2B Companies',
+                counter_retail: 'Retail Customers',
+                counter_ledger: 'Ledger Entries',
+                counter_drawers: 'Banks & Drawers',
+                master_backup_title: 'Comprehensive Master System Backup (Formatted Excel)',
+                master_backup_desc: 'Generate a structured CSV backup with UTF-8 BOM containing company profile, liquidity summary, bookings, desk sales, receivables, debts, and general ledger.',
+                btn_download_full_excel: 'Download Master Excel Backup',
+                json_backup_title: 'Full Database Backup (JSON Database File)',
+                json_backup_desc: 'Save a complete snapshot of all system tables in a portable JSON file that can be restored anytime without data loss.',
+                btn_export_json: 'Export Database File (JSON)',
+                json_restore_title: 'System Restore from Backup (Restore from File)',
+                json_restore_desc: 'Upload and restore a previous JSON or CSV backup to recover all accounts, bookings, and master definitions in one click.',
+                btn_import_json: 'Import & Restore Previous Backup',
+                reset_zone_title: 'System Reset Center & Maintenance (Executive Action)',
+                reset_zone_desc: 'Allows General Manager to reset seasonal transactions, restore factory demo data, or perform a complete white-slate wipe with keyword confirmation.',
+                btn_open_reset_modal: 'Open System Reset Wizard',
+                reset_modal_title: 'System Reset & Maintenance Wizard',
+                reset_modal_subtitle: 'Central Database Management for Al-Haramain ERP',
+                reset_backup_recommend_title: 'Recommended Preventive Action:',
+                reset_backup_recommend_desc: 'It is strongly advised to download a full Excel or JSON backup before executing any reset.',
+                btn_download_backup_first: 'Download Backup First',
+                lbl_select_reset_mode: '1. Select desired reset operation mode:',
+                lbl_confirm_keyword: '2. To confirm, type (تصفير) in the verification box below:',
+                btn_execute_reset: 'Execute System Reset Operation',
+                btn_cancel: 'Cancel'
             }
         };
 
@@ -8106,60 +8193,120 @@
         function renderDailyReport() {
             const dateInput = document.getElementById('reportDailyDate');
             const isEn = document.documentElement.lang === 'en';
-            // Update daily stats dynamically if date is selected
-            if (dateInput) {
-                const val = dateInput.value;
-                const dSales = document.getElementById('dailySalesVal');
-                const dProfit = document.getElementById('dailyProfitVal');
-                const dCount = document.getElementById('dailyBookingsCountVal');
-                const dCollect = document.getElementById('dailyCollectionsVal');
+            const curSuffix = isEn ? ' EGP' : ' ج.م';
+            const bookingsSuffix = isEn ? ' Bookings' : ' حجوزات';
 
-                if (val === '2026-11-22') {
-                    if (dSales) dSales.innerText = isEn ? '48,500 EGP' : '48,500 ج.م';
-                    if (dProfit) dProfit.innerText = isEn ? '8,700 EGP' : '8,700 ج.م';
-                    if (dCount) dCount.innerText = isEn ? '8 Bookings' : '8 حجوزات';
-                    if (dCollect) dCollect.innerText = isEn ? '34,200 EGP' : '34,200 ج.م';
-                } else {
-                    // Sample recalculated metrics for alternate historical dates
-                    if (dSales) dSales.innerText = isEn ? '32,400 EGP' : '32,400 ج.م';
-                    if (dProfit) dProfit.innerText = isEn ? '5,800 EGP' : '5,800 ج.م';
-                    if (dCount) dCount.innerText = isEn ? '5 Bookings' : '5 حجوزات';
-                    if (dCollect) dCollect.innerText = isEn ? '26,000 EGP' : '26,000 ج.م';
+            const dSales = document.getElementById('dailySalesVal');
+            const dProfit = document.getElementById('dailyProfitVal');
+            const dCount = document.getElementById('dailyBookingsCountVal');
+            const dCollect = document.getElementById('dailyCollectionsVal');
+
+            const selectedDate = dateInput ? dateInput.value : '';
+
+            // Filter bookings that match the selected date or calculate live state metrics
+            let matchingBookings = (state.bookings || []).filter(b => {
+                if (!selectedDate) return true;
+                if (b.date) return b.date === selectedDate;
+                if (b.id && typeof b.id === 'number' && b.id > 1700000000000) {
+                    return new Date(b.id).toISOString().slice(0, 10) === selectedDate;
                 }
+                return false;
+            });
+
+            let totalSales = 0;
+            let totalProfit = 0;
+            let bookingsCount = 0;
+
+            if (matchingBookings.length > 0) {
+                matchingBookings.forEach(b => {
+                    let rate = 1.0;
+                    if (state.currencies) {
+                        const c = state.currencies.find(cur => cur.symbol === b.currency || cur.code === b.currency);
+                        if (c && c.rate) rate = c.rate;
+                    }
+                    totalSales += (b.sell * rate);
+                    totalProfit += (b.profit * rate);
+                });
+                bookingsCount = matchingBookings.length;
+            } else {
+                (state.bookings || []).forEach(b => {
+                    let rate = 1.0;
+                    if (state.currencies) {
+                        const c = state.currencies.find(cur => cur.symbol === b.currency || cur.code === b.currency);
+                        if (c && c.rate) rate = c.rate;
+                    }
+                    totalSales += (b.sell * rate);
+                    totalProfit += (b.profit * rate);
+                });
+                bookingsCount = (state.bookings || []).length;
             }
+
+            // Collections calculated from cash drawers and vault balances
+            let totalCashCollected = 0;
+            (state.cashDrawers || []).forEach(d => {
+                let rate = 1.0;
+                if (state.currencies) {
+                    const c = state.currencies.find(cur => cur.symbol === d.cur || cur.code === d.cur);
+                    if (c && c.rate) rate = c.rate;
+                }
+                totalCashCollected += (d.bal * rate);
+            });
+
+            if (dSales) dSales.innerText = Math.round(totalSales).toLocaleString() + curSuffix;
+            if (dProfit) dProfit.innerText = Math.round(totalProfit).toLocaleString() + curSuffix;
+            if (dCount) dCount.innerText = bookingsCount + bookingsSuffix;
+            if (dCollect) dCollect.innerText = Math.round(totalCashCollected).toLocaleString() + curSuffix;
         }
 
         function exportReportsToExcel() {
             const isEn = document.documentElement.lang === 'en';
             let csv = '\uFEFF'; // UTF-8 BOM for Arabic support in MS Excel
             csv += isEn 
-                ? 'Period,Gross Sales (EGP),Net Profit (EGP),Total Bookings,Peak Time / Month Indicator\n'
-                : 'الفترة التشغيلية,إجمالي المبيعات (ج.م),صافي الربح (ج.م),عدد الحجوزات,مؤشر الذروة التشغيلية\n';
+                ? 'Operational Metric / Period,Gross Sales (EGP),Net Profit (EGP),Total Count,Status & Analytics Indicator\n'
+                : 'المؤشر التشغيلي / الفترة,إجمالي المبيعات (ج.م),صافي الربح (ج.م),العدد الإجمالي,مؤشر الحالة والتحليل التشغيلي\n';
 
-            csv += isEn 
-                ? 'Today (22 Nov 2026),48500,8700,8,01:00 PM - 02:00 PM (Daily Peak Hour - 46.8% volume)\n'
-                : 'اليوم (22 نوفمبر 2026),48500,8700,8,01:00 م - 02:00 م (ساعة الذروة اليومية - 46.8% من المبيعات)\n';
+            // Calculate live totals from state
+            let totalSales = 0;
+            let totalProfit = 0;
+            (state.bookings || []).forEach(b => {
+                let rate = 1.0;
+                if (state.currencies) {
+                    const c = state.currencies.find(cur => cur.symbol === b.currency || cur.code === b.currency);
+                    if (c && c.rate) rate = c.rate;
+                }
+                totalSales += (b.sell * rate);
+                totalProfit += (b.profit * rate);
+            });
+            const bCount = (state.bookings || []).length;
+            const roundSales = Math.round(totalSales);
+            const roundProfit = Math.round(totalProfit);
 
-            csv += isEn 
-                ? 'Current Week (Week 47),284500,46200,38,Tuesday (Weekly Peak Day - 11 Bookings)\n'
-                : 'الأسبوع الحالي (أسبوع 47),284500,46200,38,الثلاثاء (يوم الذروة الأسبوعي - 11 حجز)\n';
+            csv += isEn
+                ? `Active Travel Bookings,${roundSales},${roundProfit},${bCount},Peak Operational Hours: 01:00 PM - 02:00 PM\n`
+                : `سجل الحجوزات النشطة,${roundSales},${roundProfit},${bCount},ساعات الذروة التشغيلية: 01:00 م - 02:00 م\n`;
 
-            csv += isEn 
-                ? 'Current Month (November 2026),945000,162500,142,Week 2 (Peak Week - 310000 EGP)\n'
-                : 'الشهر الحالي (نوفمبر 2026),945000,162500,142,الأسبوع الثاني (أسبوع الذروة - 310000 ج.م)\n';
+            const tktCount = (state.ticketInventory || []).length;
+            const tktSales = (state.ticketInventory || []).filter(t => t.status !== 'In_Stock').reduce((acc, t) => acc + (t.sellPrice || 0), 0);
+            csv += isEn
+                ? `Desk POS Ticket Inventory,${tktSales},—,${tktCount},${tktCount} Tickets in Custody\n`
+                : `جرد تذاكر عهدة المكتب,${tktSales},—,${tktCount},${tktCount} تذاكر بالعهدة\n`;
 
-            csv += isEn 
-                ? 'Fiscal Year 2026,8420000,1270000,1284,March / Ramadan (Annual Peak Month - 286 Trips - 1.65M EGP)\n'
-                : 'السنة المالية 2026 كاملة,8420000,1270000,1284,مارس / رمضان المبارك (شهر الذروة السنوي - 286 رحلة - 1.65 مليون ج.م)\n';
+            let totalBankBal = (state.bankAccounts || []).reduce((acc, b) => acc + (b.bal || 0), 0);
+            let totalDrawerBal = (state.cashDrawers || []).reduce((acc, d) => acc + (d.bal || 0), 0);
+            csv += isEn
+                ? `Treasury & Bank Liquidity,${totalBankBal + totalDrawerBal},—,—,${(state.bankAccounts || []).length} Banks | ${(state.cashDrawers || []).length} Drawers\n`
+                : `سيولة الخزائن والحسابات البنكية,${totalBankBal + totalDrawerBal},—,—,${(state.bankAccounts || []).length} بنوك | ${(state.cashDrawers || []).length} خزائن\n`;
 
-            csv += isEn 
-                ? 'Secondary Peak (Hajj Season),1240000,215000,198,June (Hajj High Season - Premium Hajj)\n'
-                : 'الذروة الثانية (موسم الحج),1240000,215000,198,يونيو (موسم الحج الأكبر - باقات الحج السياحي)\n';
+            let compDue = (state.companies || []).reduce((acc, c) => acc + (c.due || c.currentDue || 0), 0);
+            let retDue = (state.retailCustomers || []).reduce((acc, r) => acc + (r.due || 0), 0);
+            csv += isEn
+                ? `Total Outstanding Receivables (Dues),${compDue + retDue},—,—,Corporate: ${compDue} EGP | Retail: ${retDue} EGP\n`
+                : `إجمالي مستحقات وديون العملاء,${compDue + retDue},—,—,شركات: ${compDue} ج.م | أفراد: ${retDue} ج.م\n`;
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `Al_Haramain_Periodic_Reports_and_Peak_Analytics_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.download = `Al_Haramain_Dynamic_Periodic_Reports_${new Date().toISOString().slice(0, 10)}.csv`;
             link.click();
         }
 
@@ -8476,7 +8623,7 @@
                 state.currencies.push(curObj);
             }
 
-            localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
+            saveStateToLocalStorage();
             renderDefinitionsTables();
             renderCurrencyTicker();
             populateCurrencyDropdowns();
@@ -8526,6 +8673,7 @@
             } else {
                 state.services.push(srvObj);
             }
+            saveStateToLocalStorage();
             renderDefinitionsTables();
             closeManageServiceModal();
             alert(`✓ تم حفظ الخدمة (${name}) بنجاح وإتاحتها في قوائم الحجز.`);
@@ -8535,6 +8683,7 @@
             if (!s) return;
             if (confirm(`هل أنت متأكد من حذف الخدمة (${s.name}) من الكتالوج؟`)) {
                 state.services.splice(idx, 1);
+                saveStateToLocalStorage();
                 renderDefinitionsTables();
             }
         }
@@ -8577,6 +8726,7 @@
             } else {
                 state.chartOfAccounts.push(accObj);
             }
+            saveStateToLocalStorage();
             renderDefinitionsTables();
             closeManageAccountItemModal();
             alert(`✓ تم حفظ البند المحاسبي (${name}) في دليل الحسابات بنجاح.`);
@@ -8586,6 +8736,7 @@
             if (!a) return;
             if (confirm(`هل أنت متأكد من حذف البند المحاسبي (${a.name})؟`)) {
                 state.chartOfAccounts.splice(idx, 1);
+                saveStateToLocalStorage();
                 renderDefinitionsTables();
             }
         }
@@ -8629,6 +8780,7 @@
             } else {
                 state.cashDrawers.push(drwObj);
             }
+            saveStateToLocalStorage();
             renderDefinitionsTables();
             closeManageCashDrawerModal();
             alert(`✓ تم حفظ الخزينة / طريقة التحصيل (${name}) بنجاح.`);
@@ -8638,6 +8790,7 @@
             if (!d) return;
             if (confirm(`هل أنت متأكد من حذف (${d.name})؟`)) {
                 state.cashDrawers.splice(idx, 1);
+                saveStateToLocalStorage();
                 renderDefinitionsTables();
             }
         }
@@ -8656,7 +8809,7 @@
                 email: document.getElementById('cpEmail').value.trim(),
                 address: document.getElementById('cpAddress').value.trim()
             };
-            localStorage.setItem('alharamain_company_profile', JSON.stringify(state.companyProfile));
+            saveStateToLocalStorage();
             alert('✓ تم حفظ واعتماد بيانات وهوية شركة الحرمين بنجاح وتحديثها في كل وثائق وسندات النظام.');
         }
 
@@ -8668,7 +8821,7 @@
                 wht: parseFloat(document.getElementById('taxWht').value) || 1.0,
                 activityCode: document.getElementById('taxActivityCode').value.trim()
             };
-            localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
+            saveStateToLocalStorage();
             alert('✓ تم حفظ واعتماد نسب الضرائب وإعدادات الفاتورة الإلكترونية ETA بنجاح.');
         }
 
@@ -8840,7 +8993,7 @@
                 state.staff.push(staffObj);
             }
 
-            localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+            saveStateToLocalStorage();
 
             // If the edited user is the current user or system manager, update the active user immediately!
             if (isCurrentOrAdmin || role === 'admin') {
@@ -8862,7 +9015,7 @@
             }
             if (confirm(`هل أنت متأكد من حذف الموظف (${s.name}) وسحب كافة صلاحياته من النظام نهائياً؟`)) {
                 state.staff.splice(idx, 1);
-                localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+                saveStateToLocalStorage();
                 renderStaffTable();
                 renderGatewayRoles();
                 alert(`✓ تم حذف حساب الموظف (${s.name}) بنجاح.`);
@@ -9639,6 +9792,12 @@
 
         function saveStateToLocalStorage() {
             try {
+                if (state.bookings) localStorage.setItem('alharamain_bookings', JSON.stringify(state.bookings));
+                if (state.suppliers) localStorage.setItem('alharamain_suppliers', JSON.stringify(state.suppliers));
+                if (state.bankAccounts) localStorage.setItem('alharamain_bank_accounts', JSON.stringify(state.bankAccounts));
+                if (state.cashDrawers) localStorage.setItem('alharamain_cash_drawers', JSON.stringify(state.cashDrawers));
+                if (state.services) localStorage.setItem('alharamain_services', JSON.stringify(state.services));
+                if (state.chartOfAccounts) localStorage.setItem('alharamain_chart_of_accounts', JSON.stringify(state.chartOfAccounts));
                 if (state.companies) localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
                 if (state.retailCustomers) localStorage.setItem('alharamain_retail_customers', JSON.stringify(state.retailCustomers));
                 if (state.ticketInventory) localStorage.setItem('alharamain_ticket_inventory', JSON.stringify(state.ticketInventory));
@@ -9647,6 +9806,7 @@
                 if (state.companyProfile) localStorage.setItem('alharamain_company_profile', JSON.stringify(state.companyProfile));
                 if (state.taxSettings) localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
                 if (state.staff) localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+                if (typeof updateBackupOverviewCounters === 'function') updateBackupOverviewCounters();
             } catch(e) {
                 console.warn('LocalStorage save warning:', e);
             }
@@ -9763,6 +9923,12 @@
             } else if (activeResetMode === 'demo') {
                 // 2. Factory Reset to Default Initial State
                 try {
+                    localStorage.removeItem('alharamain_bookings');
+                    localStorage.removeItem('alharamain_suppliers');
+                    localStorage.removeItem('alharamain_bank_accounts');
+                    localStorage.removeItem('alharamain_cash_drawers');
+                    localStorage.removeItem('alharamain_services');
+                    localStorage.removeItem('alharamain_chart_of_accounts');
                     localStorage.removeItem('alharamain_companies');
                     localStorage.removeItem('alharamain_retail_customers');
                     localStorage.removeItem('alharamain_ticket_inventory');
