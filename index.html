@@ -1144,10 +1144,16 @@
                             </h3>
                             <p class="text-xs text-slate-500 mt-0.5" data-i18n="bookings_view_desc">تسجيل ومتابعة حجوزات الطيران GDS، برامج العمرة والحج، وحجوزات الفنادق</p>
                         </div>
-                        <button onclick="openBookingModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-plus"></i>
-                            <span data-i18n="btn_new_booking_lg">تسجيل حجز جديد</span>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openBookingModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-plus"></i>
+                                <span data-i18n="btn_new_booking_lg">تسجيل حجز جديد</span>
+                            </button>
+                            <button onclick="exportBookingsToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer" title="تصدير جدول الحجوزات إلى ملف إكسل منظم">
+                                <i class="fa-solid fa-file-excel"></i>
+                                <span data-i18n="btn_export_bookings_excel">تصدير إكسل</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Bookings Table with Full Controls -->
@@ -2784,7 +2790,7 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <input type="file" id="jsonBackupFileInput" accept=".json" class="hidden" onchange="handleImportJsonBackup(event)">
+                                    <input type="file" id="jsonBackupFileInput" accept=".json,.csv" class="hidden" onchange="handleImportBackup(event)">
                                     <button onclick="document.getElementById('jsonBackupFileInput').click()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl transition cursor-pointer flex items-center justify-center gap-2 shadow-xs">
                                         <i class="fa-solid fa-upload"></i>
                                         <span data-i18n="btn_import_json">استيراد واستعادة نسخة سابقة</span>
@@ -9002,6 +9008,37 @@
         // 📊 EXCEL & BACKUP FORMATTING ENGINE (UTF-8 BOM)
         // ==========================================
 
+        
+        // System Wide Visual Notification Toast
+        function showNotification(msg, type = 'success') {
+            let toast = document.getElementById('globalSystemToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'globalSystemToast';
+                document.body.appendChild(toast);
+            }
+            
+            const baseClass = 'fixed bottom-6 left-6 z-[9999] max-w-md px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-black flex items-center gap-3 transition-all duration-300 transform';
+            
+            if (type === 'success') {
+                toast.className = baseClass + ' translate-y-0 opacity-100 bg-emerald-600 text-white border border-emerald-500/50';
+                toast.innerHTML = '<i class="fa-solid fa-circle-check text-base text-white"></i><span>' + msg + '</span>';
+            } else if (type === 'error') {
+                toast.className = baseClass + ' translate-y-0 opacity-100 bg-rose-600 text-white border border-rose-500/50';
+                toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base text-white"></i><span>' + msg + '</span>';
+            } else {
+                toast.className = baseClass + ' translate-y-0 opacity-100 bg-slate-900 text-gold-400 border border-gold-500/50';
+                toast.innerHTML = '<i class="fa-solid fa-bell text-base text-gold-400"></i><span>' + msg + '</span>';
+            }
+            
+            clearTimeout(window._toastTimeout);
+            window._toastTimeout = setTimeout(() => {
+                if (toast) {
+                    toast.className = baseClass + ' translate-y-10 opacity-0 pointer-events-none';
+                }
+            }, 4000);
+        }
+
         function escapeCsv(val) {
             if (val === null || val === undefined) return '""';
             let str = String(val).replace(/\r\n|\r|\n/g, ' ').trim();
@@ -9359,46 +9396,247 @@
         }
 
         // 8. Restore from JSON Database Backup
-        function handleImportJsonBackup(event) {
+        // 8. Smart Multi-Format Restore from Backup (Supports both JSON and CSV Excel files)
+        function parseCsvLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const c = line[i];
+                if (c === '"') {
+                    if (inQuotes && line[i+1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (c === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += c;
+                }
+            }
+            result.push(current);
+            return result;
+        }
+
+        function parseAlharamainCsvBackup(csvText) {
+            if (csvText.charCodeAt(0) === 0xFEFF) {
+                csvText = csvText.slice(1);
+            }
+            const lines = csvText.split(/\r?\n/);
+            const parsedData = {
+                bookings: [],
+                ticketInventory: [],
+                companies: [],
+                retailCustomers: [],
+                suppliers: [],
+                cashDrawers: [],
+                currentAccountLedger: []
+            };
+
+            let currentSection = null;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line || line.startsWith('====')) continue;
+
+                if (line.includes('[2]') && (line.includes('BOOKINGS') || line.includes('سجل حجوزات'))) {
+                    currentSection = 'bookings';
+                    continue;
+                } else if (line.includes('[3]') && (line.includes('DESK TICKETING') || line.includes('مبيعات مكتب الطيران'))) {
+                    currentSection = 'tickets';
+                    continue;
+                } else if (line.includes('[4]') && (line.includes('CORPORATE CLIENTS') || line.includes('حسابات ومديونيات الشركات'))) {
+                    currentSection = 'companies';
+                    continue;
+                } else if (line.includes('[5]') && (line.includes('RETAIL CLIENTS') || line.includes('عملاء الأفراد'))) {
+                    currentSection = 'retail';
+                    continue;
+                } else if (line.includes('[6]') && (line.includes('SUPPLIERS') || line.includes('أرصدة ومستحقات الموردين'))) {
+                    currentSection = 'suppliers';
+                    continue;
+                } else if (line.includes('[7]') && (line.includes('CASH DRAWERS') || line.includes('الخزائن النقدية'))) {
+                    currentSection = 'drawers';
+                    continue;
+                } else if (line.includes('[8]') && (line.includes('GENERAL LEDGER') || line.includes('دفتر أستاذ'))) {
+                    currentSection = 'ledger';
+                    continue;
+                }
+
+                if (line.startsWith('"TOTALS') || line.startsWith('"المجموع') || line.startsWith('TOTALS') || line.startsWith('المجموع')) {
+                    continue;
+                }
+
+                const cols = parseCsvLine(line);
+                if (cols.length < 2) continue;
+                if (cols[0] === 'م' || cols[0] === '#' || cols[0] === '"م"' || cols[0] === '"#"') continue;
+
+                if (currentSection === 'bookings' && cols[1]) {
+                    parsedData.bookings.push({
+                        id: parsedData.bookings.length + 1,
+                        pnr: cols[1],
+                        client: cols[2] || '',
+                        service: cols[3] || '',
+                        supplier: cols[4] || '',
+                        sell: parseFloat(cols[5]) || 0,
+                        cost: parseFloat(cols[6]) || 0,
+                        profit: parseFloat(cols[7]) || 0,
+                        currency: cols[8] || 'ج.م',
+                        eta: cols[9] || 'معتمدة'
+                    });
+                } else if (currentSection === 'tickets' && cols[1]) {
+                    parsedData.ticketInventory.push({
+                        id: 'inv_' + (parsedData.ticketInventory.length + 1),
+                        ticketNumber: cols[1],
+                        pnr: cols[2] || '',
+                        routing: cols[3] || '',
+                        airline: cols[4] || '',
+                        supplier: cols[4] || '',
+                        passenger: cols[5] || '',
+                        sellPrice: parseFloat(cols[6]) || 0,
+                        netCost: parseFloat(cols[7]) || 0,
+                        cur: cols[9] || 'ج.م',
+                        statusLabel: cols[10] || 'مباعة ومصدرة',
+                        status: (cols[10] && cols[10].includes('عهدة')) ? 'In_Stock' : 'Issued_Sold',
+                        date: cols[11] || new Date().toISOString().slice(0, 10)
+                    });
+                } else if (currentSection === 'companies' && cols[1]) {
+                    parsedData.companies.push({
+                        id: 'comp_' + (parsedData.companies.length + 1),
+                        code: cols[1],
+                        name: cols[2] || '',
+                        type: cols[3] || 'حساب شركة (Corporate)',
+                        phone: cols[4] || '',
+                        creditLimit: parseFloat(cols[5]) || 0,
+                        sales: parseFloat(cols[6]) || 0,
+                        paid: parseFloat(cols[7]) || 0,
+                        due: parseFloat(cols[8]) || 0,
+                        currentDue: parseFloat(cols[8]) || 0,
+                        currency: cols[9] || 'ج.م'
+                    });
+                } else if (currentSection === 'retail' && cols[1]) {
+                    parsedData.retailCustomers.push({
+                        id: 'cust_' + (parsedData.retailCustomers.length + 1),
+                        code: cols[1],
+                        name: cols[2] || '',
+                        phone: cols[3] || '',
+                        passport: cols[4] || '',
+                        tripType: cols[5] || '',
+                        total: parseFloat(cols[6]) || 0,
+                        paid: parseFloat(cols[7]) || 0,
+                        due: parseFloat(cols[8]) || 0,
+                        dueDate: cols[9] || '-'
+                    });
+                } else if (currentSection === 'suppliers' && cols[1]) {
+                    parsedData.suppliers.push({
+                        id: 'sup_' + (parsedData.suppliers.length + 1),
+                        code: cols[1],
+                        name: cols[2] || '',
+                        service: cols[3] || '',
+                        category: cols[3] || '',
+                        phone: cols[4] || '',
+                        due: parseFloat(cols[5]) || 0,
+                        balance: parseFloat(cols[5]) || 0,
+                        currency: cols[6] || 'ج.م'
+                    });
+                } else if (currentSection === 'drawers' && cols[1]) {
+                    const drawer = (state.cashDrawers || []).find(d => d.name === cols[1]);
+                    if (drawer) {
+                        drawer.bal = parseFloat(cols[6]) || 0;
+                    }
+                }
+            }
+
+            return parsedData;
+        }
+
+        function handleImportBackup(event) {
             const file = event.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (!data.bookings || !data.companies) {
-                        alert('الملف المختار غير متوافق مع نظام الحرمين ERP.');
-                        return;
-                    }
+                const content = e.target.result;
+                const fileName = (file.name || '').toLowerCase();
 
-                    if (confirm('هل أنت متأكد من استعادة قاعدة البيانات من هذا الملف؟ سيتم تحديث كافة السجلات الحالية.')) {
-                        if (data.bookings) state.bookings = data.bookings;
-                        if (data.ticketInventory) state.ticketInventory = data.ticketInventory;
-                        if (data.companies) state.companies = data.companies;
-                        if (data.retailCustomers) state.retailCustomers = data.retailCustomers;
-                        if (data.suppliers) state.suppliers = data.suppliers;
-                        if (data.currentAccountLedger) state.currentAccountLedger = data.currentAccountLedger;
-                        if (data.cashDrawers) state.cashDrawers = data.cashDrawers;
-                        if (data.bankAccounts) state.bankAccounts = data.bankAccounts;
-                        if (data.companyProfile) state.companyProfile = data.companyProfile;
-                        if (data.taxSettings) state.taxSettings = data.taxSettings;
-                        if (data.currencies) state.currencies = data.currencies;
-                        if (data.staff) state.staff = data.staff;
+                // Check if JSON
+                if (fileName.endsWith('.json') || content.trim().startsWith('{')) {
+                    try {
+                        const data = JSON.parse(content);
+                        if (!data.bookings && !data.companies && !data.version) {
+                            alert('ملف JSON المختار لا يحتوي على بيانات متوافقة مع نظام الحرمين.');
+                            return;
+                        }
 
-                        saveStateToLocalStorage();
-                        renderTables();
-                        showNotification('تمت استعادة قاعدة البيانات وتحديث النظام بالكامل بنجاح!', 'success');
+                        if (confirm('تم التحقق من ملف النسخة الاحتياطية بنجاح! هل تريد استعادة البيانات الآن؟')) {
+                            if (data.bookings) state.bookings = data.bookings;
+                            if (data.ticketInventory) state.ticketInventory = data.ticketInventory;
+                            if (data.companies) state.companies = data.companies;
+                            if (data.retailCustomers) state.retailCustomers = data.retailCustomers;
+                            if (data.suppliers) state.suppliers = data.suppliers;
+                            if (data.currentAccountLedger) state.currentAccountLedger = data.currentAccountLedger;
+                            if (data.cashDrawers) state.cashDrawers = data.cashDrawers;
+                            if (data.bankAccounts) state.bankAccounts = data.bankAccounts;
+                            if (data.companyProfile) state.companyProfile = data.companyProfile;
+                            if (data.taxSettings) state.taxSettings = data.taxSettings;
+                            if (data.currencies) state.currencies = data.currencies;
+                            if (data.staff) state.staff = data.staff;
+
+                            saveStateToLocalStorage();
+                            renderTables();
+                            showNotification('تمت استعادة قاعدة البيانات من ملف JSON بنجاح!', 'success');
+                        }
+                    } catch (err) {
+                        alert('خطأ أثناء قراءة ملف JSON: ' + err.message);
                     }
-                } catch (err) {
-                    alert('خطأ أثناء قراءة ملف النسخة الاحتياطية: ' + err.message);
+                } else {
+                    // It is a CSV backup file
+                    try {
+                        const parsed = parseAlharamainCsvBackup(content);
+                        const hasData = (parsed.bookings && parsed.bookings.length > 0) ||
+                                        (parsed.companies && parsed.companies.length > 0) ||
+                                        (parsed.ticketInventory && parsed.ticketInventory.length > 0) ||
+                                        (parsed.retailCustomers && parsed.retailCustomers.length > 0) ||
+                                        (parsed.suppliers && parsed.suppliers.length > 0);
+
+                        if (!hasData) {
+                            alert('الملف المختار غير متوافق. يرجى اختيار ملف النسخة الاحتياطية الشاملة المعتمد من نظام الحرمين (سواء ملف CSV أو JSON).');
+                            return;
+                        }
+
+                        const msg = 'تم فحص ملف الإكسل الاحتياطي بنجاح:\n' +
+                                    '- ' + parsed.bookings.length + ' حجز\n' +
+                                    '- ' + parsed.ticketInventory.length + ' تذكرة مكتب\n' +
+                                    '- ' + parsed.companies.length + ' شركة B2B\n' +
+                                    '- ' + parsed.retailCustomers.length + ' عميل أفراد\n' +
+                                    '- ' + parsed.suppliers.length + ' مورد\n\n' +
+                                    'هل ترغب في استعادة وتحديث سجلات النظام بهذه البيانات الآن؟';
+
+                        if (confirm(msg)) {
+                            if (parsed.bookings.length > 0) state.bookings = parsed.bookings;
+                            if (parsed.ticketInventory.length > 0) state.ticketInventory = parsed.ticketInventory;
+                            if (parsed.companies.length > 0) state.companies = parsed.companies;
+                            if (parsed.retailCustomers.length > 0) state.retailCustomers = parsed.retailCustomers;
+                            if (parsed.suppliers.length > 0) state.suppliers = parsed.suppliers;
+
+                            saveStateToLocalStorage();
+                            renderTables();
+                            showNotification('تمت استعادة كافة السجلات والحسابات من ملف الإكسل الاحتياطي بنجاح!', 'success');
+                        }
+                    } catch (err) {
+                        alert('خطأ أثناء قراءة ملف النسخة الاحتياطية CSV: ' + err.message);
+                    }
                 }
             };
             reader.readAsText(file);
             event.target.value = '';
         }
 
-        // Helper to persist modified state
+        // Alias for backwards compatibility
+        const handleImportJsonBackup = handleImportBackup;
+
         function saveStateToLocalStorage() {
             try {
                 if (state.companies) localStorage.setItem('alharamain_companies', JSON.stringify(state.companies));
