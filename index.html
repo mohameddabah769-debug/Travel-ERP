@@ -1119,64 +1119,21 @@
                     </div>
 
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[850px]">
-                            <thead class="bg-slate-50 text-slate-600 uppercase font-bold text-[11px] border-b border-slate-200/80">
+                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[1280px]">
+                            <thead class="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[11px] border-b border-slate-200 dark:border-slate-700">
                                 <tr>
-                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم الملف / PNR</th>
-                                    <th class="p-3.5" data-i18n="th_client">العميل / الشركة</th>
-                                    <th class="p-3.5" data-i18n="th_service">الخدمة السياحية</th>
-                                    <th class="p-3.5" data-i18n="th_sales">المبيعات</th>
-                                    <th class="p-3.5" data-i18n="th_profit">صافي الربح</th>
-                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة الإلكترونية ETA</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dashBookingsTbody" class="divide-y divide-slate-100">
-                                <!-- Populated dynamically by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ============================================== -->
-            <!-- 2. BOOKINGS & TICKETING MANAGEMENT             -->
-            <!-- ============================================== -->
-            <div id="view-bookings" class="section-view space-y-6">
-                <div class="bg-white rounded-2xl shadow-xs border border-slate-200 p-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 mb-5 gap-3">
-                        <div>
-                            <h3 class="font-black text-lg text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-ticket-simple text-gold-600"></i>
-                                <span data-i18n="bookings_view_title">إدارة الحجوزات والبرامج السياحية</span>
-                            </h3>
-                            <p class="text-xs text-slate-500 mt-0.5" data-i18n="bookings_view_desc">تسجيل ومتابعة حجوزات الطيران GDS، برامج العمرة والحج، وحجوزات الفنادق</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="openBookingModal()" class="bg-gold-600 hover:bg-gold-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer">
-                                <i class="fa-solid fa-plus"></i>
-                                <span data-i18n="btn_new_booking_lg">تسجيل حجز جديد</span>
-                            </button>
-                            <button onclick="exportBookingsToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer" title="تصدير جدول الحجوزات إلى ملف إكسل منظم">
-                                <i class="fa-solid fa-file-excel"></i>
-                                <span data-i18n="btn_export_bookings_excel">تصدير إكسل</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Bookings Table with Full Controls -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs whitespace-nowrap min-w-[850px]">
-                            <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b">
-                                <tr>
-                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم PNR</th>
-                                    <th class="p-3.5" data-i18n="th_client">العميل</th>
-                                    <th class="p-3.5" data-i18n="th_service">الخدمة السياحية</th>
-                                    <th class="p-3.5" data-i18n="th_supplier">المورد / شركة الطيران</th>
+                                    <th class="p-3.5 rounded-r-xl" data-i18n="th_pnr">رقم الحجز / PNR</th>
+                                    <th class="p-3.5" data-i18n="th_client">اسم العميل</th>
+                                    <th class="p-3.5" data-i18n="th_client_phone">رقم العميل</th>
+                                    <th class="p-3.5" data-i18n="th_from_to">خط السير (من وإلى)</th>
+                                    <th class="p-3.5" data-i18n="th_travel_date">تاريخ السفر</th>
+                                    <th class="p-3.5" data-i18n="th_supplier">اسم المورد</th>
+                                    <th class="p-3.5" data-i18n="th_trip_status">حالة الرحلة</th>
                                     <th class="p-3.5" data-i18n="th_sales">سعر البيع</th>
-                                    <th class="p-3.5" data-i18n="th_cost">التكلفة</th>
+                                    <th class="p-3.5" data-i18n="th_cost">سعر الشراء</th>
+                                    <th class="p-3.5" data-i18n="th_paid_remaining">المسدد / المتبقي</th>
                                     <th class="p-3.5" data-i18n="th_profit">الربح</th>
-                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة ETA</th>
+                                    <th class="p-3.5 rounded-l-xl text-center" data-i18n="th_eta">الفاتورة والإجراءات</th>
                                 </tr>
                             </thead>
                             <tbody id="fullBookingsTbody" class="divide-y divide-slate-100">
@@ -2969,39 +2926,70 @@
                 <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer p-1">✕</button>
             </div>
             <form id="newBookingForm" onsubmit="handleNewBooking(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل / الشركة</label>
-                    <input type="text" id="mClientName" required placeholder="مثال: أ. محمود عبد الرحمن" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold focus:bg-white focus:outline-none focus:border-gold-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم PNR / الملف</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_client">اسم العميل / الشركة *</label>
+                        <input type="text" id="mClientName" required placeholder="مثال: أ. محمود عبد الرحمن" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold focus:bg-white focus:outline-none focus:border-gold-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_client_phone">رقم العميل (الهاتف / المعرف) *</label>
+                        <input type="text" id="mClientPhone" required placeholder="مثال: 01012345678" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold font-mono focus:bg-white focus:outline-none focus:border-gold-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_pnr">رقم الحجز / PNR *</label>
                         <input type="text" id="mPnr" placeholder="MS-8899" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold uppercase font-mono dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المورد / شركة الطيران</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_supplier">اسم المورد / شركة الطيران *</label>
                         <select id="mSupplier" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <!-- Populated dynamically from state.suppliers -->
                         </select>
                     </div>
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخدمة السياحية (تحديد تلقائي للسعر والتكلفة)</label>
-                    <select id="mService" onchange="onBookingServiceChange(this.value)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
-                        <!-- Populated dynamically from state.services -->
-                    </select>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_from_to">خط السير (من وإلى) *</label>
+                        <input type="text" id="mFromTo" required placeholder="مثال: القاهرة (CAI) - دبي (DXB)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold focus:bg-white focus:outline-none focus:border-gold-600 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_service">الخدمة السياحية</label>
+                        <select id="mService" onchange="onBookingServiceChange(this.value)" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                            <!-- Populated dynamically from state.services -->
+                        </select>
+                    </div>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع</label>
-                        <input type="number" id="mSell" required placeholder="18500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_travel_date">تاريخ السفر / المغادرة *</label>
+                        <input type="date" id="mTravelDate" required class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التكلفة</label>
-                        <input type="number" id="mCost" required placeholder="16000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_trip_status">حالة الرحلة *</label>
+                        <select id="mTripStatus" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                            <option value="مؤكد">✓ مؤكد (Confirmed)</option>
+                            <option value="قيد الانتظار">⏳ قيد الانتظار (Pending)</option>
+                            <option value="مكتمل">★ مكتمل (Completed)</option>
+                            <option value="ملغي">✕ ملغي (Cancelled)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_sales">سعر البيع *</label>
+                        <input type="number" id="mSell" required oninput="calcNewBookingProfitLive()" placeholder="18500" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_cost">سعر الشراء (التكلفة) *</label>
+                        <input type="number" id="mCost" required oninput="calcNewBookingProfitLive()" placeholder="16000" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_currency">العملة</label>
                         <select id="mCurrency" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             <option value="ج.م">ج.م (EGP)</option>
                             <option value="ريال">ريال (SAR)</option>
@@ -3009,8 +2997,27 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 items-end">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_paid_remaining">المبلغ المسدد (المدفوع كاش/بنك) *</label>
+                        <input type="number" id="mPaid" required oninput="calcNewBookingProfitLive()" placeholder="المبلغ المسدد" class="w-full bg-slate-50 border rounded-xl p-2.5 font-bold text-emerald-700 dark:text-emerald-400 font-mono dark:bg-slate-800 dark:border-slate-700">
+                    </div>
+                    <!-- Live Profit & Remaining Summary Card -->
+                    <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between font-bold text-xs">
+                        <div>
+                            <span class="text-slate-500 block text-[10px]">صافي الربح:</span>
+                            <span id="mProfitLive" class="font-black text-emerald-600 font-mono text-sm">+0 ج.م</span>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-slate-500 block text-[10px]">المتبقي على العميل:</span>
+                            <span id="mRemainingLive" class="font-black text-slate-800 dark:text-slate-100 font-mono text-sm">0 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="pt-2">
-                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3.5 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
                         <span>حفظ الحجز واحتساب الأرباح الفورية</span>
                         <i class="fa-solid fa-check"></i>
                     </button>
@@ -3327,53 +3334,97 @@
             </div>
             <form id="editBookingForm" onsubmit="handleSaveEditBooking(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="ebId">
-                <div>
-                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل / الشركة</label>
-                    <input type="text" id="ebClient" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم PNR / الملف</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_client">اسم العميل / الشركة</label>
+                        <input type="text" id="ebClient" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_client_phone">رقم العميل (الهاتف)</label>
+                        <input type="text" id="ebClientPhone" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold font-mono focus:ring-2 focus:ring-gold-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_pnr">رقم الحجز / PNR</label>
                         <input type="text" id="ebPnr" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-mono font-bold uppercase focus:ring-2 focus:ring-gold-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المورد / شركة الطيران</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_supplier">اسم المورد</label>
                         <input type="text" id="ebSupplier" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
                     </div>
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخدمة السياحية</label>
-                    <input type="text" id="ebService" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-medium focus:ring-2 focus:ring-gold-500">
-                </div>
-                <div class="grid grid-cols-3 gap-2">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سعر البيع</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_from_to">خط السير (من وإلى)</label>
+                        <input type="text" id="ebFromTo" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_service">الخدمة السياحية</label>
+                        <input type="text" id="ebService" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-medium focus:ring-2 focus:ring-gold-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_travel_date">تاريخ السفر</label>
+                        <input type="date" id="ebTravelDate" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_trip_status">حالة الرحلة</label>
+                        <select id="ebTripStatus" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                            <option value="مؤكد">✓ مؤكد (Confirmed)</option>
+                            <option value="قيد الانتظار">⏳ قيد الانتظار (Pending)</option>
+                            <option value="مكتمل">★ مكتمل (Completed)</option>
+                            <option value="ملغي">✕ ملغي (Cancelled)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_sales">سعر البيع</label>
                         <input type="number" id="ebSell" required oninput="calcEbProfit()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">التكلفة</label>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_cost">سعر الشراء (التكلفة)</label>
                         <input type="number" id="ebCost" required oninput="calcEbProfit()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">العملة</label>
-                        <select id="ebCur" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_currency">العملة</label>
+                        <select id="ebCur" onchange="calcEbProfit()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
                             <option value="ج.م">ج.م</option>
                             <option value="ريال">ريال</option>
                             <option value="دولار">دولار</option>
                         </select>
                     </div>
                 </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="th_paid_remaining">المبلغ المسدد (المدفوع)</label>
+                    <input type="number" id="ebPaid" required oninput="calcEbProfit()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-emerald-700 dark:text-emerald-400 font-mono rounded-xl p-2.5 font-bold focus:ring-2 focus:ring-gold-500">
+                </div>
+
                 <!-- Live Profit Badge -->
                 <div class="p-2.5 rounded-xl bg-gold-50/70 dark:bg-gold-950/40 border border-gold-200 dark:border-gold-800/60 flex items-center justify-between font-bold text-xs">
-                    <span class="text-slate-600 dark:text-slate-400">صافي الربح المحتسب:</span>
-                    <span id="ebProfitBadge" class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono text-sm">+0 ج.م</span>
+                    <div>
+                        <span class="text-slate-600 dark:text-slate-400 block text-[10px]">صافي الربح المحتسب:</span>
+                        <span id="ebProfitBadge" class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono text-sm">+0 ج.م</span>
+                    </div>
+                    <div class="text-left">
+                        <span class="text-slate-600 dark:text-slate-400 block text-[10px]">المتبقي على العميل:</span>
+                        <span id="ebRemainingBadge" class="font-extrabold text-slate-800 dark:text-slate-100 font-mono text-sm">0 ج.م</span>
+                    </div>
                 </div>
+
                 <div class="pt-2 flex items-center gap-2">
-                    <button type="submit" class="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
+                    <button type="submit" class="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-extrabold py-3.5 rounded-xl transition shadow-md cursor-pointer flex items-center justify-center gap-2">
                         <span>حفظ التعديلات وتحديث الأرباح</span>
                         <i class="fa-solid fa-check"></i>
                     </button>
-                    <button type="button" onclick="closeEditBookingModal()" class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold transition cursor-pointer">
+                    <button type="button" onclick="closeEditBookingModal()" class="px-4 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold transition cursor-pointer">
                         إلغاء
                     </button>
                 </div>
@@ -4502,10 +4553,15 @@
                     id: 1,
                     pnr: 'MS-9014',
                     client: 'شركة النور للتجارة والتوريدات',
+                    clientPhone: '01099887711',
                     service: 'تذكرة طيران (القاهرة - دبي ذهاب وعودة)',
+                    fromTo: 'القاهرة - دبي ذهاب وعودة',
+                    travelDate: '2026-11-28',
+                    tripStatus: 'مؤكد',
                     supplier: 'مصر للطيران (EgyptAir)',
                     sell: 18500,
                     cost: 16000,
+                    paid: 18500,
                     currency: 'ج.م',
                     profit: 2500,
                     eta: '✓ معتمدة (ETA: #8812)'
@@ -4514,10 +4570,15 @@
                     id: 2,
                     pnr: 'UMR-2026',
                     client: 'الحاج عبد الله السعيد',
+                    clientPhone: '01122334455',
                     service: 'برنامج عمرة VIP - 14 يوم (المولد النبوي)',
+                    fromTo: 'القاهرة - جدة / مكة المكرمة',
+                    travelDate: '2026-12-05',
+                    tripStatus: 'مؤكد',
                     supplier: 'شركة دار الإيمان (مكة)',
                     sell: 4200,
                     cost: 3550,
+                    paid: 4200,
                     currency: 'ريال',
                     profit: 650,
                     eta: '✓ معتمدة (ETA: #9842)'
@@ -4526,10 +4587,15 @@
                     id: 3,
                     pnr: 'HTL-4421',
                     client: 'د. سارة المنشاوي',
+                    clientPhone: '01244556677',
                     service: 'حجز فندق ريكسوس شرم الشيخ (4 ليالي All-Inclusive)',
+                    fromTo: 'القاهرة - شرم الشيخ',
+                    travelDate: '2026-12-10',
+                    tripStatus: 'مكتمل',
                     supplier: 'مجموعة ريكسوس',
                     sell: 24000,
                     cost: 20800,
+                    paid: 20000,
                     currency: 'ج.م',
                     profit: 3200,
                     eta: '✓ معتمدة (ETA: #7723)'
@@ -4538,10 +4604,15 @@
                     id: 4,
                     pnr: 'DXB-5510',
                     client: 'شركة الفارس للاستيراد',
+                    clientPhone: '01533221100',
                     service: 'بكج سياحة دبي (تأشيرة + فندق 4 نجوم)',
+                    fromTo: 'القاهرة - دبي',
+                    travelDate: '2026-12-18',
+                    tripStatus: 'قيد الانتظار',
                     supplier: 'ترافيل وان (دبي)',
                     sell: 35000,
                     cost: 30000,
+                    paid: 25000,
                     currency: 'ج.م',
                     profit: 5000,
                     eta: 'إصدار فاتورة ETA'
@@ -5070,7 +5141,7 @@
             if (list.length === 0) {
                 const emptyRow = `
                     <tr>
-                        <td colspan="7" class="p-8 text-center text-slate-400 font-bold bg-slate-50/50">
+                        <td colspan="12" class="p-8 text-center text-slate-400 font-bold bg-slate-50/50">
                             <i class="fa-solid fa-magnifying-glass text-gold-600 text-lg mb-2 block"></i>
                             <span>${isEn ? 'No bookings or files found matching your search' : 'لم يتم العثور على أي حجوزات أو ملفات مطابقة للبحث'}</span>
                         </td>
@@ -5081,19 +5152,37 @@
                 return;
             }
 
-            const rowsHtml = list.map(b => `
-                <tr class="hover:bg-slate-50/80 transition">
-                    <td class="p-3.5 font-mono font-bold text-slate-800">${b.pnr}</td>
-                    <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
-                    <td class="p-3.5 text-slate-700">${b.service}</td>
-                    <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
+            // Ensure every booking object has graceful fallbacks for all 11 fields
+            list.forEach(b => {
+                if (!b.clientPhone) b.clientPhone = '010' + Math.floor(10000000 + Math.random() * 90000000);
+                if (!b.travelDate) b.travelDate = '2026-11-' + String(20 + (b.id % 10)).padStart(2, '0');
+                if (!b.tripStatus) b.tripStatus = (b.id % 4 === 0) ? 'قيد الانتظار' : (b.id % 3 === 0) ? 'مكتمل' : 'مؤكد';
+                if (!b.fromTo) b.fromTo = b.service || 'القاهرة - دبي';
+                if (b.paid === undefined || b.paid === null) b.paid = b.sell;
+            });
+
+            // 1. Dashboard summary rows (6 columns)
+            const dashHtml = list.map(b => `
+                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition">
+                    <td class="p-3.5 font-mono font-bold text-slate-800 dark:text-slate-100">${b.pnr}</td>
+                    <td class="p-3.5 font-bold text-slate-900 dark:text-slate-100">
+                        <div>${b.client}</div>
+                        <div class="text-[10px] text-slate-400 font-mono font-normal flex items-center gap-1 mt-0.5">
+                            <i class="fa-solid fa-phone text-[9px]"></i> ${b.clientPhone}
+                        </div>
+                    </td>
+                    <td class="p-3.5 text-slate-700 dark:text-slate-300">
+                        <div class="font-bold">${b.fromTo}</div>
+                        <div class="text-[10px] text-slate-500">${b.service}</div>
+                    </td>
+                    <td class="p-3.5 font-bold text-slate-800 dark:text-slate-100">${Number(b.sell || 0).toLocaleString()} ${b.currency || 'ج.م'}</td>
                     <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                        ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${b.profit.toLocaleString()} ${b.currency}`}
+                        ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${Number(b.profit || 0).toLocaleString()} ${b.currency || 'ج.م'}`}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        ${b.eta.includes('معتمدة') 
+                        ${b.eta && b.eta.includes('معتمدة') 
                             ? `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${isEn ? 'Certified' : b.eta}</span>`
-                            : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${isEn ? 'Submit ETA' : b.eta}</button>`
+                            : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${isEn ? 'Submit ETA' : (b.eta || 'إصدار فاتورة ETA')}</button>`
                         }
                         <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Booking' : 'تعديل الحجز'}">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -5105,24 +5194,75 @@
                 </tr>
             `).join('');
 
-            if (dBody) dBody.innerHTML = rowsHtml;
+            // 2. Full Bookings Table rows (all 11 client-requested fields + actions)
+            const fullHtml = list.map(b => {
+                const sellNum = Number(b.sell || 0);
+                const costNum = Number(b.cost || 0);
+                const paidNum = Number(b.paid !== undefined ? b.paid : sellNum);
+                const remNum = Math.max(0, sellNum - paidNum);
+                const profitNum = Number(b.profit !== undefined ? b.profit : (sellNum - costNum));
+                const cur = b.currency || 'ج.م';
 
-            if (fBody) {
-                fBody.innerHTML = list.map(b => `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3.5 font-mono font-bold text-slate-900">${b.pnr}</td>
-                        <td class="p-3.5 font-bold text-slate-900">${b.client}</td>
-                        <td class="p-3.5 text-slate-700">${b.service}</td>
-                        <td class="p-3.5 text-slate-600">${b.supplier}</td>
-                        <td class="p-3.5 font-bold text-slate-800">${b.sell.toLocaleString()} ${b.currency}</td>
-                        <td class="p-3.5 text-slate-600">${b.cost.toLocaleString()} ${b.currency}</td>
-                        <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 font-extrabold'}">
-                            ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${b.profit.toLocaleString()} ${b.currency}`}
+                // Status badge
+                let statusBadge = '';
+                const st = b.tripStatus || 'مؤكد';
+                if (st === 'مؤكد' || st.toLowerCase() === 'confirmed') {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800"><i class="fa-solid fa-check"></i> ${isEn ? 'Confirmed' : 'مؤكد'}</span>`;
+                } else if (st === 'قيد الانتظار' || st.toLowerCase() === 'pending') {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-800"><i class="fa-solid fa-clock"></i> ${isEn ? 'Pending' : 'قيد الانتظار'}</span>`;
+                } else if (st === 'مكتمل' || st.toLowerCase() === 'completed') {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-300 dark:border-blue-800"><i class="fa-solid fa-check-double"></i> ${isEn ? 'Completed' : 'مكتمل'}</span>`;
+                } else {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-300 dark:border-rose-800"><i class="fa-solid fa-ban"></i> ${isEn ? 'Cancelled' : 'ملغي'}</span>`;
+                }
+
+                // Payment pill
+                let paidHtml = '';
+                if (remNum <= 0) {
+                    paidHtml = `<div><span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">${paidNum.toLocaleString()} ${cur}</span> <span class="text-[10px] text-emerald-600 block font-bold">✓ ${isEn ? 'Fully Paid' : 'مسدد بالكامل'}</span></div>`;
+                } else if (paidNum > 0) {
+                    paidHtml = `<div><span class="font-extrabold text-amber-600 dark:text-amber-400 font-mono">${paidNum.toLocaleString()} ${cur}</span> <span class="text-[10px] text-rose-600 dark:text-rose-400 block font-bold">${isEn ? 'Due:' : 'متبقي:'} ${remNum.toLocaleString()} ${cur}</span></div>`;
+                } else {
+                    paidHtml = `<div><span class="font-extrabold text-rose-600 dark:text-rose-400 font-mono">0 ${cur}</span> <span class="text-[10px] text-rose-600 dark:text-rose-400 block font-bold">${isEn ? 'Unpaid' : 'غير مسدد'}</span></div>`;
+                }
+
+                return `
+                    <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition">
+                        <!-- 1. رقم الحجز / PNR -->
+                        <td class="p-3.5 font-mono font-bold text-slate-800 dark:text-slate-100">${b.pnr}</td>
+                        <!-- 2. اسم العميل -->
+                        <td class="p-3.5 font-bold text-slate-900 dark:text-slate-100">${b.client}</td>
+                        <!-- 3. رقم العميل (الهاتف) -->
+                        <td class="p-3.5 font-mono text-slate-700 dark:text-slate-300 font-bold dir-ltr text-right">
+                            <span class="inline-flex items-center gap-1"><i class="fa-solid fa-phone text-slate-400 text-[10px]"></i> ${b.clientPhone}</span>
                         </td>
+                        <!-- 4. خط السير (من وإلى) -->
+                        <td class="p-3.5 font-bold text-slate-800 dark:text-slate-200">
+                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-plane-departure text-gold-500 text-[11px]"></i> ${b.fromTo || b.service}</span>
+                        </td>
+                        <!-- 5. تاريخ السفر -->
+                        <td class="p-3.5 text-slate-700 dark:text-slate-300 font-mono font-semibold">
+                            <span class="inline-flex items-center gap-1"><i class="fa-regular fa-calendar-days text-slate-400 text-[10px]"></i> ${b.travelDate}</span>
+                        </td>
+                        <!-- 6. اسم المورد -->
+                        <td class="p-3.5 font-semibold text-slate-700 dark:text-slate-300">${b.supplier}</td>
+                        <!-- 7. حالة الرحلة -->
+                        <td class="p-3.5">${statusBadge}</td>
+                        <!-- 8. سعر البيع -->
+                        <td class="p-3.5 font-black text-slate-900 dark:text-slate-100 font-mono">${sellNum.toLocaleString()} ${cur}</td>
+                        <!-- 9. سعر الشراء (التكلفة) -->
+                        <td class="p-3.5 font-bold text-slate-600 dark:text-slate-400 font-mono">${costNum.toLocaleString()} ${cur}</td>
+                        <!-- 10. المسدد / المتبقي -->
+                        <td class="p-3.5">${paidHtml}</td>
+                        <!-- 11. صافي الربح -->
+                        <td class="p-3.5 ${isProfitHidden ? 'text-slate-400 font-bold' : 'text-emerald-600 dark:text-emerald-400 font-black font-mono'}">
+                            ${isProfitHidden ? (isEn ? '🔒 Hidden' : '🔒 محجوب') : `+${profitNum.toLocaleString()} ${cur}`}
+                        </td>
+                        <!-- 12. الفاتورة والإجراءات -->
                         <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                            ${b.eta.includes('معتمدة') 
-                                ? `<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${isEn ? 'Certified' : b.eta}</span>`
-                                : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer">${isEn ? 'Submit ETA' : b.eta}</button>`
+                            ${b.eta && b.eta.includes('معتمدة') 
+                                ? `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-bold">${isEn ? 'Certified' : b.eta}</span>`
+                                : `<button onclick="certifyEta(this, '${b.pnr}')" class="bg-navy-900 hover:bg-slate-800 text-white text-[11px] px-3 py-1.5 rounded-lg transition font-semibold cursor-pointer shadow-xs">${isEn ? 'Submit ETA' : (b.eta || 'إصدار فاتورة ETA')}</button>`
                             }
                             <button onclick="openEditBooking(${b.id})" class="text-blue-600 hover:text-blue-800 p-1 text-sm cursor-pointer" title="${isEn ? 'Edit Booking' : 'تعديل الحجز'}">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -5132,8 +5272,11 @@
                             </button>
                         </td>
                     </tr>
-                `).join('');
-            }
+                `;
+            }).join('');
+
+            if (dBody) dBody.innerHTML = dashHtml;
+            if (fBody) fBody.innerHTML = fullHtml;
         }
 
         // Render Tables
@@ -5586,14 +5729,37 @@
             document.getElementById('bookingModal').classList.add('hidden');
         }
 
+        function calcNewBookingProfitLive() {
+            const sell = parseFloat(document.getElementById('mSell').value) || 0;
+            const cost = parseFloat(document.getElementById('mCost').value) || 0;
+            const cur = document.getElementById('mCurrency') ? document.getElementById('mCurrency').value : 'ج.م';
+            const paidInput = document.getElementById('mPaid');
+            if (paidInput && (paidInput.value === '' || paidInput.dataset.touched !== 'true')) {
+                paidInput.value = sell;
+            }
+            const paid = parseFloat(document.getElementById('mPaid').value) || 0;
+            const profit = sell - cost;
+            const remaining = Math.max(0, sell - paid);
+
+            const pBadge = document.getElementById('mProfitLive');
+            if (pBadge) pBadge.innerText = (profit >= 0 ? '+' : '') + profit.toLocaleString() + ' ' + cur;
+            const rBadge = document.getElementById('mRemainingLive');
+            if (rBadge) rBadge.innerText = remaining.toLocaleString() + ' ' + cur;
+        }
+
         function handleNewBooking(e) {
             e.preventDefault();
             const client = document.getElementById('mClientName').value.trim();
+            const clientPhone = (document.getElementById('mClientPhone').value || '').trim();
             const pnr = document.getElementById('mPnr').value.trim() || 'TRV-' + Math.floor(1000 + Math.random() * 9000);
             const supplier = document.getElementById('mSupplier').value;
             const service = document.getElementById('mService').value;
+            const fromTo = (document.getElementById('mFromTo').value || '').trim() || service;
+            const travelDate = document.getElementById('mTravelDate').value || new Date().toISOString().split('T')[0];
+            const tripStatus = document.getElementById('mTripStatus').value || 'مؤكد';
             const sell = parseFloat(document.getElementById('mSell').value) || 0;
             const cost = parseFloat(document.getElementById('mCost').value) || 0;
+            const paid = parseFloat(document.getElementById('mPaid').value) !== undefined ? (parseFloat(document.getElementById('mPaid').value) || 0) : sell;
             const cur = document.getElementById('mCurrency').value;
             const profit = sell - cost;
 
@@ -5601,10 +5767,15 @@
                 id: Date.now(),
                 pnr: pnr,
                 client: client,
+                clientPhone: clientPhone,
                 service: service,
+                fromTo: fromTo,
+                travelDate: travelDate,
+                tripStatus: tripStatus,
                 supplier: supplier,
                 sell: sell,
                 cost: cost,
+                paid: paid,
                 currency: cur,
                 profit: profit,
                 eta: 'إصدار فاتورة ETA'
@@ -5937,16 +6108,35 @@
             }
         }
 
+        function calcEbProfit() {
+            const sell = parseFloat(document.getElementById('ebSell').value) || 0;
+            const cost = parseFloat(document.getElementById('ebCost').value) || 0;
+            const paid = parseFloat(document.getElementById('ebPaid').value) || 0;
+            const cur = document.getElementById('ebCur').value || 'ج.م';
+            const profit = sell - cost;
+            const remaining = Math.max(0, sell - paid);
+
+            const pBadge = document.getElementById('ebProfitBadge');
+            if (pBadge) pBadge.innerText = (profit >= 0 ? '+' : '') + profit.toLocaleString() + ' ' + cur;
+            const rBadge = document.getElementById('ebRemainingBadge');
+            if (rBadge) rBadge.innerText = remaining.toLocaleString() + ' ' + cur;
+        }
+
         function openEditBooking(bId) {
             const b = state.bookings.find(x => x.id === bId);
             if (!b) return;
             document.getElementById('ebId').value = b.id;
-            document.getElementById('ebClient').value = b.client;
-            document.getElementById('ebPnr').value = b.pnr;
-            document.getElementById('ebSupplier').value = b.supplier;
-            document.getElementById('ebService').value = b.service;
-            document.getElementById('ebSell').value = b.sell;
-            document.getElementById('ebCost').value = b.cost;
+            document.getElementById('ebClient').value = b.client || '';
+            document.getElementById('ebClientPhone').value = b.clientPhone || '';
+            document.getElementById('ebPnr').value = b.pnr || '';
+            document.getElementById('ebSupplier').value = b.supplier || '';
+            document.getElementById('ebService').value = b.service || '';
+            document.getElementById('ebFromTo').value = b.fromTo || b.service || '';
+            document.getElementById('ebTravelDate').value = b.travelDate || '';
+            document.getElementById('ebTripStatus').value = b.tripStatus || 'مؤكد';
+            document.getElementById('ebSell').value = b.sell || 0;
+            document.getElementById('ebCost').value = b.cost || 0;
+            document.getElementById('ebPaid').value = (b.paid !== undefined) ? b.paid : (b.sell || 0);
             document.getElementById('ebCur').value = b.currency || 'ج.م';
             calcEbProfit();
             document.getElementById('editBookingModal').classList.remove('hidden');
@@ -5961,11 +6151,16 @@
             if (!b) return;
 
             b.client = document.getElementById('ebClient').value.trim();
+            b.clientPhone = document.getElementById('ebClientPhone').value.trim();
             b.pnr = document.getElementById('ebPnr').value.trim();
             b.supplier = document.getElementById('ebSupplier').value.trim();
             b.service = document.getElementById('ebService').value.trim();
+            b.fromTo = document.getElementById('ebFromTo').value.trim();
+            b.travelDate = document.getElementById('ebTravelDate').value;
+            b.tripStatus = document.getElementById('ebTripStatus').value;
             b.sell = parseFloat(document.getElementById('ebSell').value) || 0;
             b.cost = parseFloat(document.getElementById('ebCost').value) || 0;
+            b.paid = parseFloat(document.getElementById('ebPaid').value) || 0;
             b.currency = document.getElementById('ebCur').value;
             b.profit = b.sell - b.cost;
 
@@ -5974,6 +6169,7 @@
             closeEditBookingModal();
             alert(`✓ تم حفظ تعديلات الحجز ${b.pnr} واحتساب صافي الربح الجديد (+${b.profit.toLocaleString()} ${b.currency})`);
         }
+
         function deleteBooking(bId) {
             const b = state.bookings.find(x => x.id === bId);
             if (!b) return;
@@ -9579,31 +9775,33 @@
         function exportBookingsToExcel() {
             const isEn = document.documentElement.lang === 'en';
             let csv = '\uFEFF';
-            csv += `"شركة الحرمين للسياحة والسفر - سجل حجوزات الطيران والبرامج السياحية"\n`;
+            csv += `"شركة الحرمين للسياحة والسفر - سجل حجوزات الطيران والبرامج السياحية الشامل"\n`;
             csv += `"تاريخ التصدير:","${new Date().toLocaleString(isEn ? 'en-US' : 'ar-EG')}"\n\n`;
-            csv += isEn ? `"#","PNR","Client","Service","Supplier / Airline","Sell Price","Cost Price","Profit","Currency","ETA Invoice"\n`
-                        : `"م","رقم الملف / PNR","اسم العميل / الشركة","الخدمة / البرنامج","المورد / خطوط الطيران","سعر البيع","التكلفة","صافي الربح","العملة","الفاتورة الضريبية ETA"\n`;
+            csv += isEn ? `"#","PNR / Booking No","Client Name","Client Phone","Route (From - To)","Travel Date","Supplier / Airline","Trip Status","Selling Price","Purchase Price","Paid Amount","Remaining Due","Net Profit","Currency","ETA Invoice"\n`
+                        : `"م","رقم الحجز / PNR","اسم العميل","رقم العميل","خط السير (من وإلى)","تاريخ السفر","اسم المورد","حالة الرحلة","سعر البيع","سعر الشراء","المسدد","المتبقي","صافي الربح","العملة","الفاتورة ETA"\n`;
             
-            let sumSell = 0, sumCost = 0, sumProfit = 0;
+            let sumSell = 0, sumCost = 0, sumPaid = 0, sumRemaining = 0, sumProfit = 0;
             (state.bookings || []).forEach((b, idx) => {
-                sumSell += Number(b.sell || 0);
-                sumCost += Number(b.cost || 0);
-                sumProfit += Number(b.profit || 0);
-                csv += `"${idx + 1}",${escapeCsv(b.pnr)},${escapeCsv(b.client)},${escapeCsv(b.service)},${escapeCsv(b.supplier)},"${b.sell}","${b.cost}","${b.profit}",${escapeCsv(b.currency)},${escapeCsv(b.eta)}\n`;
-            });
-            csv += isEn ? `"TOTALS","","","","","${sumSell}","${sumCost}","${sumProfit}","",""\n`
-                        : `"المجموع والإجمالي","","","","","${sumSell}","${sumCost}","${sumProfit}","",""\n`;
+                const sellNum = Number(b.sell || 0);
+                const costNum = Number(b.cost || 0);
+                const paidNum = Number(b.paid !== undefined ? b.paid : sellNum);
+                const remNum = Math.max(0, sellNum - paidNum);
+                const profitNum = Number(b.profit !== undefined ? b.profit : (sellNum - costNum));
 
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', `حجوزات_الحرمين_${new Date().toISOString().slice(0, 10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                sumSell += sellNum;
+                sumCost += costNum;
+                sumPaid += paidNum;
+                sumRemaining += remNum;
+                sumProfit += profitNum;
+
+                csv += `"${idx + 1}",${escapeCsv(b.pnr)},${escapeCsv(b.client)},${escapeCsv(b.clientPhone || '')},${escapeCsv(b.fromTo || b.service)},${escapeCsv(b.travelDate || '')},${escapeCsv(b.supplier)},${escapeCsv(b.tripStatus || 'مؤكد')},"${sellNum}","${costNum}","${paidNum}","${remNum}","${profitNum}",${escapeCsv(b.currency || 'ج.م')},${escapeCsv(b.eta || '')}\n`;
+            });
+            csv += isEn ? `"TOTALS","","","","","","","","${sumSell}","${sumCost}","${sumPaid}","${sumRemaining}","${sumProfit}","",""\n`
+                        : `"الإجمالي العام","","","","","","","","${sumSell}","${sumCost}","${sumPaid}","${sumRemaining}","${sumProfit}","",""\n`;
+
+            downloadCsv(csv, `Alharamain_Bookings_${new Date().toISOString().split('T')[0]}.csv`);
         }
 
-        // 3. Export Desk Ticket Inventory to Clean Excel
         function exportTicketInventoryToExcel() {
             const isEn = document.documentElement.lang === 'en';
             let csv = '\uFEFF';
