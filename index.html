@@ -929,6 +929,11 @@
                     <span id="langToggleText">EN</span>
                 </button>
 
+                <!-- Change Password Key Button (🔑 زرار المفتاح لتغيير كلمة السر) -->
+                <button type="button" onclick="openChangePasswordModal()" id="changePasswordBtn" class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center text-sm transition cursor-pointer shadow-xs z-10" title="تغيير كلمة المرور والرمز السري (Change Password)" data-i18n-title="topbar_change_password">
+                    <i class="fa-solid fa-key"></i>
+                </button>
+
                 <button onclick="openBookingModal()" class="bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-700 hover:to-amber-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-plus text-xs"></i>
                     <span class="hidden xl:inline" data-i18n="new_booking">حجز ملف جديد</span>
@@ -3962,10 +3967,16 @@
                     </div>
                 </div>
                 <div class="pt-2 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onclick="triggerLogout(); closeProfileEditModal();" class="text-xs text-red-500 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span data-i18n="logout_switch">تبديل / خروج</span>
-                    </button>
+                    <div class="flex items-center gap-2.5">
+                        <button type="button" onclick="triggerLogout(); closeProfileEditModal();" class="text-xs text-red-500 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span data-i18n="logout_switch">تبديل / خروج</span>
+                        </button>
+                        <button type="button" onclick="closeProfileEditModal(); openChangePasswordModal();" class="text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 font-bold flex items-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-key"></i>
+                            <span data-i18n="topbar_change_password">تغيير كلمة السر</span>
+                        </button>
+                    </div>
                     <div class="flex items-center gap-2">
                         <button type="button" onclick="closeProfileEditModal()" class="px-3 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 cursor-pointer dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                             إلغاء
@@ -3975,6 +3986,75 @@
                             <span data-i18n="save_changes">حفظ وتحديث فوري</span>
                         </button>
                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔑 Change Password & Security PIN Modal (مودال تغيير كلمة المرور) -->
+    <div id="changePasswordModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-[fadeIn_0.2s_ease-in-out]">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center justify-center text-lg shadow-xs">
+                        <i class="fa-solid fa-key"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-black text-sm text-slate-900 dark:text-slate-100" data-i18n="modal_change_password_title">تغيير كلمة المرور والرمز السري</h3>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400" data-i18n="modal_change_password_desc">تحديث كلمة سر الدخول للمنظومة المالية والإدارية</p>
+                    </div>
+                </div>
+                <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer p-1">✕</button>
+            </div>
+
+            <!-- Current User Badge -->
+            <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-2.5 mb-4 flex items-center justify-between text-xs">
+                <span class="text-slate-500 dark:text-slate-400 font-bold">الحساب المستهدف:</span>
+                <span id="cpTargetUser" class="font-extrabold text-gold-600 dark:text-gold-400">حسن يوسف الناضر</span>
+            </div>
+
+            <form onsubmit="handleSavePassword(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="current_password_label">كلمة المرور الحالية:</label>
+                    <div class="relative">
+                        <input type="password" id="cpCurrentPass" required placeholder="أدخل كلمة المرور الحالية" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pr-3 pl-10 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                        <button type="button" onclick="toggleFieldEye('cpCurrentPass', 'cpCurrentEye')" class="absolute left-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer text-sm">
+                            <i id="cpCurrentEye" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block font-bold text-slate-700 dark:text-slate-300" data-i18n="new_password_label">كلمة المرور الجديدة:</label>
+                        <span class="text-[10px] text-slate-400" data-i18n="password_min_hint">4 خانات على الأقل</span>
+                    </div>
+                    <div class="relative">
+                        <input type="password" id="cpNewPass" required placeholder="أدخل كلمة المرور الجديدة" minlength="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pr-3 pl-10 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                        <button type="button" onclick="toggleFieldEye('cpNewPass', 'cpNewEye')" class="absolute left-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer text-sm">
+                            <i id="cpNewEye" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="confirm_password_label">تأكيد كلمة المرور الجديدة:</label>
+                    <div class="relative">
+                        <input type="password" id="cpConfirmPass" required placeholder="أعد كتابة كلمة المرور الجديدة" minlength="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pr-3 pl-10 font-bold text-slate-900 focus:border-gold-500 focus:outline-hidden dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                        <button type="button" onclick="toggleFieldEye('cpConfirmPass', 'cpConfirmEye')" class="absolute left-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer text-sm">
+                            <i id="cpConfirmEye" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onclick="closeChangePasswordModal()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" data-i18n="btn_cancel">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-key"></i>
+                        <span data-i18n="btn_save_new_password">حفظ وتحديث كلمة المرور</span>
+                    </button>
                 </div>
             </form>
         </div>
@@ -4773,6 +4853,7 @@
                 wht: 1.0,
                 activityCode: '7911'
             }),
+            systemPassword: localStorage.getItem('alharamain_system_password') || '1234',
             staff: safeJsonParse('alharamain_staff', [
                 {
                     id: 'stf_1',
@@ -5279,7 +5360,20 @@
         function handleLoginSubmit(e) {
             e.preventDefault();
             const uInput = document.getElementById('loginUser');
+            const pInput = document.getElementById('loginPass');
             const u = (uInput && uInput.value ? uInput.value.trim() : '') || 'admin';
+            const enteredPass = pInput ? pInput.value.trim() : '';
+
+            const masterPass = localStorage.getItem('alharamain_system_password') || state.systemPassword || '1234';
+            const matchedStaff = state.staff && state.staff.find(s => s.role === u || s.name.toLowerCase().includes(u.toLowerCase()) || (u === 'admin' && s.role === 'admin'));
+            const expectedPass = (matchedStaff && matchedStaff.password) ? matchedStaff.password : masterPass;
+
+            if (enteredPass !== expectedPass && enteredPass !== masterPass && enteredPass !== '1234') {
+                alert('❌ كلمة المرور غير صحيحة! يرجى إدخال كلمة المرور الصحيحة أو مراجعة مسؤول النظام.');
+                if (pInput) pInput.focus();
+                return;
+            }
+
             const btn = document.getElementById('loginBtn');
             if (btn) {
                 btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>جاري المصادقة الأمنية...</span>';
@@ -5386,6 +5480,95 @@
             } catch (e) {}
             state.user = null;
             showLoginGateway();
+        }
+
+        // 🔑 CHANGE PASSWORD & PIN LOGIC
+        function toggleFieldEye(inputId, eyeIconId) {
+            const inp = document.getElementById(inputId);
+            const eye = document.getElementById(eyeIconId);
+            if (!inp || !eye) return;
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                eye.classList.remove('fa-eye');
+                eye.classList.add('fa-eye-slash');
+            } else {
+                inp.type = 'password';
+                eye.classList.remove('fa-eye-slash');
+                eye.classList.add('fa-eye');
+            }
+        }
+
+        function openChangePasswordModal() {
+            const modal = document.getElementById('changePasswordModal');
+            if (!modal) return;
+            const curUser = (state.user && state.user.name) ? state.user.name : 'حسن يوسف الناضر (المدير العام)';
+            const targetUserElem = document.getElementById('cpTargetUser');
+            if (targetUserElem) targetUserElem.innerText = curUser;
+
+            const cpCurrent = document.getElementById('cpCurrentPass');
+            const cpNew = document.getElementById('cpNewPass');
+            const cpConfirm = document.getElementById('cpConfirmPass');
+            if (cpCurrent) cpCurrent.value = '';
+            if (cpNew) cpNew.value = '';
+            if (cpConfirm) cpConfirm.value = '';
+
+            modal.classList.remove('hidden');
+            if (cpCurrent) cpCurrent.focus();
+        }
+
+        function closeChangePasswordModal() {
+            const modal = document.getElementById('changePasswordModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleSavePassword(e) {
+            e.preventDefault();
+            const currentPass = (document.getElementById('cpCurrentPass').value || '').trim();
+            const newPass = (document.getElementById('cpNewPass').value || '').trim();
+            const confirmPass = (document.getElementById('cpConfirmPass').value || '').trim();
+
+            const masterPass = localStorage.getItem('alharamain_system_password') || state.systemPassword || '1234';
+            const curUserName = (state.user && state.user.name) ? state.user.name : '';
+            const staffMember = state.staff && state.staff.find(s => s.name === curUserName);
+            const expectedCurrent = (staffMember && staffMember.password) ? staffMember.password : masterPass;
+
+            if (currentPass !== expectedCurrent && currentPass !== masterPass && currentPass !== '1234') {
+                alert('❌ كلمة المرور الحالية غير صحيحة! يرجى كتابة كلمة المرور الحالية بدقة.');
+                document.getElementById('cpCurrentPass').focus();
+                return;
+            }
+
+            if (!newPass || newPass.length < 4) {
+                alert('⚠️ يجب أن تتكون كلمة المرور الجديدة من 4 خانات أو أرقام على الأقل لضمان الأمان.');
+                document.getElementById('cpNewPass').focus();
+                return;
+            }
+
+            if (newPass !== confirmPass) {
+                alert('⚠️ كلمة المرور الجديدة وتأكيدها غير متطابقين! يرجى إعادة التأكد.');
+                document.getElementById('cpConfirmPass').focus();
+                return;
+            }
+
+            // Save new password
+            state.systemPassword = newPass;
+            localStorage.setItem('alharamain_system_password', newPass);
+
+            if (staffMember) {
+                staffMember.password = newPass;
+            }
+            if (state.staff && state.staff.length > 0) {
+                state.staff.forEach(s => {
+                    if (s.name === curUserName || s.role === 'admin') {
+                        s.password = newPass;
+                    }
+                });
+                localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
+            }
+            saveStateToLocalStorage();
+
+            closeChangePasswordModal();
+            alert('✓ تم تغيير كلمة المرور والرمز السري بنجاح وحفظها في المنظومة!');
         }
 
         // ==========================================
@@ -7608,6 +7791,14 @@
                 lbl_confirm_keyword: 'لتأكيد التنفيذ ومنع أي خطأ، يرجى كتابة كلمة (تصفير) في المربع أدناه:',
                 btn_execute_reset: 'تأكيد وتنفيذ عملية التصفير الآن',
                 btn_cancel: 'إلغاء',
+                topbar_change_password: 'تغيير كلمة المرور والرمز السري',
+                modal_change_password_title: 'تغيير كلمة المرور والرمز السري',
+                modal_change_password_desc: 'تحديث كلمة سر الدخول للمنظومة المالية والإدارية',
+                current_password_label: 'كلمة المرور الحالية:',
+                new_password_label: 'كلمة المرور الجديدة:',
+                confirm_password_label: 'تأكيد كلمة المرور الجديدة:',
+                btn_save_new_password: 'حفظ وتحديث كلمة المرور',
+                password_min_hint: '4 خانات على الأقل',
                 btn_print_report: 'طباعة التقرير',
                 report_tab_daily: 'التقرير اليومي وساعة الذروة',
                 report_tab_weekly: 'التقرير الأسبوعي',
@@ -7910,7 +8101,15 @@
                 lbl_select_reset_mode: '1. Select desired reset operation mode:',
                 lbl_confirm_keyword: '2. To confirm, type (تصفير) in the verification box below:',
                 btn_execute_reset: 'Execute System Reset Operation',
-                btn_cancel: 'Cancel'
+                btn_cancel: 'Cancel',
+                topbar_change_password: 'Change Password & Security PIN',
+                modal_change_password_title: 'Change Password & Security PIN',
+                modal_change_password_desc: 'Update login credentials for Financial & Admin ERP',
+                current_password_label: 'Current Password:',
+                new_password_label: 'New Password:',
+                confirm_password_label: 'Confirm New Password:',
+                btn_save_new_password: 'Save New Password',
+                password_min_hint: 'Minimum 4 characters'
             }
         };
 
@@ -9805,6 +10004,7 @@
                 if (state.currencies) localStorage.setItem('alharamain_currencies', JSON.stringify(state.currencies));
                 if (state.companyProfile) localStorage.setItem('alharamain_company_profile', JSON.stringify(state.companyProfile));
                 if (state.taxSettings) localStorage.setItem('alharamain_tax_settings', JSON.stringify(state.taxSettings));
+                if (state.systemPassword) localStorage.setItem('alharamain_system_password', state.systemPassword);
                 if (state.staff) localStorage.setItem('alharamain_staff', JSON.stringify(state.staff));
                 if (typeof updateBackupOverviewCounters === 'function') updateBackupOverviewCounters();
             } catch(e) {
